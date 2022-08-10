@@ -5,7 +5,7 @@
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <!-- Mobile menu button-->
                 <button type="button"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    class="menus-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     aria-controls="mobile-menu" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
                     <!--
@@ -34,8 +34,10 @@
             </div>
             <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex-shrink-0 flex items-center">
+                    <!-- on mobile view -->
                     <img class="block lg:hidden h-8 w-auto"
                         src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+                    <!-- on pc view -->
                     <img class="hidden lg:block h-8 w-auto"
                         src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
                         alt="Workflow">
@@ -44,23 +46,56 @@
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-                            aria-current="page">Dashboard</a>
+                            aria-current="page">Home</a>
 
                         <a href="#"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Team</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">My
+                            Posts</a>
 
                         <a href="#"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Saved
+                        </a>
 
                         <a href="#"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
+                            class="text-yellow-400 hover:bg-gray-700 hover:text-green px-3 py-2 rounded-md text-sm font-medium">Data
+                            Users</a>
                     </div>
                 </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <div class="hidden lg:block flex justify-center mx-3">
+                    <div class="xl:w-45">
+                        <div class="input-group relative flex flex-wrap items-stretch w-full">
+                            <input type="search"
+                                class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                            <button
+                                class="btn inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                                type="button" id="button-addon2">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search"
+                                    class="w-4 border-0" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <span
+                    class="block lg:hidden input-group-text flex items-center px-3 py-1.5 text-base border-0 font-normal bg-gray-800 text-gray-400 text-center whitespace-nowrap rounded"
+                    id="basic-addon2">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="w-5"
+                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path fill="currentColor"
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                        </path>
+                    </svg>
+                </span>
                 <button type="button"
-                    class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                    <span class="sr-only">View notifications</span>
+                    class="notif-button bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <span class="hidden isi-notif sr-only">View notifications</span>
                     <!-- Heroicon name: outline/bell -->
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -73,7 +108,7 @@
                 <div class="ml-3 relative">
                     <div>
                         <button type="button"
-                            class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                            class="user-menu-button bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                             id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="sr-only">Open user menu</span>
                             <img class="h-8 w-8 rounded-full"
@@ -92,15 +127,16 @@
                 From: "transform opacity-100 scale-100"
                 To: "transform opacity-0 scale-95"
             -->
-                    <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                    <div class="hidden user-menu-item origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                        tabindex="-1">
                         <!-- Active: "bg-gray-100", Not Active: "" -->
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                            id="user-menu-item-0">Your Profile</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                            id="user-menu-item-1">Settings</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                            id="user-menu-item-2">Sign out</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
+                            tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
+                            tabindex="-1" id="user-menu-item-1">Settings</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
+                            tabindex="-1" id="user-menu-item-2">Sign out</a>
                     </div>
                 </div>
             </div>
@@ -108,20 +144,46 @@
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden" id="mobile-menu">
+    <div class="hidden menus-item" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-                aria-current="page">Dashboard</a>
+                aria-current="page">Home</a>
 
             <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
+                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">My
+                Posts</a>
 
             <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Saved
+            </a>
 
             <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
+                class="text-yellow-400 hover:bg-gray-700 hover:text-green block px-3 py-2 rounded-md text-base font-medium">Data
+                Users</a>
         </div>
     </div>
 </nav>
+
+<script>
+    // script for avatar dropdown
+    const btn = document.querySelector("button.user-menu-button");
+    const menu = document.querySelector(".user-menu-item");
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+
+    // script for menu dropdown
+    const button = document.querySelector("button.menus-button");
+    const menus = document.querySelector(".menus-item");
+    button.addEventListener("click", () => {
+        menus.classList.toggle("hidden");
+    });
+
+    // script for notification
+    const n_button = document.querySelector("button.notif-button");
+    const isi = document.querySelector(".isi-notif");
+    n_button.addEventListener("click", () => {
+        isi.classList.toggle("hidden");
+    });
+</script>

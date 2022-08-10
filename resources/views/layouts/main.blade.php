@@ -48,12 +48,12 @@
     </script>
 
     {{-- <title>{{ $title }}</title> --}}
-    <title>Home | IR</title>
+    <title>Home | Blog</title>
 </head>
 
 <body>
     @include('partials.navbar')
-    <div class="container">
+    <div class="container px-4 py-4">
         <div class="col">
             @yield('container')
         </div>
