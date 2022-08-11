@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -12,10 +13,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // nanti disini pakai datatable, sementara passing data biasa dulu
         return view('home', [
             'title' => 'Blog | Home',
+            'posts' => Post::latest()->get(),
         ]);
     }
 
