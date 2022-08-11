@@ -48,7 +48,6 @@
     </script>
 
     <title>{{ $title }}</title>
-    {{-- <title>Home | Blog</title> --}}
 </head>
 
 <body>

@@ -21,7 +21,9 @@ Route::get('/', [SigninController::class, 'index'])->name('signin')->middleware(
 
 Route::post('/signin', [SigninController::class, 'authenticate']);
 
-Route::post('/signout', [SigninController::class, 'logout']);
+Route::get('/signin', [SigninController::class, 'index']);
+
+Route::post('/signout', [SigninController::class, 'signout']);
 
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
 

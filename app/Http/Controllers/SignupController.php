@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class SignupController extends Controller
 {
@@ -42,6 +44,7 @@ class SignupController extends Controller
             'username' => 'required|max:50',
             'email' => 'required|email:dns|max:70',
             'password' => 'required|min:8|max:40',
+            'remember_token' => Str::random(10),
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
