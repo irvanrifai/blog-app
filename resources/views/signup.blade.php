@@ -1,4 +1,4 @@
 @extends('layouts.main')
 @section('container')
-    <h1>Admin | Data User</h1>
+    <h1>Sign Up</h1>
 @endsection

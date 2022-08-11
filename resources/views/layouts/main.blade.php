@@ -47,8 +47,8 @@
         }
     </script>
 
-    {{-- <title>{{ $title }}</title> --}}
-    <title>Home | Blog</title>
+    <title>{{ $title }}</title>
+    {{-- <title>Home | Blog</title> --}}
 </head>
 
 <body>
