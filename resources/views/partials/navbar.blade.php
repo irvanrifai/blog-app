@@ -57,6 +57,10 @@
                         </a>
 
                         <a href="#"
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About
+                        </a>
+
+                        <a href="#"
                             class="text-yellow-400 hover:bg-gray-700 hover:text-green px-3 py-2 rounded-md text-sm font-medium">Data
                             Users</a>
                     </div>
@@ -67,10 +71,10 @@
                     <div class="xl:w-45">
                         <div class="input-group relative flex flex-wrap items-stretch w-full">
                             <input type="search"
-                                class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none"
                                 placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
                             <button
-                                class="btn inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                                class="btn inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:bg-gray-600  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
                                 type="button" id="button-addon2">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search"
                                     class="w-4 border-0" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -156,6 +160,10 @@
 
             <a href="#"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Saved
+            </a>
+
+            <a href="#"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About
             </a>
 
             <a href="#"
