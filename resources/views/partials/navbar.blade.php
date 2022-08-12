@@ -10,23 +10,23 @@
                         aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
                         <!--
-                                                                      Icon when menu is closed.
-                                                          
-                                                                      Heroicon name: outline/menu
-                                                          
-                                                                      Menu open: "hidden", Menu closed: "block"
-                                                                    -->
+                                                                                                                                                                                                                                                          Icon when menu is closed.
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                          Heroicon name: outline/menu
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                          Menu open: "hidden", Menu closed: "block"
+                                                                                                                                                                                                                                                        -->
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                         <!--
-                                                                      Icon when menu is open.
-                                                          
-                                                                      Heroicon name: outline/x
-                                                          
-                                                                      Menu open: "block", Menu closed: "hidden"
-                                                                    -->
+                                                                                                                                                                                                                                                          Icon when menu is open.
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                          Heroicon name: outline/x
+                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                          Menu open: "block", Menu closed: "hidden"
+                                                                                                                                                                                                                                                        -->
                         <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -70,9 +70,10 @@
                                 class="{{ Request::is('about') ? 'bg-gray-900 text-white' : '' }} text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About
                             </a>
 
-                            <a href="#"
-                                class="{{ Request::is('admin*') ? 'bg-gray-900 text-yellow-500' : '' }} text-yellow-400 hover:bg-gray-700 hover:text-yellow-500 px-3 py-2 rounded-md text-sm font-medium">Data
-                                Users</a>
+                            @can('isAdmin')
+                                <a href="#"
+                                    class="{{ Request::is('admin*') ? 'bg-gray-900 text-yellow-500' : '' }} text-yellow-400 hover:bg-gray-700 hover:text-yellow-500 px-3 py-2 rounded-md text-sm font-medium">Admin</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -131,27 +132,28 @@
                                 class="user-menu-button bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt="">
+                                <img class="h-8 w-8 rounded-full" {{-- src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" --}}
+                                    src="https://source.unsplash.com/100x100/?human" alt="">
                             </button>
                         </div>
 
                         <!--
-                                                                                                      Dropdown menu, show/hide based on menu state.
-                                                                                          
-                                                                                                      Entering: "transition ease-out duration-100"
-                                                                                                        From: "transform opacity-0 scale-95"
-                                                                                                        To: "transform opacity-100 scale-100"
-                                                                                                      Leaving: "transition ease-in duration-75"
-                                                                                                        From: "transform opacity-100 scale-100"
-                                                                                                        To: "transform opacity-0 scale-95"
-                                                                                                    -->
+                                                                                                                                                                                                                                                                                          Dropdown menu, show/hide based on menu state.
+                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                          Entering: "transition ease-out duration-100"
+                                                                                                                                                                                                                                                                                            From: "transform opacity-0 scale-95"
+                                                                                                                                                                                                                                                                                            To: "transform opacity-100 scale-100"
+                                                                                                                                                                                                                                                                                          Leaving: "transition ease-in duration-75"
+                                                                                                                                                                                                                                                                                            From: "transform opacity-100 scale-100"
+                                                                                                                                                                                                                                                                                            To: "transform opacity-0 scale-95"
+                                                                                                                                                                                                                                                                                        -->
                         <div class="hidden user-menu-item origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                             tabindex="-1">
                             <!-- Active: "bg-gray-100", Not Active: "" -->
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
+                            <p class="block px-4 py-2 text-lg text-gray-200 bg-gray-700 rounded" role="menuitem"
+                                tabindex="-1" id="user-name">{{ Str::of(auth()->user()->name)->words(2, '') }}</p>
+                            <a href="{{ url('profile') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
                                 tabindex="-1" id="user-menu-item-0">Profile</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
                                 tabindex="-1" id="user-menu-item-1">Settings</a>
@@ -189,8 +191,7 @@
                 </a>
 
                 <a href="#"
-                    class="{{ Request::is('admin') ? 'bg-gray-900 text-yellow-500' : '' }} text-yellow-400 hover:bg-gray-700 hover:text-yellow-500 px-3 py-2 rounded-md text-base font-medium">Data
-                    Users</a>
+                    class="{{ Request::is('admin') ? 'bg-gray-900 text-yellow-500' : '' }} text-yellow-400 hover:bg-gray-700 hover:text-yellow-500 px-3 py-2 rounded-md text-base font-medium">Admin</a>
             </div>
         </div>
     @endauth

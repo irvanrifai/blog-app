@@ -30,6 +30,12 @@ Route::get('/about', function () {
     ]);
 })->name('about');
 
+Route::get('/profile', function () {
+    return view('manipulate_profile', [
+        'title' => 'Blog | Profile',
+    ]);
+})->name('profile');
+
 Route::post('/signout', [SigninController::class, 'signout']);
 
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
@@ -38,4 +44,5 @@ Route::post('/signup', [SignupController::class, 'store']);
 
 Route::resource('/post', PostController::class)->middleware('auth');
 
+// Route::resource('/mypost', MypostController::class)->middleware('isAdmin');
 Route::resource('/mypost', MypostController::class)->middleware('auth');
