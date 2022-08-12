@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SigninController extends Controller
 {
@@ -32,13 +33,14 @@ class SigninController extends Controller
 
             // $request->session()->flash('success_login_a', 'Welcome, admin!');
 
-            return redirect()->intended('post');
+            // Alert::success('Congrats', 'Signin Successfull');
+            Alert::toast('Sign In Successfull', 'success');
+            return redirect()->intended('mypost');
         }
 
+        Alert::toast('Sign In Unsuccessfull', 'error');
         return back()
-            // ->with([
-            //     'error_login' => 'Login failed!',
-            // ])
+            ->withErrors('Error Sign In', 'error')
             ->onlyInput('email');
     }
 
@@ -51,7 +53,7 @@ class SigninController extends Controller
         $request->session()->regenerateToken();
 
         // $request->session()->flash('success_logout_a', 'Logout success!');
-
+        Alert::toast('Sign Out Successfull', 'success');
         return redirect('/signin');
     }
 

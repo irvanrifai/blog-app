@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SignupController extends Controller
 {
@@ -48,11 +50,8 @@ class SignupController extends Controller
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
-
         User::create($validatedData);
-
-        // $request->session()->flash('success_regis', 'Registration successfull, please login!');
-
+        Alert::toast('Sign Up Successfull, Please Login', 'success');
         return redirect('/signin');
     }
 

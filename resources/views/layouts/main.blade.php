@@ -54,6 +54,7 @@
 
 <body>
     @include('partials.navbar')
+    @include('sweetalert::alert')
     <div class="container px-4 py-4">
         <div class="col">
             @yield('container')
