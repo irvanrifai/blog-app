@@ -6,7 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PostController extends Controller
+class SavedpostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,17 +15,11 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Post::all();
-        if (request('cari')) {
-            $query->where('title', 'like', '%' . request('cari') . '%');
-            // ->orWhere('body', 'like', '%' . request('cari') . '%')
-            // ->orWhere('category', 'like', '%' . request('cari') . '%');
-        }
         // nanti disini pakai datatable, sementara passing data biasa dulu
         return view('home', [
-            'title' => 'Blog | Home',
-            'page' => 'All Post',
-            'posts' => $query,
+            'title' => 'Blog | Saved',
+            'page' => 'Saved Post',
+            'posts' => Post::latest()->where('category', 'General')->get(),
         ]);
     }
 
