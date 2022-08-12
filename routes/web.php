@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\MypostController;
 use App\Http\Controllers\SigninController;
 use App\Http\Controllers\SignupController;
 
@@ -23,10 +24,18 @@ Route::post('/signin', [SigninController::class, 'authenticate']);
 
 Route::get('/signin', [SigninController::class, 'index']);
 
+Route::get('/about', function () {
+    return view('about', [
+        'title' => 'Blog | About',
+    ]);
+})->name('about');
+
 Route::post('/signout', [SigninController::class, 'signout']);
 
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
 
 Route::post('/signup', [SignupController::class, 'store']);
 
-Route::resource('/PostController', PostController::class)->middleware('auth');
+Route::resource('/post', PostController::class)->middleware('auth');
+
+Route::resource('/mypost', MypostController::class)->middleware('auth');

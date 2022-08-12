@@ -32,7 +32,7 @@ class SigninController extends Controller
 
             // $request->session()->flash('success_login_a', 'Welcome, admin!');
 
-            return redirect()->intended('/PostController');
+            return redirect()->intended('post');
         }
 
         return back()

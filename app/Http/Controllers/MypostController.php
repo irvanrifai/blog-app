@@ -6,7 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PostController extends Controller
+class MypostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,10 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        // nanti disini pakai datatable, sementara passing data biasa dulu
         return view('home', [
-            'title' => 'Blog | Home',
-            'page' => 'All Post',
-            'posts' => Post::latest()->get(),
+            'title' => 'Blog | My Post',
+            'page' => 'My Post',
+            'posts' => Post::latest()->where('category', 'Web App')->get(),
         ]);
     }
 

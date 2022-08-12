@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('container')
-    <h1 class="text-2xl mb-4">All Posts</h1>
+    <h1 class="text-2xl mb-4">{{ $page }}</h1>
     {{-- <hr> --}}
     <div class="container-fluid">
         <div class="card-group">

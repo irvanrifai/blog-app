@@ -43,4 +43,8 @@
             </div>
         </div>
     </div>
+    <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+        <img class="h-20 w-20 object-cover sm:h-30 md:h-30 lg:w-40 lg:h-40"
+            src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="">
+    </div>
 @endsection
