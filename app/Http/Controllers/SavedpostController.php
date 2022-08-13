@@ -22,6 +22,10 @@ class SavedpostController extends Controller
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s saved post",
             'posts' => Post::latest()->where('category', 'General')->get(),
         ]);
+
+        // tidak bisa pakai mvc, pakai ajax di view saja
+        // jadi controller ini mungkin tidak dipakai(untuk proses saving post)
+        // cuma dipakai menampilkan halaman saved post
     }
 
     /**
