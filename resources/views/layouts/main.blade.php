@@ -25,6 +25,18 @@
     {{-- fontawesome --}}
     <script src="https://kit.fontawesome.com/8186c4a2d4.js" crossorigin="anonymous"></script>
 
+    {{-- ckeditor --}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+    {{-- <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <div id="editor"></div> --}}
+
+
     {{-- datatable --}}
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

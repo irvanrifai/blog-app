@@ -37,6 +37,12 @@ Route::get('/profile', function () {
     ]);
 })->name('profile');
 
+Route::get('/settings', function () {
+    return view('profile_setting', [
+        'title' => 'Blog | Setting',
+    ]);
+})->name('settings');
+
 Route::post('/signout', [SigninController::class, 'signout']);
 
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
