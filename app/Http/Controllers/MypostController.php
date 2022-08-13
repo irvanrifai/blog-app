@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +18,7 @@ class MypostController extends Controller
     {
         return view('home', [
             'title' => 'Blog | My Post',
-            'page' => 'My Post',
+            'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
             'posts' => Post::latest()->where('category', 'Web App')->get(),
         ]);
     }

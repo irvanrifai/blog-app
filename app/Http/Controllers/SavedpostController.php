@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +19,7 @@ class SavedpostController extends Controller
         // nanti disini pakai datatable, sementara passing data biasa dulu
         return view('home', [
             'title' => 'Blog | Saved',
-            'page' => 'Saved Post',
+            'page' => Str::of(auth()->user()->name)->words(2, '') . "'s saved post",
             'posts' => Post::latest()->where('category', 'General')->get(),
         ]);
     }

@@ -15,17 +15,17 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Post::all();
+        $query = Post::latest();
         if (request('cari')) {
-            $query->where('title', 'like', '%' . request('cari') . '%');
-            // ->orWhere('body', 'like', '%' . request('cari') . '%')
-            // ->orWhere('category', 'like', '%' . request('cari') . '%');
+            $query->where('title', 'like', '%' . request('cari') . '%')
+                ->orWhere('body', 'like', '%' . request('cari') . '%')
+                ->orWhere('category', 'like', '%' . request('cari') . '%');
         }
         // nanti disini pakai datatable, sementara passing data biasa dulu
         return view('home', [
             'title' => 'Blog | Home',
             'page' => 'All Post',
-            'posts' => $query,
+            'posts' => $query->paginate()->withQueryString(),
         ]);
     }
 
