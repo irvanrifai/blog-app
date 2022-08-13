@@ -70,7 +70,7 @@
 
                                 <div class="col-span-6 sm:col-span-4">
                                     <label for="body" class="block text-sm font-medium text-gray-700">Body
-                                        address</label>
+                                    </label>
                                     <input name="body" type="text" id="body"
                                         class="@error('body') is-invalid @enderror">
                                     <script>

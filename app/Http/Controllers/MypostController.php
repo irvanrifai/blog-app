@@ -67,7 +67,9 @@ class MypostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('manipulate_post', [
+            'id' => $post->slug
+        ]);
     }
 
     /**
@@ -78,7 +80,7 @@ class MypostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('mypost');
     }
 
     /**
@@ -88,9 +90,22 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, $id)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'cover' => 'file|image|max:2048',
+            'title' => 'required|max:100',
+            'slug' => 'required|max:100',
+            'body' => 'required',
+            'category' => 'required',
+        ]);
+        if ($validatedData->fails()) {
+            return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
+        } else {
+            Post::where('id', $id)->update($validatedData->validate());
+            Alert::toast('Update Post Successfull', 'success');
+            return redirect(url('/mypost'));
+        }
     }
 
     /**
@@ -99,8 +114,10 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, $id)
     {
-        //
+        Post::destroy($post->id, $id);
+        Alert::toast('Delete Post Successfull', 'success');
+        return redirect(url('/mypost'));
     }
 }
