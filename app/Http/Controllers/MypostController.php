@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
 class MypostController extends Controller
 {
@@ -30,7 +32,7 @@ class MypostController extends Controller
      */
     public function create()
     {
-        //
+        return view(url('mypost/create'));
     }
 
     /**
@@ -41,7 +43,20 @@ class MypostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'cover' => 'file|image|max:2048',
+            'title' => 'required|max:100',
+            'slug' => 'required|max:100',
+            'body' => 'required',
+            'category' => 'required',
+        ]);
+        if ($validatedData->fails()) {
+            return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
+        } else {
+            Post::create($validatedData->validate());
+            Alert::toast('New Post Upload Successfull', 'success');
+            return redirect(url('/mypost'));
+        }
     }
 
     /**

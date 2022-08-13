@@ -43,6 +43,18 @@ Route::get('/settings', function () {
     ]);
 })->name('settings');
 
+// nyoba
+Route::get('/create', function () {
+    return view('add_post', [
+        'title' => 'Blog | New Post',
+    ]);
+})->name('newpost');
+Route::get('/edit', function () {
+    return view('manipulate_post', [
+        'title' => 'Blog | Edit Post',
+    ]);
+})->name('editpost');
+
 Route::post('/signout', [SigninController::class, 'signout']);
 
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
@@ -53,5 +65,7 @@ Route::resource('/post', PostController::class)->middleware('auth');
 
 // Route::resource('/mypost', MypostController::class)->middleware('isAdmin');
 Route::resource('/mypost', MypostController::class)->middleware('auth');
+
+// Route::get('/mypost/create', [MypostController::class, 'store']);
 
 Route::resource('/savedpost', SavedpostController::class)->middleware('auth');

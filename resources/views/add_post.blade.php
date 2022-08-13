@@ -2,7 +2,7 @@
 @section('container')
     <div class="mt-1 sm:mt-0">
         <div class="ps-4 pb-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-0 text-gray-900">Edit Post</h3>
+            <h3 class="text-lg font-medium leading-0 text-gray-900">New Post</h3>
         </div>
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
@@ -88,15 +88,10 @@
                             </div>
                         </div>
                         <div class="px-4 py-3 bg-gray-50 sm:px-6">
-                            <div class="text-left">
-                                <button type="submit"
-                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update
-                                    Now</button>
-                            </div>
                             <div class="text-right">
-                                <a type="button" href="#"
-                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400"><i
-                                        class="fa fa-trash"></i></a>
+                                <button type="submit"
+                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Post
+                                    Now</button>
                             </div>
                         </div>
                     </div>

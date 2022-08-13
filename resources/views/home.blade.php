@@ -25,4 +25,8 @@
             {{-- </div> --}}
         </div>
     </div>
+    <a class="text-gray-600 px-2 py-2 bg-gray-300 shadow-lg item-align-center text-xl font-bold rounded-full mr-1 ease-linear"
+        href="{{ url('create') }}">
+        +
+    </a>
 @endsection

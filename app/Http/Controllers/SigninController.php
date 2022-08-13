@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 class SigninController extends Controller
 {
@@ -34,12 +35,15 @@ class SigninController extends Controller
             // $request->session()->flash('success_login_a', 'Welcome, admin!');
 
             // Alert::success('Congrats', 'Signin Successfull');
-            Alert::toast('Sign In Successfull', 'success');
+            Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
             return redirect()->intended('mypost');
         }
 
-        Alert::toast('Sign In Unsuccessfull', 'error');
+        Alert::toast("Sign In Unsuccessfull, Your Credentials Doesn't match", 'error');
         return back()
+            ->with([
+                'error_login' => "Your Credentials Doesn't match"
+            ])
             ->withErrors('Error Sign In', 'error')
             ->onlyInput('email');
     }
