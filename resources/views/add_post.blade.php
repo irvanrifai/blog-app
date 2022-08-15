@@ -60,7 +60,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-span-6 sm:col-span-3">
+                                {{-- <div class="col-span-6 sm:col-span-3">
                                     <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
                                     <input type="text" name="slug" id="slug" autocomplete="family-name"
                                         class="@error('slug') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -70,7 +70,7 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-span-3 sm:col-span-2">
                                     <label for="category" class="block text-sm font-medium text-gray-700">Category

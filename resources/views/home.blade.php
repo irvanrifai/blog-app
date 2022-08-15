@@ -4,7 +4,7 @@
     {{-- <hr> --}}
     <div class="container-fluid">
         <div class="fixed-bottom text-right sm:px-14 py-14 px-10">
-            <a class="text-gray-600 px-3 py-2 bg-gray-400 shadow-xl text-xl font-bold rounded-full mr-1 ease-linear"
+            <a class="text-gray-600 px-3 py-2 bg-gray-400 shadow-xl text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
                 href="{{ url('mypost/create') }}"><i class="fa fa-plus"></i>
             </a>
         </div>
@@ -20,10 +20,10 @@
                                 <h5 class="text-gray-900 text-xl font-medium mb-2">
                                     {{ Str::of($post->title)->words(10, '') }}
                                 </h5>
-                                <p class="text-gray-700 text-base mb-2">
-                                    {{ Str::of($post->body)->words(20, ' read more...') }}
+                                <p class="text-gray-700 text-justify text-base mb-2">
+                                    {!! Str::of($post->body)->words(20, ' read more...') !!}
                                 </p>
-                                <p class="text-gray-800 text-xs">In Category : {{ $post->category->name }}</p>
+                                <p class="text-gray-800 text-xs mt-2">In Category : {{ $post->category->name }}</p>
                                 <p class="text-gray-900 text-sm my-2 font-bold">By
                                     {{ Str::of($post->user->name)->words(3, '') }}</p>
                                 <p class="text-gray-600 text-xs mt-2">Last update on
@@ -31,10 +31,14 @@
                                 </p>
                             </div>
                             {{-- kasih kondisi saved/not saved --}}
-                            <a class="text-right py-6 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                            <a class="text-right pt-6 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
                                 href="#"><i class="fa fa-bookmark"></i></a>
                             {{-- <a class="text-right py-6 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                 href="#"><i class="fa fa-bookmark"></i></a> --}}
+
+                            {{-- tombol edit, only my post --}}
+                            <a class="text-right py-4 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                href="{{ url('edit') }}"><i class="fa fa-pencil"></i></a>
                         </div>
                     </div>
                 @endforeach

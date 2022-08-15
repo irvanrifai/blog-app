@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,7 +23,7 @@ class MypostController extends Controller
         return view('home', [
             'title' => 'Blog | My Post',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
-            'posts' => Post::latest()->get(),
+            'posts' => Post::latest()->where('user_id', auth()->user()->id)->get(),
         ]);
     }
 
@@ -51,7 +52,6 @@ class MypostController extends Controller
         $validatedData = Validator::make($request->all(), [
             'cover' => 'file|image|max:2048',
             'title' => 'required|max:100',
-            'slug' => 'required|max:100',
             'category' => 'required',
             'body' => 'required',
         ]);
@@ -63,12 +63,12 @@ class MypostController extends Controller
             $validatedData = $request->validate([
                 'cover' => 'file|image|max:2048',
                 'title' => 'required|max:100',
-                'slug' => 'required|max:100',
                 'category' => 'required',
                 'body' => 'required',
             ]);
             $validatedData['user_id'] = auth()->user()->id;
             $validatedData['category_id'] = $validatedData['category'];
+            $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
             Post::create($validatedData);
             Alert::toast('New Post Upload Successfull', 'success');
             return redirect(url('mypost'));
