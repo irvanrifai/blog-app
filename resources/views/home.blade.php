@@ -24,8 +24,11 @@
                                 <p class="text-gray-600 text-xs">Last update on {{ $post->updated_at->diffForHumans() }}
                                 </p>
                             </div>
+                            {{-- kasih kondisi saved/not saved --}}
                             <a class="text-right py-6 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                 href="#"><i class="fa fa-bookmark"></i></a>
+                            {{-- <a class="text-right py-6 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                href="#"><i class="fa fa-bookmark"></i></a> --}}
                         </div>
                     </div>
                 @endforeach

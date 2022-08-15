@@ -22,7 +22,7 @@ class SavedController extends Controller
         return view('home', [
             'title' => 'Blog | Saved',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s saved post",
-            'posts' => Post::latest()->where('category', 'General')->get(),
+            'posts' => Post::latest()->where('category_id', '4')->get(),
         ]);
     }
 

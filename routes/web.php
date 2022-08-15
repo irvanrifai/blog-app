@@ -7,6 +7,7 @@ use App\Http\Controllers\MypostController;
 use App\Http\Controllers\SigninController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\SavedpostController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::get('/settings', function () {
 Route::get('/create', function () {
     return view('add_post', [
         'title' => 'Blog | New Post',
+        'categories' => Category::all(),
     ]);
 })->name('newpost');
 Route::get('/edit', function () {

@@ -21,7 +21,7 @@ class MypostController extends Controller
         return view('home', [
             'title' => 'Blog | My Post',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
-            'posts' => Post::latest()->where('category', 'Web App')->get(),
+            'posts' => Post::latest()->where('category_id', '2')->get(),
         ]);
     }
 

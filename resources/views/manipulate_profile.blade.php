@@ -117,12 +117,5 @@
                 </form>
             </div>
         </div>
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="px-4 py-6 bg-gray-50 text-right sm:px-6">
-                <a type="button"
-                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400">Delete
-                    Account</a>
-            </div>
-        </div>
     </div>
 @endsection

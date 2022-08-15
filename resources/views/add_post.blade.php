@@ -12,20 +12,34 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
 
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-6 sm:col-span-6">
                                     <label for="cover" class="block text-sm font-medium text-gray-700">Cover</label>
-                                    <div class="mt-2 flex items-center">
-                                        <span class="inline-block h-24 w-24 rounded-full overflow-hidden bg-gray-100">
-                                            <svg class="h-full w-full text-gray-300" fill="currentColor"
+                                    {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
+                                    {{-- <img id="output" /> --}}
+                                    {{-- script for change cover --}}
+                                    <script>
+                                        var loadFile = function(event) {
+                                            var output = document.getElementById('output');
+                                            output.src = URL.createObjectURL(event.target.files[0]);
+                                            output.onload = function() {
+                                                URL.revokeObjectURL(output.src) // free memory
+                                            }
+                                        };
+                                    </script>
+                                    <div class="mt-4 flex items-center">
+                                        <span class="inline-block h-40 w-40 rounded-full overflow-hidden bg-gray-100">
+                                            <img id="output">
+                                            {{-- <svg class="h-full w-full text-gray-300" fill="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path
                                                     d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                            </svg>
+                                            </svg> --}}
                                         </span>
                                         <button type="button"
                                             class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button>
                                     </div>
-                                    <input type="file" name="cover" id="cover" autocomplete="given-name"
+                                    <input type="file" name="cover" id="cover" accept="image/*"
+                                        onchange="loadFile(event)" autocomplete="given-name"
                                         class="@error('cover') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     @error('cover')
                                         <div class="invalid-feedback">
@@ -56,11 +70,22 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-span-6 sm:col-span-4">
+                                <div class="col-span-3 sm:col-span-2">
                                     <label for="category" class="block text-sm font-medium text-gray-700">Category
-                                        address</label>
-                                    <input type="text" name="category" id="category" autocomplete="category"
-                                        class="@error('category') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </label>
+                                    {{-- <input type="" name="category" id="category" autocomplete="category"
+                                        class="@error('category') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> --}}
+                                    <select class="mt-2 form-select @error('category') is-invalid @enderror" id="category"
+                                        name="category">
+                                        <option value="{{ old('category') ? old('category') : '' }}" selected disabled>
+                                            <label class="text-gray-400 text-sm">
+                                                Select
+                                            </label>
+                                        </option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('category')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -68,8 +93,8 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-span-6 sm:col-span-4">
-                                    <label for="body" class="block text-sm font-medium text-gray-700">Body
+                                <div class="col-span-6 sm:col-span-6">
+                                    <label for="body" class="mb-2 block text-sm font-medium text-gray-700">Body
                                     </label>
                                     <input name="body" type="text" id="body"
                                         class="@error('body') is-invalid @enderror">
