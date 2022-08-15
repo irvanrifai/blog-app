@@ -16,11 +16,11 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('cover', 255)->nullable();
-            $table->integer('user_id')->nullable();
             $table->string('title', 255);
             $table->string('slug', 255);
             $table->text('body');
-            $table->string('category', 100)->default('General');
+            $table->foreignId('user_id', 255)->nullable();
+            $table->foreignId('category_id', 255)->nullable();
             $table->timestamps();
         });
     }

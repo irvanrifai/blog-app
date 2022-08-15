@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SavedController;
 use App\Http\Controllers\MypostController;
 use App\Http\Controllers\SigninController;
 use App\Http\Controllers\SignupController;
@@ -68,4 +69,5 @@ Route::resource('/mypost', MypostController::class)->middleware('auth');
 
 // Route::get('/mypost/create', [MypostController::class, 'store']);
 
-Route::resource('/savedpost', SavedpostController::class)->middleware('auth');
+// Route::resource('/savedpost', SavedpostController::class)->middleware('auth');
+Route::resource('/savedpost', SavedController::class)->middleware('auth');

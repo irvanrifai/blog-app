@@ -18,7 +18,8 @@ class PostFactory extends Factory
             'title' => $this->faker->realTextBetween(10, 20, 1),
             'slug' => $this->faker->realTextBetween(10, 20, 1),
             'body' => $this->faker->realTextBetween(50, 200, 3),
-            'category' => $this->faker->randomElement(['General', 'Web App', 'Mobile App', 'Software', 'Tips & Trick']),
+            'user_id' => $this->faker->numberBetween(1, 5),
+            'category_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
