@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,7 +22,7 @@ class MypostController extends Controller
         return view('home', [
             'title' => 'Blog | My Post',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
-            'posts' => Post::latest()->where('category_id', '2')->get(),
+            'posts' => Post::latest()->get(),
         ]);
     }
 
@@ -32,7 +33,11 @@ class MypostController extends Controller
      */
     public function create()
     {
-        return view(url('mypost/create'));
+        return view('add_post', [
+            'title' => 'Blog | New Post',
+            'page' => 'New Post',
+            'posts' => Post::latest()->get(),
+        ]);
     }
 
     /**
@@ -47,15 +52,26 @@ class MypostController extends Controller
             'cover' => 'file|image|max:2048',
             'title' => 'required|max:100',
             'slug' => 'required|max:100',
-            'body' => 'required',
             'category' => 'required',
+            'body' => 'required',
         ]);
+
+
         if ($validatedData->fails()) {
             return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
         } else {
-            Post::create($validatedData->validate());
+            $validatedData = $request->validate([
+                'cover' => 'file|image|max:2048',
+                'title' => 'required|max:100',
+                'slug' => 'required|max:100',
+                'category' => 'required',
+                'body' => 'required',
+            ]);
+            $validatedData['user_id'] = auth()->user()->id;
+            $validatedData['category_id'] = $validatedData['category'];
+            Post::create($validatedData);
             Alert::toast('New Post Upload Successfull', 'success');
-            return redirect(url('/mypost'));
+            return redirect(url('mypost'));
         }
     }
 
@@ -96,8 +112,8 @@ class MypostController extends Controller
             'cover' => 'file|image|max:2048',
             'title' => 'required|max:100',
             'slug' => 'required|max:100',
-            'body' => 'required',
             'category' => 'required',
+            'body' => 'required',
         ]);
         if ($validatedData->fails()) {
             return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -26,7 +27,9 @@ class PostController extends Controller
             'title' => 'Blog | Home',
             'page' => 'All Post',
             'posts' => $query->paginate()->withQueryString(),
+            // 'category' => Category::all(),
         ]);
+        // dd(Post::category);
     }
 
     /**

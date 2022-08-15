@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="fixed-bottom text-right sm:px-14 py-14 px-10">
             <a class="text-gray-600 px-3 py-2 bg-gray-400 shadow-xl text-xl font-bold rounded-full mr-1 ease-linear"
-                href="{{ url('create') }}"><i class="fa fa-plus"></i>
+                href="{{ url('mypost/create') }}"><i class="fa fa-plus"></i>
             </a>
         </div>
         <div class="card-group">
@@ -17,11 +17,17 @@
                             <img class="w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg"
                                 src="https://source.unsplash.com/200x200/?landscape" alt="" />
                             <div class="p-6 flex flex-col justify-start">
-                                <h5 class="text-gray-900 text-xl font-medium mb-2">{{ $post->title }}</h5>
-                                <p class="text-gray-700 text-base mb-2">{{ $post->body }}
+                                <h5 class="text-gray-900 text-xl font-medium mb-2">
+                                    {{ Str::of($post->title)->words(10, '') }}
+                                </h5>
+                                <p class="text-gray-700 text-base mb-2">
+                                    {{ Str::of($post->body)->words(20, ' read more...') }}
                                 </p>
-                                <p class="text-gray-800 text-xs mb-4">(Sementara)In Category {{ $post->title }}</p>
-                                <p class="text-gray-600 text-xs">Last update on {{ $post->updated_at->diffForHumans() }}
+                                <p class="text-gray-800 text-xs">In Category : {{ $post->category->name }}</p>
+                                <p class="text-gray-900 text-sm my-2 font-bold">By
+                                    {{ Str::of($post->user->name)->words(3, '') }}</p>
+                                <p class="text-gray-600 text-xs mt-2">Last update on
+                                    {{ $post->updated_at->diffForHumans() }}
                                 </p>
                             </div>
                             {{-- kasih kondisi saved/not saved --}}

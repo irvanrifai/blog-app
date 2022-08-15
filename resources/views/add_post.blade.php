@@ -4,14 +4,13 @@
         <div class="ps-4 pb-4 sm:px-0">
             <h3 class="text-lg font-medium leading-0 text-gray-900">New Post</h3>
         </div>
-        <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('mypost') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
-
                                 <div class="col-span-6 sm:col-span-6">
                                     <label for="cover" class="block text-sm font-medium text-gray-700">Cover</label>
                                     {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
@@ -27,20 +26,21 @@
                                         };
                                     </script>
                                     <div class="mt-4 flex items-center">
-                                        <span class="inline-block h-40 w-40 rounded-full overflow-hidden bg-gray-100">
-                                            <img id="output">
+                                        <span class="inline-block h-50 w-60 rounded-lg overflow-hidden bg-gray-100">
+                                            <img id="output" class="items-align-center"
+                                                src="https://static.vecteezy.com/system/resources/previews/004/141/669/original/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg">
                                             {{-- <svg class="h-full w-full text-gray-300" fill="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path
                                                     d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                                             </svg> --}}
                                         </span>
-                                        <button type="button"
-                                            class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button>
+                                        {{-- <button type="button"
+                                            class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button> --}}
+                                        <input type="file" name="cover" id="cover" accept="image/*"
+                                            onchange="loadFile(event)" autocomplete="given-name"
+                                            class="@error('cover') is-invalid @enderror ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                     </div>
-                                    <input type="file" name="cover" id="cover" accept="image/*"
-                                        onchange="loadFile(event)" autocomplete="given-name"
-                                        class="@error('cover') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     @error('cover')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -51,7 +51,8 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
                                     <input type="text" name="title" id="title" autocomplete="given-name"
-                                        class="@error('title') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        class="@error('title') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        value="{{ old('title') }}">
                                     @error('title')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -62,7 +63,8 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
                                     <input type="text" name="slug" id="slug" autocomplete="family-name"
-                                        class="@error('slug') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        class="@error('slug') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        value="{{ old('slug') }}">
                                     @error('slug')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -82,8 +84,8 @@
                                                 Select
                                             </label>
                                         </option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @foreach ($posts as $post)
+                                            <option value="{{ $post->category->id }}">{{ $post->category->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('category')
@@ -96,12 +98,12 @@
                                 <div class="col-span-6 sm:col-span-6">
                                     <label for="body" class="mb-2 block text-sm font-medium text-gray-700">Body
                                     </label>
-                                    <input name="body" type="text" id="body"
-                                        class="@error('body') is-invalid @enderror">
+                                    <textarea name="body" id="body" class="@error('body') is-invalid @enderror"></textarea>
                                     <script>
                                         ClassicEditor.create(document.querySelector('#body')).catch(error => {
                                             console.error(error);
                                         });
+                                        // CKEDITOR.replace('body')
                                     </script>
                                     @error('body')
                                         <div class="invalid-feedback">

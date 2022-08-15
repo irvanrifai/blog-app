@@ -46,12 +46,12 @@ Route::get('/settings', function () {
 })->name('settings');
 
 // nyoba
-Route::get('/create', function () {
-    return view('add_post', [
-        'title' => 'Blog | New Post',
-        'categories' => Category::all(),
-    ]);
-})->name('newpost');
+// Route::get('/create', function () {
+//     return view('add_post', [
+//         'title' => 'Blog | New Post',
+//         'categories' => Category::all(),
+//     ]);
+// })->name('newpost');
 Route::get('/edit', function () {
     return view('manipulate_post', [
         'title' => 'Blog | Edit Post',
