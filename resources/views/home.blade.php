@@ -14,8 +14,13 @@
                     {{-- every post --}}
                     <div class="flex justify-center">
                         <div class="flex flex-col md:flex-row rounded-lg bg-white shadow-lg">
-                            <img class="w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg"
-                                src="https://source.unsplash.com/200x200/?landscape" alt="" />
+                            @if ($post->cover)
+                                <img class="w-48 h-84 md:h-auto object-cover md:w-42 rounded-t-lg md:rounded-none md:rounded-l-lg"
+                                    src="{{ asset('storage/' . $post->cover) }}" alt="" />
+                            @else
+                                <img class="w-48 h-84 md:h-auto object-cover md:w-42 rounded-t-lg md:rounded-none md:rounded-l-lg"
+                                    src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" alt="" />
+                            @endif
                             <div class="p-6 flex flex-col justify-start">
                                 <h5 class="text-gray-900 text-xl font-medium mb-2">
                                     {{ Str::of($post->title)->words(10, '') }}
@@ -37,8 +42,10 @@
                                 href="#"><i class="fa fa-bookmark"></i></a> --}}
 
                             {{-- tombol edit, only my post --}}
-                            <a class="text-right py-4 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                href="{{ url('edit') }}"><i class="fa fa-pencil"></i></a>
+                            @if (auth()->user()->id == $post->user_id)
+                                <a class="text-right py-4 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                    href="{{ url('edit') }}"><i class="fa fa-pencil"></i></a>
+                            @endif
                         </div>
                     </div>
                 @endforeach

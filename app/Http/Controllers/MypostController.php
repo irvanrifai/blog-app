@@ -38,6 +38,7 @@ class MypostController extends Controller
             'title' => 'Blog | New Post',
             'page' => 'New Post',
             'posts' => Post::latest()->get(),
+            'categories' => Category::latest()->get()
         ]);
     }
 
@@ -49,8 +50,9 @@ class MypostController extends Controller
      */
     public function store(Request $request)
     {
+        // ddd($request);
         $validatedData = Validator::make($request->all(), [
-            'cover' => 'file|image|max:2048',
+            'cover' => 'required|image|file|max:2048',
             'title' => 'required|max:100',
             'category' => 'required',
             'body' => 'required',
@@ -61,11 +63,14 @@ class MypostController extends Controller
             return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
         } else {
             $validatedData = $request->validate([
-                'cover' => 'file|image|max:2048',
+                'cover' => 'image|file|max:2048',
                 'title' => 'required|max:100',
                 'category' => 'required',
                 'body' => 'required',
             ]);
+            if ($request->file('cover')) {
+                $validatedData['cover'] = $request->file('cover')->store('post-cover');
+            }
             $validatedData['user_id'] = auth()->user()->id;
             $validatedData['category_id'] = $validatedData['category'];
             $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
@@ -96,7 +101,7 @@ class MypostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('mypost');
+        return view('manipulate_post');
     }
 
     /**

@@ -11,7 +11,7 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
-                                <div class="col-span-6 sm:col-span-6">
+                                <div class="col-span-3 sm:col-span-6">
                                     <label for="cover" class="block text-sm font-medium text-gray-700">Cover</label>
                                     {{-- <input type="file" accept="image/*" onchange="loadFile(event)"> --}}
                                     {{-- <img id="output" /> --}}
@@ -26,8 +26,9 @@
                                         };
                                     </script>
                                     <div class="mt-4 flex items-center">
-                                        <span class="inline-block h-50 w-60 rounded-lg overflow-hidden bg-gray-100">
-                                            <img id="output" class="items-align-center"
+                                        <span
+                                            class="inline-block col-auto overflow-clip h-50 w-60 sm:h-50 sm:w-60 rounded-lg bg-gray-100">
+                                            <img id="output" class="items-align-center img-fluid"
                                                 src="https://static.vecteezy.com/system/resources/previews/004/141/669/original/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg">
                                             {{-- <svg class="h-full w-full text-gray-300" fill="currentColor"
                                                 viewBox="0 0 24 24">
@@ -37,21 +38,23 @@
                                         </span>
                                         {{-- <button type="button"
                                             class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Change</button> --}}
-                                        <input type="file" name="cover" id="cover" accept="image/*"
-                                            onchange="loadFile(event)" autocomplete="given-name"
-                                            class="@error('cover') is-invalid @enderror ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    </div>
-                                    @error('cover')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                        <div class="col-auto">
+                                            <input type="file" name="cover" id="cover" accept="image/*"
+                                                onchange="loadFile(event)" autocomplete="given-name"
+                                                class="@error('cover') is-invalid @enderror ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            @error('cover')
+                                                <div class="invalid-feedback ms-4">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
 
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="col-span-5 sm:col-span-2">
                                     <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
                                     <input type="text" name="title" id="title" autocomplete="given-name"
-                                        class="@error('title') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        class="@error('title') is-invalid @enderror mt-2 w-full shadow-md border-gray-700 font-medium py-1.5 sm:text-sm rounded-md"
                                         value="{{ old('title') }}">
                                     @error('title')
                                         <div class="invalid-feedback">
@@ -60,6 +63,7 @@
                                     @enderror
                                 </div>
 
+                                {{-- slug field --}}
                                 {{-- <div class="col-span-6 sm:col-span-3">
                                     <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
                                     <input type="text" name="slug" id="slug" autocomplete="family-name"
@@ -77,15 +81,16 @@
                                     </label>
                                     {{-- <input type="" name="category" id="category" autocomplete="category"
                                         class="@error('category') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> --}}
-                                    <select class="mt-2 form-select @error('category') is-invalid @enderror" id="category"
-                                        name="category">
+                                    <select
+                                        class="mt-2 form-select @error('category') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        id="category" name="category">
                                         <option value="{{ old('category') ? old('category') : '' }}" selected disabled>
                                             <label class="text-gray-400 text-sm">
                                                 Select
                                             </label>
                                         </option>
-                                        @foreach ($posts as $post)
-                                            <option value="{{ $post->category->id }}">{{ $post->category->name }}</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('category')
