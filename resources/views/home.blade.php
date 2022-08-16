@@ -15,10 +15,10 @@
                     <div class="flex justify-center">
                         <div class="flex flex-col md:flex-row rounded-lg bg-white shadow-lg">
                             @if ($post->cover)
-                                <img class="w-48 h-84 md:h-auto object-cover md:w-42 rounded-t-lg md:rounded-none md:rounded-l-lg"
+                                <img class="w-full h-42 sm:h-21 object-cover sm:w-40 rounded-t-lg md:rounded-none md:rounded-l-lg"
                                     src="{{ asset('storage/' . $post->cover) }}" alt="" />
                             @else
-                                <img class="w-48 h-84 md:h-auto object-cover md:w-42 rounded-t-lg md:rounded-none md:rounded-l-lg"
+                                <img class="w-full h-42 sm:h-21 object-cover sm:w-40 rounded-t-lg md:rounded-none md:rounded-l-lg"
                                     src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" alt="" />
                             @endif
                             <div class="p-6 flex flex-col justify-start">

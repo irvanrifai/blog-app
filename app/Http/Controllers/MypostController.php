@@ -20,10 +20,11 @@ class MypostController extends Controller
      */
     public function index(Request $request)
     {
+        $posts = Post::latest()->where('user_id', auth()->user()->id)->get();
         return view('home', [
             'title' => 'Blog | My Post',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
-            'posts' => Post::latest()->where('user_id', auth()->user()->id)->get(),
+            'posts' => $posts,
         ]);
     }
 

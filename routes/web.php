@@ -9,7 +9,6 @@ use App\Http\Controllers\MypostController;
 use App\Http\Controllers\SigninController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SavedpostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,20 +46,6 @@ Route::get('/settings', function () {
     ]);
 })->name('settings');
 
-// nyoba
-Route::get('mypost/{slug}', function (Post $post) {
-    return view('post', [
-        'title' => 'Blog | Single',
-        'page' => $post->title,
-        'post' => $post
-    ]);
-})->name('newpost');
-// Route::get('/edit', function () {
-//     return view('manipulate_post', [
-//         'title' => 'Blog | Edit Post',
-//     ]);
-// })->name('editpost');
-
 Route::post('/signout', [SigninController::class, 'signout']);
 
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
@@ -74,6 +59,14 @@ Route::resource('/mypost', MypostController::class)->middleware('auth');
 Route::resource('/savedpost', SavedController::class)->middleware('auth');
 
 Route::resource('/profile', ProfileController::class)->middleware('auth');
+
+// Route::get('mypost/{post}', function (Post $post) {
+//     return view('post', [
+//         'title' => 'Blog | Post',
+//         'page' => $post->title,
+//         'post' => $post,
+//     ]);
+// });
 
 // Route::resource('/mypost', [MypostController::class, function (Post $post) {
 //     return $post;

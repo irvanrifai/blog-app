@@ -33,5 +33,25 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isAdmin', function (User $user) {
             return $user->role === 2;
         });
+
+        Gate::define('do_read', function ($user, $url) {
+            return session('access')->where('url', $url)
+                ->where('type', 'Read')->isNotEmpty();
+        });
+
+        Gate::define('do_create', function ($user, $raw) {
+            return session('permissions')->where('raw', $raw)
+                ->isNotEmpty();
+        });
+
+        Gate::define('do_update', function ($user, $raw) {
+            return session('permissions')->where('raw', $raw)
+                ->isNotEmpty();
+        });
+
+        Gate::define('do_delete', function ($user, $raw) {
+            return session('permissions')->where('raw', $raw)
+                ->isNotEmpty();
+        });
     }
 }
