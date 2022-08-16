@@ -22,9 +22,11 @@
                                     src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" alt="" />
                             @endif
                             <div class="p-6 flex flex-col justify-start">
-                                <h5 class="text-gray-900 text-xl font-medium mb-2">
-                                    {{ Str::of($post->title)->words(10, '') }}
-                                </h5>
+                                <a href="{{ url('post/' . $post->slug) }}">
+                                    <h5 class="text-gray-900 hover:text-blue-700 text-xl font-medium mb-2">
+                                        {{ Str::of($post->title)->words(10, '') }}
+                                    </h5>
+                                </a>
                                 <p class="text-gray-700 text-justify text-base mb-2">
                                     {!! Str::of($post->body)->words(20, ' read more...') !!}
                                 </p>

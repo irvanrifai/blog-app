@@ -1,14 +1,15 @@
 <?php
 
+use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SavedController;
 use App\Http\Controllers\MypostController;
 use App\Http\Controllers\SigninController;
 use App\Http\Controllers\SignupController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SavedpostController;
-use App\Models\Category;
-use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +35,11 @@ Route::get('/about', function () {
     ]);
 })->name('about');
 
-Route::get('/profile', function () {
-    return view('manipulate_profile', [
-        'title' => 'Blog | Profile',
-    ]);
-})->name('profile');
+// Route::get('/profile', function () {
+//     return view('manipulate_profile', [
+//         'title' => 'Blog | Profile',
+//     ]);
+// })->name('profile');
 
 Route::get('/settings', function () {
     return view('profile_setting', [
@@ -47,12 +48,13 @@ Route::get('/settings', function () {
 })->name('settings');
 
 // nyoba
-// Route::get('/create', function () {
-//     return view('add_post', [
-//         'title' => 'Blog | New Post',
-//         'categories' => Category::all(),
-//     ]);
-// })->name('newpost');
+Route::get('mypost/{slug}', function (Post $post) {
+    return view('post', [
+        'title' => 'Blog | Single',
+        'page' => $post->title,
+        'post' => $post
+    ]);
+})->name('newpost');
 // Route::get('/edit', function () {
 //     return view('manipulate_post', [
 //         'title' => 'Blog | Edit Post',
@@ -67,12 +69,16 @@ Route::post('/signup', [SignupController::class, 'store']);
 
 Route::resource('/post', PostController::class)->middleware('auth');
 
-// Route::resource('/mypost', MypostController::class)->middleware('isAdmin');
-Route::resource('/mypost', MypostController::class, function (Post $post) {
-    return $post;
-})->middleware('auth');
+Route::resource('/mypost', MypostController::class)->middleware('auth');
+
+Route::resource('/savedpost', SavedController::class)->middleware('auth');
+
+Route::resource('/profile', ProfileController::class)->middleware('auth');
+
+// Route::resource('/mypost', [MypostController::class, function (Post $post) {
+//     return $post;
+// }])->middleware('auth');
 
 // Route::get('/mypost/create', [MypostController::class, 'store']);
 
 // Route::resource('/savedpost', SavedpostController::class)->middleware('auth');
-Route::resource('/savedpost', SavedController::class)->middleware('auth');

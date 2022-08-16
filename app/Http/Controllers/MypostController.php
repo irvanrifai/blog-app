@@ -88,8 +88,10 @@ class MypostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('manipulate_post', [
-            'id' => $post->slug
+        return view('post', [
+            'title' => 'Blog | Post',
+            'page' => $post->title,
+            'post' => $post
         ]);
     }
 
@@ -101,7 +103,6 @@ class MypostController extends Controller
      */
     public function edit(Post $post)
     {
-        // dd(Post::all());
         return view('manipulate_post', [
             'title' => 'Blog | Edit Post',
             'page' => 'Edit Post',
@@ -117,7 +118,7 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, $id)
+    public function update(Request $request, Post $post)
     {
         $validatedData = Validator::make($request->all(), [
             'cover' => 'file|image|max:2048',
@@ -129,7 +130,7 @@ class MypostController extends Controller
         if ($validatedData->fails()) {
             return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
         } else {
-            Post::where('id', $id)->update($validatedData->validate());
+            Post::where('id', $post->id)->update($validatedData->validate());
             Alert::toast('Update Post Successfull', 'success');
             return redirect(url('/mypost'));
         }

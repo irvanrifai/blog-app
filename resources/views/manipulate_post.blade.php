@@ -2,12 +2,13 @@
 @section('container')
     <div class="mt-1 sm:mt-0">
         <div class="ps-4 pb-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-0 text-gray-900">Edit Post</h3>
+            <h3 class="text-lg font-medium leading-0 text-gray-900">{{ $page }}</h3>
         </div>
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('mypost/' . $post->slug) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('put')
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
@@ -136,7 +137,7 @@
                     <form action="{{ url('mypost/' . $post->slug) }}" method="post">
                         @csrf
                         @method('delete')
-                        <button type="submit" onclick="return confirm('Delete this post, Are you sure?')"
+                        <button type="submit" onclick="return confirm('Delete this post?')"
                             class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400"><i
                                 class="fa fa-trash"></i></button>
                     </form>

@@ -61,7 +61,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('post', [
+            'title' => 'Blog | Post',
+            'page' => $post->title,
+            'post' => $post
+        ]);
     }
 
     /**

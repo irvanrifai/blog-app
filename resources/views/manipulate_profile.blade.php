@@ -3,7 +3,9 @@
     <div>
         <div class="md:grid md:grid-cols-3 md:gap-6 pb-4">
             <div class="md:mt-0 md:col-span-2">
-                <form action="#" method="POST">
+                <form action="{{ url('profile/' . $profile->id) }}" method="POST" enctype="multipart/form-data">
+                    @method('put')
+                    @csrf
                     <div class="shadow sm:rounded-md sm:overflow-hidden">
                         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div>
@@ -21,21 +23,21 @@
                             </div>
                             <div class="col-span-6 sm:col-span-3 lg:col-span-6">
                                 <label for="postal-code" class="block text-sm font-medium text-gray-700">Username</label>
-                                <input type="text" name="postal-code" id="postal-code"
-                                    value="{{ auth()->user()->username }}" autocomplete="postal-code"
+                                <input type="text" name="postal-code" id="postal-code" value="{{ $profile->username }}"
+                                    autocomplete="postal-code"
                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             <div class="col-span-3 sm:col-span-3 lg:col-span-2">
                                 <label for="postal-code" class="block text-sm font-medium text-gray-700">Name</label>
-                                <input type="text" name="postal-code" id="postal-code" value="{{ auth()->user()->name }}"
+                                <input type="text" name="postal-code" id="postal-code" value="{{ $profile->name }}"
                                     autocomplete="postal-code"
                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
                                 <label for="email-address" class="block text-sm font-medium text-gray-700">Email
                                     address</label>
-                                <input type="text" name="email-address" id="email-address"
-                                    value="{{ auth()->user()->email }}" autocomplete="email"
+                                <input type="text" name="email-address" id="email-address" value="{{ $profile->email }}"
+                                    autocomplete="email"
                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             <div class="grid grid-cols-3 gap-6">
@@ -47,6 +49,7 @@
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
                                         <input type="text" name="company-website" id="company-website"
+                                            value="{{ $profile->linkedin_account }}"
                                             class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://linkedin.com/">
                                     </div>
@@ -61,6 +64,7 @@
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
                                         <input type="text" name="company-website" id="company-website"
+                                            value="{{ $profile->github_account }}"
                                             class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://github.com/">
                                     </div>
@@ -75,6 +79,7 @@
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
                                         <input type="text" name="company-website" id="company-website"
+                                            value="{{ $profile->fb_account }}"
                                             class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://www.facebook.com/">
                                     </div>
@@ -89,6 +94,7 @@
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
                                         <input type="text" name="company-website" id="company-website"
+                                            value="{{ $profile->ig_account }}"
                                             class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://www.instagram.com/">
                                     </div>
@@ -103,6 +109,7 @@
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
                                         <input type="text" name="company-website" id="company-website"
+                                            value="{{ $profile->twt_account }}"
                                             class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://twitter.com/">
                                     </div>

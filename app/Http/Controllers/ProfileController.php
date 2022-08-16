@@ -23,7 +23,7 @@ class ProfileController extends Controller
         return view('manipulate_profile', [
             'title' => 'Blog | Profile',
             // 'page' => Str::of(auth()->user()->name)->words(2, '') . "'s saved post",
-            // 'posts' => Post::latest()->where('category', 'General')->get(),
+            'profile' => auth()->user(),
         ]);
     }
 
@@ -79,8 +79,9 @@ class ProfileController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // $user_id = auth()->user()->id;
         $validatedData = Validator::make($request->all(), [
-            'photo' => 'file|image|max:2048',
+            'photo' => 'image|file|max:2048',
             'name' => 'required|max:100',
             'username' => 'required|max:100',
             'fb_account' => 'max:100',
@@ -89,7 +90,7 @@ class ProfileController extends Controller
             'linkedin_account' => 'max:100',
             'github_account' => 'max:100',
             'email' => 'required|email:dns|max:70',
-            'password' => 'required|min:8|max:40',
+            // 'password' => 'required|min:8|max:40',
         ]);
         if ($validatedData->fails()) {
             return redirect(url('profile'))->withInput()->withErrors($validatedData);
@@ -106,9 +107,10 @@ class ProfileController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user, $id)
+    public function destroy(User $user)
     {
-        Post::destroy($user->id, $id);
+        // $user_id = auth()->user()->id;
+        Post::destroy('id', $user->id);
         Alert::toast('Delete Profile Successfull', 'success');
         return redirect(url('/signin'));
     }
