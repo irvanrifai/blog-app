@@ -22,7 +22,7 @@
                                     src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" alt="" />
                             @endif
                             <div class="p-6 flex flex-col justify-start">
-                                <a href="{{ url('post/' . $post->slug) }}">
+                                <a href="{{ url('mypost/' . $post->slug) }}">
                                     <h5 class="text-gray-900 hover:text-blue-700 text-xl font-medium mb-2">
                                         {{ Str::of($post->title)->words(10, '') }}
                                     </h5>

@@ -87,13 +87,14 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, $slug)
     {
+        $post = Post::where('slug', $slug)->first();
         return view('post', [
             'title' => 'Blog | Post',
-            'page' => $post->title,
+            'page' => 'Detail Post',
             'post' => $post
-        ]);
+        ], compact('post'));
     }
 
     /**
@@ -102,14 +103,15 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Post $post, $slug)
     {
+        $post = Post::where('slug', $slug)->first();
         return view('manipulate_post', [
             'title' => 'Blog | Edit Post',
             'page' => 'Edit Post',
             'post' => $post,
             'categories' => Category::latest()->get()
-        ]);
+        ], compact('post'));
     }
 
     /**

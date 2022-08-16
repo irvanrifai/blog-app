@@ -90,9 +90,9 @@
                                     <select
                                         class="mt-2 form-select @error('category') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                         id="category" name="category">
-                                        <option value="{{ old('category', $post->category) }}" selected disabled>
+                                        <option value="{{ old('category') }}" selected disabled>
                                             <label class="text-gray-400 text-sm">
-                                                Select
+                                                {{ old('category', $post->category->name) }}
                                             </label>
                                         </option>
                                         @foreach ($categories as $category)
@@ -110,7 +110,7 @@
                                     <label for="body" class="mb-2 block text-sm font-medium text-gray-700">Body
                                     </label>
                                     <textarea name="body" id="body" value="{{ old('body', $post->body) }}"
-                                        class="@error('body') is-invalid @enderror"></textarea>
+                                        class="@error('body') is-invalid @enderror">{!! old('body', $post->body) !!}</textarea>
                                     <script>
                                         ClassicEditor.create(document.querySelector('#body')).catch(error => {
                                             console.error(error);
