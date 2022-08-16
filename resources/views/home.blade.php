@@ -44,7 +44,7 @@
                             {{-- tombol edit, only my post --}}
                             @if (auth()->user()->id == $post->user_id)
                                 <a class="text-right py-4 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                    href="{{ url('edit') }}"><i class="fa fa-pencil"></i></a>
+                                    href="mypost/{{ $post->slug }}/edit"><i class="fa fa-pencil"></i></a>
                             @endif
                         </div>
                     </div>

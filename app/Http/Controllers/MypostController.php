@@ -101,7 +101,13 @@ class MypostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('manipulate_post');
+        // dd(Post::all());
+        return view('manipulate_post', [
+            'title' => 'Blog | Edit Post',
+            'page' => 'Edit Post',
+            'post' => $post,
+            'categories' => Category::latest()->get()
+        ]);
     }
 
     /**
@@ -135,9 +141,9 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, $id)
+    public function destroy(Post $post)
     {
-        Post::destroy($post->id, $id);
+        Post::destroy($post->slug);
         Alert::toast('Delete Post Successfull', 'success');
         return redirect(url('/mypost'));
     }

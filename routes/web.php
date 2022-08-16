@@ -8,6 +8,7 @@ use App\Http\Controllers\SigninController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\SavedpostController;
 use App\Models\Category;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,11 +53,11 @@ Route::get('/settings', function () {
 //         'categories' => Category::all(),
 //     ]);
 // })->name('newpost');
-Route::get('/edit', function () {
-    return view('manipulate_post', [
-        'title' => 'Blog | Edit Post',
-    ]);
-})->name('editpost');
+// Route::get('/edit', function () {
+//     return view('manipulate_post', [
+//         'title' => 'Blog | Edit Post',
+//     ]);
+// })->name('editpost');
 
 Route::post('/signout', [SigninController::class, 'signout']);
 
@@ -67,7 +68,9 @@ Route::post('/signup', [SignupController::class, 'store']);
 Route::resource('/post', PostController::class)->middleware('auth');
 
 // Route::resource('/mypost', MypostController::class)->middleware('isAdmin');
-Route::resource('/mypost', MypostController::class)->middleware('auth');
+Route::resource('/mypost', MypostController::class, function (Post $post) {
+    return $post;
+})->middleware('auth');
 
 // Route::get('/mypost/create', [MypostController::class, 'store']);
 
