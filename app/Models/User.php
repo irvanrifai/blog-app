@@ -52,8 +52,13 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function savepost()
+    public function user()
     {
-        return $this->hasMany(Saved::class);
+        // return $this->belongsToMany('');
+    }
+
+    public function savedpost()
+    {
+        return $this->belongsToMany(Saved::class);
     }
 }

@@ -28,6 +28,7 @@ class PostController extends Controller
             'title' => 'Blog | Home',
             'page' => 'All Post',
             'posts' => $query->paginate(10)->withQueryString(),
+            'saved' => Saved::all()
         ]);
     }
 

@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('container')
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
+    <p>{{ $saved->post->name }}</p>
     {{-- <hr> --}}
     <div class="container-fluid">
         <div class="fixed-bottom text-right sm:px-14 py-14 px-10">
@@ -36,10 +37,13 @@
                                 <p class="text-gray-600 text-xs mt-2">Last update on
                                     {{ $post->updated_at->diffForHumans() }}
                                 </p>
+                                {{-- <p>{{ $post->savedpost->user_id }}</p> --}}
                             </div>
 
                             {{-- kasih kondisi saved/not saved --}}
-                            @if (auth()->user()->id == $post->savepost->user_id)
+                            {{-- masih error, entah relationship atau apanya --}}
+                            @if (auth()->user()->id != $post->id)
+                                {{-- @if (auth()->user()->id == $post->savedpost->user_id) --}}
                                 <a class="text-right py-6 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                     href="#" id="saved"><i class="fa fa-bookmark"></i></a>
                             @else

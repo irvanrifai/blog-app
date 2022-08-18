@@ -55,4 +55,4 @@ Route::resource('/savedpost', SavedController::class)->middleware('auth');
 
 Route::resource('/profile', ProfileController::class)->middleware('auth');
 
-Route::resource('/savedpost', SavedpostController::class)->middleware('auth');
+Route::resource('/savedpost', SavedController::class)->middleware('auth');

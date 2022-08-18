@@ -26,7 +26,7 @@ class Post extends Model
 
     public function savedpost()
     {
-        return $this->belongsTo(Saved::class);
+        return $this->belongsToMany(Saved::class);
     }
 
     public function sluggable(): array
