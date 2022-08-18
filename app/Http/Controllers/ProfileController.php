@@ -22,7 +22,6 @@ class ProfileController extends Controller
         // nanti disini pakai datatable, sementara passing data biasa dulu
         return view('manipulate_profile', [
             'title' => 'Blog | Profile',
-            // 'page' => Str::of(auth()->user()->name)->words(2, '') . "'s saved post",
             'profile' => auth()->user(),
         ]);
     }
