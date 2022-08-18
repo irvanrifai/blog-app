@@ -34,12 +34,6 @@ Route::get('/about', function () {
     ]);
 })->name('about');
 
-// Route::get('/profile', function () {
-//     return view('manipulate_profile', [
-//         'title' => 'Blog | Profile',
-//     ]);
-// })->name('profile');
-
 Route::get('/settings', function () {
     return view('profile_setting', [
         'title' => 'Blog | Setting',
@@ -61,18 +55,4 @@ Route::resource('/savedpost', SavedController::class)->middleware('auth');
 
 Route::resource('/profile', ProfileController::class)->middleware('auth');
 
-// Route::get('mypost/{post}', function (Post $post) {
-//     return view('post', [
-//         'title' => 'Blog | Post',
-//         'page' => $post->title,
-//         'post' => $post,
-//     ]);
-// });
-
-// Route::resource('/mypost', [MypostController::class, function (Post $post) {
-//     return $post;
-// }])->middleware('auth');
-
-// Route::get('/mypost/create', [MypostController::class, 'store']);
-
-// Route::resource('/savedpost', SavedpostController::class)->middleware('auth');
+Route::resource('/savedpost', SavedpostController::class)->middleware('auth');

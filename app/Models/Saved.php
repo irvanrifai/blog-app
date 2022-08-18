@@ -11,4 +11,12 @@ class Saved extends Model
     protected $guarded = [
         'id',
     ];
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
+    public function post()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

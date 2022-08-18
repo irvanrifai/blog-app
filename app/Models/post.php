@@ -24,10 +24,10 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function saved()
-    // {
-    //     // 
-    // }
+    public function savedpost()
+    {
+        return $this->belongsTo(Saved::class);
+    }
 
     public function sluggable(): array
     {

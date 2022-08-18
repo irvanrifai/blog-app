@@ -37,11 +37,85 @@
                                     {{ $post->updated_at->diffForHumans() }}
                                 </p>
                             </div>
+
                             {{-- kasih kondisi saved/not saved --}}
-                            <a class="text-right pt-6 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
-                                href="#"><i class="fa fa-bookmark"></i></a>
-                            {{-- <a class="text-right py-6 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                href="#"><i class="fa fa-bookmark"></i></a> --}}
+                            @if (auth()->user()->id == $post->savepost->user_id)
+                                <a class="text-right py-6 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                    href="#" id="saved"><i class="fa fa-bookmark"></i></a>
+                            @else
+                                <a class="text-right pt-6 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
+                                    href="#" id="save"><i class="fa fa-bookmark"></i></a>
+                            @endif
+
+                            {{-- scrpit for saved-unsaved button --}}
+                            <script type="text/javascript">
+                                $(function() {
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        }
+                                    });
+
+                                    // coba buat sendiri
+                                    // $save = $("#save");
+                                    // $saved = $("#saved");
+
+                                    // if ($save.length) {
+                                    //     $save.on('click', function() {
+                                    //         $.ajax('SavedController.php', {
+                                    //             data: 'here'
+                                    //         }, function(response) {
+                                    //             // do something with your response from SavedController.php:
+                                    //             $save.addClass("unlike");
+                                    //             $save.removeClass("like");
+                                    //             $saved = $save;
+                                    //         });
+                                    //     });
+                                    // }
+
+                                    // if ($saved.length) {
+                                    //     $saved.on('click', function() {
+                                    //         $.ajax('SavedController.php', {
+                                    //             data: 'here'
+                                    //         }, function(response) {
+                                    //             // do something with your response from SavedController.php:
+                                    //             $saved.addClass("like");
+                                    //             $saved.removeClass("unlike");
+                                    //             $save = $saved;
+                                    //         });
+                                    //     });
+                                    // }
+
+                                    // contoh ajax dari datatable
+                                    $('body').on('click', '#save', function() {
+                                        var slug = $(this).data("slug");
+                                        $.ajax({
+                                            url: "{{ url('savedpost') }}",
+                                            type: "POST",
+                                            success: function(data) {
+                                                table.draw();
+                                            },
+                                            error: function(data) {
+                                                console.log('Error:', data);
+                                            }
+                                        });
+                                    });
+
+                                    $('body').on('click', '#saved', function() {
+                                        var id_saved = $(this).data("id_saved");
+                                        $.ajax({
+                                            url: "{{ url('savedpost') }}" + '/' + id_saved,
+                                            type: "DELETE",
+                                            success: function(data) {
+                                                table.draw();
+                                            },
+                                            error: function(data) {
+                                                console.log('Error:', data);
+                                            }
+                                        });
+                                    });
+                                })
+                            </script>
 
                             {{-- tombol edit, only my post --}}
                             @if (auth()->user()->id == $post->user_id)

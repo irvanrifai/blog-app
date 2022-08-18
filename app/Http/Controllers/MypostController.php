@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Saved;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class MypostController extends Controller
 {
@@ -20,7 +21,6 @@ class MypostController extends Controller
      */
     public function index(Request $request)
     {
-        // $posts = Post::latest()->where('user_id', auth()->user()->id)->get();
         $posts = Post::latest()->where('user_id', auth()->user()->id);
         return view('home', [
             'title' => 'Blog | My Post',

@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Saved;
 
 class PostController extends Controller
 {
@@ -27,9 +28,7 @@ class PostController extends Controller
             'title' => 'Blog | Home',
             'page' => 'All Post',
             'posts' => $query->paginate(10)->withQueryString(),
-            // 'category' => Category::all(),
         ]);
-        // dd(Post::category);
     }
 
     /**

@@ -45,7 +45,10 @@ class SavedController extends Controller
      */
     public function store(StoreSavedRequest $request)
     {
-        //
+        $data = Saved::create(
+            ['user_id' => auth()->user()->id, 'post_id' => $request->post_id],
+        );
+        return response()->json($data);
     }
 
     /**
@@ -88,8 +91,9 @@ class SavedController extends Controller
      * @param  \App\Models\Saved  $saved
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Saved $saved)
+    public function destroy(Saved $saved, $slug)
     {
-        //
+        $data = Saved::where('slug', $slug)->delete();
+        return response()->json($data);
     }
 }
