@@ -2,7 +2,7 @@
 @section('container')
     <div class="mt-1 sm:mt-0">
         <div class="ps-4 pb-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-0 text-gray-900">New Post</h3>
+            <h3 class="text-lg font-medium leading-0 text-gray-900">{{ $page }}</h3>
         </div>
         <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-span-5 sm:col-span-2">
+                                <div class="col-span-6 sm:col-span-3">
                                     <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
                                     <input type="text" name="title" id="title" autocomplete="given-name"
                                         class="@error('title') is-invalid @enderror mt-2 w-full shadow-md border-gray-700 font-medium py-1.5 sm:text-sm rounded-md"

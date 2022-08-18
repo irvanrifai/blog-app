@@ -67,7 +67,10 @@ class ProfileController extends Controller
      */
     public function edit(User $user)
     {
-        return view('manipulate_profile');
+        return view('manipulate_profile', [
+            'title' => 'Blog | Profile',
+            'profile' => auth()->user(),
+        ]);
     }
 
     /**
@@ -77,7 +80,7 @@ class ProfileController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user, $username)
     {
         // $user_id = auth()->user()->id;
         $validatedData = Validator::make($request->all(), [
@@ -90,12 +93,27 @@ class ProfileController extends Controller
             'linkedin_account' => 'max:100',
             'github_account' => 'max:100',
             'email' => 'required|email:dns|max:70',
-            // 'password' => 'required|min:8|max:40',
+            // 'password' => 'min:8|max:40',
         ]);
         if ($validatedData->fails()) {
+            Alert::toast('Update Profile Unsuccessfull', 'error');
             return redirect(url('profile'))->withInput()->withErrors($validatedData);
         } else {
-            User::where('id', $user->id)->update($validatedData->validate());
+            $validatedData = $request->validate([
+                'photo' => 'image|file|max:2048',
+                'name' => 'required|max:100',
+                'username' => 'required|max:100',
+                'fb_account' => 'max:100',
+                'twt_account' => 'max:100',
+                'ig_account' => 'max:100',
+                'linkedin_account' => 'max:100',
+                'github_account' => 'max:100',
+                'email' => 'required|email:dns|max:70',
+            ]);
+            if ($request->file('photo')) {
+                $validatedData['photo'] = $request->file('photo')->store('user-photo');
+            }
+            User::where('username', $username)->update($validatedData);
             Alert::toast('Update Profile Successfull', 'success');
             return redirect(url('profile'));
         }
@@ -107,11 +125,10 @@ class ProfileController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $user, $username)
     {
-        // $user_id = auth()->user()->id;
-        Post::destroy('id', $user->id);
+        User::where('username', $username)->delete();
         Alert::toast('Delete Profile Successfull', 'success');
-        return redirect(url('/signin'));
+        return redirect(url('/'));
     }
 }

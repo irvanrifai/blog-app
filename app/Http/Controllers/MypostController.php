@@ -52,7 +52,6 @@ class MypostController extends Controller
      */
     public function store(Request $request)
     {
-        // ddd($request);
         $validatedData = Validator::make($request->all(), [
             'cover' => 'image|file|max:2048',
             'title' => 'required|max:100',
@@ -138,14 +137,14 @@ class MypostController extends Controller
             $validatedData = $request->validate([
                 'cover' => 'image|file|max:2048',
                 'title' => 'required|max:100',
-                'category' => 'required',
+                // 'category' => 'required',
                 'body' => 'required',
             ]);
             if ($request->file('cover')) {
                 $validatedData['cover'] = $request->file('cover')->store('post-cover');
             }
             $validatedData['user_id'] = auth()->user()->id;
-            $validatedData['category_id'] = $validatedData['category'];
+            // $validatedData['category_id'] = $validatedData['category'];
             $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
             Post::where('slug', $slug)->update($validatedData);
             Alert::toast('Update Post Successfull', 'success');

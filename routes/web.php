@@ -43,6 +43,7 @@ Route::get('/about', function () {
 Route::get('/settings', function () {
     return view('profile_setting', [
         'title' => 'Blog | Setting',
+        'profile' => auth()->user()
     ]);
 })->name('settings');
 

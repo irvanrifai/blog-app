@@ -3,7 +3,7 @@
     <div>
         <div class="md:grid md:grid-cols-3 md:gap-6 pb-4">
             <div class="md:mt-0 md:col-span-2">
-                <form action="{{ url('profile/' . $profile->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('profile/' . $profile->username) }}" method="POST" enctype="multipart/form-data">
                     @method('put')
                     @csrf
                     <div class="shadow sm:rounded-md sm:overflow-hidden">
@@ -30,10 +30,10 @@
                                                 src="https://media.istockphoto.com/vectors/default-avatar-profile-icon-vector-vector-id1337144146?b=1&k=20&m=1337144146&s=170667a&w=0&h=ys-RUZbXzQ-FQdLstHeWshI4ViJuEhyEa4AzQNQ0rFI=">
                                         @endif
                                     </span>
-                                    <input type="file" name="cover" id="cover" accept="image/*"
+                                    <input type="file" name="photo" id="photo" accept="image/*"
                                         onchange="loadFile(event)" autocomplete="given-name"
-                                        class="@error('cover') is-invalid @enderror ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    @error('cover')
+                                        class="@error('photo') is-invalid @enderror ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    @error('photo')
                                         <div class="invalid-feedback ms-4">
                                             {{ $message }}
                                         </div>
@@ -43,96 +43,136 @@
                                 </div>
                             </div>
                             <div class="col-span-6 sm:col-span-3 lg:col-span-6">
-                                <label for="postal-code" class="block text-sm font-medium text-gray-700">Username</label>
-                                <input type="text" name="postal-code" id="postal-code" value="{{ $profile->username }}"
-                                    autocomplete="postal-code"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                                <input type="text" name="username" id="username" value="{{ $profile->username }}"
+                                    autocomplete="username"
+                                    class="@error('username') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('username')
+                                    <div class="invalid-feedback ms-4">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="col-span-3 sm:col-span-3 lg:col-span-2">
-                                <label for="postal-code" class="block text-sm font-medium text-gray-700">Name</label>
-                                <input type="text" name="postal-code" id="postal-code" value="{{ $profile->name }}"
-                                    autocomplete="postal-code"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                                <input type="text" name="name" id="name" value="{{ $profile->name }}"
+                                    autocomplete="name"
+                                    class="@error('name') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('name')
+                                    <div class="invalid-feedback ms-4">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="email-address" class="block text-sm font-medium text-gray-700">Email
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email
                                     address</label>
-                                <input type="text" name="email-address" id="email-address" value="{{ $profile->email }}"
+                                <input type="text" name="email" id="email" value="{{ $profile->email }}"
                                     autocomplete="email"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    class="@error('email') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('email')
+                                    <div class="invalid-feedback ms-4">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3 sm:col-span-2">
-                                    <label for="company-website" class="block text-sm font-medium text-gray-700"> LinkedIn
+                                    <label for="linkedin_account" class="block text-sm font-medium text-gray-700"> LinkedIn
                                     </label>
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <span
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
-                                        <input type="text" name="company-website" id="company-website"
+                                        <input type="text" name="linkedin_account" id="linkedin_account"
                                             value="{{ $profile->linkedin_account }}"
-                                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                            class="@error('linkedin_account') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://linkedin.com/">
+                                        @error('linkedin_account')
+                                            <div class="invalid-feedback ms-4">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3 sm:col-span-2">
-                                    <label for="company-website" class="block text-sm font-medium text-gray-700"> Github
+                                    <label for="github_account" class="block text-sm font-medium text-gray-700"> Github
                                     </label>
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <span
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
-                                        <input type="text" name="company-website" id="company-website"
+                                        <input type="text" name="github_account" id="github_account"
                                             value="{{ $profile->github_account }}"
-                                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                            class="@error('github_account') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://github.com/">
+                                        @error('github_account')
+                                            <div class="invalid-feedback ms-4">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3 sm:col-span-2">
-                                    <label for="company-website" class="block text-sm font-medium text-gray-700"> Facebook
+                                    <label for="fb_account" class="block text-sm font-medium text-gray-700"> Facebook
                                     </label>
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <span
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
-                                        <input type="text" name="company-website" id="company-website"
+                                        <input type="text" name="fb_account" id="fb_account"
                                             value="{{ $profile->fb_account }}"
-                                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                            class="@error('fb_account') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://www.facebook.com/">
+                                        @error('fb_account')
+                                            <div class="invalid-feedback ms-4">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3 sm:col-span-2">
-                                    <label for="company-website" class="block text-sm font-medium text-gray-700"> Instagram
+                                    <label for="ig_account" class="block text-sm font-medium text-gray-700"> Instagram
                                     </label>
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <span
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
-                                        <input type="text" name="company-website" id="company-website"
+                                        <input type="text" name="ig_account" id="ig_account"
                                             value="{{ $profile->ig_account }}"
-                                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                            class="@error('ig_account') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://www.instagram.com/">
+                                        @error('ig_account')
+                                            <div class="invalid-feedback ms-4">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3 sm:col-span-2">
-                                    <label for="company-website" class="block text-sm font-medium text-gray-700"> Twitter
+                                    <label for="twt_account" class="block text-sm font-medium text-gray-700"> Twitter
                                     </label>
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <span
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                             http:// </span>
-                                        <input type="text" name="company-website" id="company-website"
+                                        <input type="text" name="twt_account" id="twt_account"
                                             value="{{ $profile->twt_account }}"
-                                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                            class="@error('twt') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="https://twitter.com/">
+                                        @error('twt_account')
+                                            <div class="invalid-feedback ms-4">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

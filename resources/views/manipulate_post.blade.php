@@ -4,7 +4,7 @@
         <div class="ps-4 pb-4 sm:px-0">
             <h3 class="text-lg font-medium leading-0 text-gray-900">{{ $page }}</h3>
         </div>
-        <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
                 <form action="{{ url('mypost/' . $post->slug) }}" method="POST" enctype="multipart/form-data">
                     @method('put')
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-span-5 sm:col-span-2">
+                                <div class="col-span-6 sm:col-span-3">
                                     <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
                                     <input type="text" name="title" id="title" autocomplete="given-name"
                                         class="@error('title') is-invalid @enderror mt-2 w-full shadow-md border-gray-700 font-medium py-1.5 sm:text-sm rounded-md"
@@ -90,13 +90,13 @@
                                     <select
                                         class="mt-2 form-select @error('category') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                         id="category" name="category">
-                                        <option value="{{ old('category', $post->category->name) }}" selected>
+                                        <option value="{{ old('category', $post->category->id) }}" selected>
                                             <label class="text-gray-400 text-sm">
                                                 {{ old('category', $post->category->name) }}
                                             </label>
                                         </option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ old('category', $category->name) }}">{{ $category->name }}
+                                            <option value="{{ $category->id }}">{{ $category->name }}
                                             </option>
                                         @endforeach
                                     </select>

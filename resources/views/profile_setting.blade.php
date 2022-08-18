@@ -95,9 +95,13 @@
         </div>
         <div class="md:grid md:grid-cols-1 md:gap-6">
             <div class="px-4 py-6 bg-gray-100 text-center sm:px-6">
-                <a type="button"
-                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400">Delete
-                    Account</a>
+                <form action="{{ url('profile/' . $profile->username) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" onclick="return confirm('Are you sure delete this account?')"
+                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400">Delete
+                        Account</button>
+                </form>
             </div>
         </div>
     </div>
