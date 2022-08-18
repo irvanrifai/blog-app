@@ -86,7 +86,7 @@
                                         id="category" name="category">
                                         <option value="{{ old('category') ? old('category') : '' }}" selected disabled>
                                             <label class="text-gray-400 text-sm">
-                                                Select
+                                                {{ old('category') ? old('category') : 'Select' }}
                                             </label>
                                         </option>
                                         @foreach ($categories as $category)
@@ -103,7 +103,7 @@
                                 <div class="col-span-6 sm:col-span-6">
                                     <label for="body" class="mb-2 block text-sm font-medium text-gray-700">Body
                                     </label>
-                                    <textarea name="body" id="body" class="@error('body') is-invalid @enderror"></textarea>
+                                    <textarea name="body" id="body" class="@error('body') is-invalid @enderror">{{ old('body') }}</textarea>
                                     <script>
                                         ClassicEditor.create(document.querySelector('#body')).catch(error => {
                                             console.error(error);

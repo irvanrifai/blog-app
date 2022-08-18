@@ -26,7 +26,7 @@ class PostController extends Controller
         return view('home', [
             'title' => 'Blog | Home',
             'page' => 'All Post',
-            'posts' => $query->paginate()->withQueryString(),
+            'posts' => $query->paginate(10)->withQueryString(),
             // 'category' => Category::all(),
         ]);
         // dd(Post::category);

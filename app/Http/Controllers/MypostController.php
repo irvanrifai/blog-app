@@ -20,11 +20,12 @@ class MypostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::latest()->where('user_id', auth()->user()->id)->get();
+        // $posts = Post::latest()->where('user_id', auth()->user()->id)->get();
+        $posts = Post::latest()->where('user_id', auth()->user()->id);
         return view('home', [
             'title' => 'Blog | My Post',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
-            'posts' => $posts,
+            'posts' => $posts->paginate(10)->withQueryString(),
         ]);
     }
 
@@ -53,7 +54,7 @@ class MypostController extends Controller
     {
         // ddd($request);
         $validatedData = Validator::make($request->all(), [
-            'cover' => 'required|image|file|max:2048',
+            'cover' => 'image|file|max:2048',
             'title' => 'required|max:100',
             'category' => 'required',
             'body' => 'required',
@@ -61,6 +62,7 @@ class MypostController extends Controller
 
 
         if ($validatedData->fails()) {
+            Alert::toast('New Post Upload Unsuccessfull', 'error');
             return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
         } else {
             $validatedData = $request->validate([
@@ -89,12 +91,12 @@ class MypostController extends Controller
      */
     public function show(Post $post, $slug)
     {
-        $post = Post::where('slug', $slug)->first();
+        $posts = Post::where('slug', $slug)->first();
         return view('post', [
             'title' => 'Blog | Post',
             'page' => 'Detail Post',
-            'post' => $post
-        ], compact('post'));
+            'posts' => $posts
+        ], compact('posts'));
     }
 
     /**
@@ -121,19 +123,31 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, $slug)
     {
         $validatedData = Validator::make($request->all(), [
-            'cover' => 'file|image|max:2048',
+            'cover' => 'image|file|max:2048',
             'title' => 'required|max:100',
-            'slug' => 'required|max:100',
             'category' => 'required',
             'body' => 'required',
         ]);
         if ($validatedData->fails()) {
-            return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
+            Alert::toast('Update Post Unsuccessfull', 'error');
+            return redirect(url('mypost/' . $slug . '/edit'))->withInput()->withErrors($validatedData);
         } else {
-            Post::where('id', $post->id)->update($validatedData->validate());
+            $validatedData = $request->validate([
+                'cover' => 'image|file|max:2048',
+                'title' => 'required|max:100',
+                'category' => 'required',
+                'body' => 'required',
+            ]);
+            if ($request->file('cover')) {
+                $validatedData['cover'] = $request->file('cover')->store('post-cover');
+            }
+            $validatedData['user_id'] = auth()->user()->id;
+            $validatedData['category_id'] = $validatedData['category'];
+            $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
+            Post::where('slug', $slug)->update($validatedData);
             Alert::toast('Update Post Successfull', 'success');
             return redirect(url('/mypost'));
         }
@@ -145,9 +159,11 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, $slug)
     {
-        Post::destroy($post->slug);
+        // Post::destroy($post->slug);
+        // Post::destroy('slug', $slug);
+        Post::where('slug', $slug)->delete();
         Alert::toast('Delete Post Successfull', 'success');
         return redirect(url('/mypost'));
     }

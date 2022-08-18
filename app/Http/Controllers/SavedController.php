@@ -19,10 +19,11 @@ class SavedController extends Controller
      */
     public function index(Request $request)
     {
+        $posts = Post::latest()->where('category_id', '4');
         return view('home', [
             'title' => 'Blog | Saved',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s saved post",
-            'posts' => Post::latest()->where('category_id', '4')->get(),
+            'posts' => $posts->paginate(10)->withQueryString(),
         ]);
     }
 

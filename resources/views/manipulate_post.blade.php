@@ -7,8 +7,8 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
                 <form action="{{ url('mypost/' . $post->slug) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
                     @method('put')
+                    @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
@@ -90,13 +90,14 @@
                                     <select
                                         class="mt-2 form-select @error('category') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                         id="category" name="category">
-                                        <option value="{{ old('category') }}" selected disabled>
+                                        <option value="{{ old('category', $post->category->name) }}" selected>
                                             <label class="text-gray-400 text-sm">
                                                 {{ old('category', $post->category->name) }}
                                             </label>
                                         </option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option value="{{ old('category', $category->name) }}">{{ $category->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('category')
