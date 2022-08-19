@@ -41,14 +41,16 @@
                             {{-- kasih kondisi saved/not saved --}}
                             {{-- masih error, entah relationship atau apanya --}}
                             <div class="flex px-4">
-                                @if (auth()->user()->id != $post->user_id)
-                                    {{-- @if (auth()->user()->id == $post->savedpost()->user_id) --}}
-                                    <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                        href="#" id="saved"><i class="fa fa-bookmark"></i></a>
-                                @else
-                                    <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
-                                        href="#" id="save"><i class="fa fa-bookmark"></i></a>
-                                @endif
+                                @foreach ($post->saveds as $saved)
+                                    {{ dd($saved) }}
+                                    @if (auth()->user()->id == $saved->user_id)
+                                        <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                            href="#" id="saved"><i class="fa fa-bookmark"></i></a>
+                                    @else
+                                        <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
+                                            href="#" id="save"><i class="fa fa-bookmark"></i></a>
+                                    @endif
+                                @endforeach
 
                                 {{-- scrpit for saved-unsaved button --}}
                                 <script type="text/javascript">
@@ -132,7 +134,7 @@
             </div>
             {{-- </div> --}}
         </div>
-        {{ $posts->links() }}
+        {{-- {{ $posts->links() }} --}}
     </div>
     <script>
         $(document).ready(function() {

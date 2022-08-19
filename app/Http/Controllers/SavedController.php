@@ -17,9 +17,11 @@ class SavedController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Saved $saved)
     {
-        $posts = Post::latest()->where('category_id', '4');
+        // $savedpost = Saved::latest();
+        // dd($savedpost);
+        $posts = Saved::latest()->where($saved->user(), auth()->user()->id)->get();
         // $posts = Saved::latest()->where('user_id', auth()->user()->id);
         return view('home', [
             'title' => 'Blog | Saved',

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\User;
 use App\Models\Saved;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -17,15 +19,26 @@ class PostController extends Controller
      */
     public function index(Request $request, Post $post)
     {
-        $saved = Post::where('user_id', auth()->user()->id)->whereHas('savedpost', function ($q) {
-            $q->where('post_id', true);
-        })->get();
+
+        $user = User::with('saveds')->first();
+        $post = Post::with('saveds')->first();
+
+        // dd($post->saveds);
+        dd($user->saveds);
+
+        $post->saveds()->attach($user);
+        // $saved = Post::with('savedpost.posts');
 
         // $savepost = Post::with(['user', 'savedpost.user']);
-        // $saveds = Saved::all();
-        // dd($saveds);
+        // $saveds = Saved::latest()->get();
+        // dd($saveds->user());
         // dd($savepost);
-        $query = Post::latest();
+        $query = Post::with(['user', 'saveds'])->get();
+        // dd($query);
+        // $query = DB::table('posts')->join('saveds', 'posts.id', '=', 'saveds.post_id')
+        //     ->join('categories', 'posts.category_id', '=', 'categories.id')
+        //     ->join('users', 'posts.user_id', '=', 'users.id')
+        //     ->latest('posts.created_at');
         // $query = Post::with(['user', 'savedpost.user'])->latest();
         if (request('cari')) {
             $query->where('title', 'like', '%' . request('cari') . '%')
@@ -35,10 +48,10 @@ class PostController extends Controller
         return view('home', [
             'title' => 'Blog | Home',
             'page' => 'All Post',
-            'posts' => $query->paginate(10)->withQueryString(),
-            // 'posts' => $query,
+            // 'posts' => $query->paginate(10)->withQueryString(),
+            'posts' => $query,
             // 'saved' => $savepost
-        ]);
+        ], compact('query'));
     }
 
     /**

@@ -62,8 +62,13 @@ class User extends Authenticatable
     //     return $this->belongsToMany(Post::class, 'saveds')->withPivot('id');
     // }
 
-    public function savedpost()
+    public function saveds()
     {
-        return $this->hasMany(Saved::class);
+        // parameter 1 (table yg mau dihubungkan)
+        // parameter 2 (table pivot yg mau menghubungkan 2 tabel)
+        // parameter 3 (variable FK pivot yang terhubung dengan tabel ini)
+        // parameter 4 (variable FK pivot yg terhubung dengan tabel yang mau dihubungkan)
+        // return $this->belongsToMany(Post::class, 'saveds', 'user_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'saveds', 'user_id', 'post_id')->withTimestamps();
     }
 }
