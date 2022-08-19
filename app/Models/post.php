@@ -31,8 +31,12 @@ class Post extends Model
 
     // public function savedpost()
     // {
-    //     return $this->belongsToMany(Saved::class);
+    //     return $this->belongsToMany(User::class, 'saveds')->withPivot('post_id');
     // }
+    public function savedpost()
+    {
+        return $this->hasMany(Saved::class);
+    }
 
     public function sluggable(): array
     {

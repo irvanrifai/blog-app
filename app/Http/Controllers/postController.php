@@ -15,20 +15,29 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Post $post)
     {
+        $saved = Post::where('user_id', auth()->user()->id)->whereHas('savedpost', function ($q) {
+            $q->where('post_id', true);
+        })->get();
+
+        // $savepost = Post::with(['user', 'savedpost.user']);
+        // $saveds = Saved::all();
+        // dd($saveds);
+        // dd($savepost);
         $query = Post::latest();
+        // $query = Post::with(['user', 'savedpost.user'])->latest();
         if (request('cari')) {
             $query->where('title', 'like', '%' . request('cari') . '%')
                 ->orWhere('body', 'like', '%' . request('cari') . '%')
                 ->orWhere('category', 'like', '%' . request('cari') . '%');
         }
-        // nanti disini pakai datatable, sementara passing data biasa dulu
         return view('home', [
             'title' => 'Blog | Home',
             'page' => 'All Post',
             'posts' => $query->paginate(10)->withQueryString(),
-            'saved' => Saved::all()
+            // 'posts' => $query,
+            // 'saved' => $savepost
         ]);
     }
 
@@ -59,13 +68,14 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, $slug)
     {
+        $posts = Post::where('slug', $slug)->first();
         return view('post', [
             'title' => 'Blog | Post',
-            'page' => $post->title,
-            'post' => $post
-        ]);
+            'page' => 'Detail Post',
+            'posts' => $posts
+        ], compact('posts'));
     }
 
     /**
