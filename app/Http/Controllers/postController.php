@@ -24,17 +24,20 @@ class PostController extends Controller
         $post = Post::with('saveds')->first();
 
         // dd($post->saveds);
-        dd($user->saveds);
+        // dd($user->saveds);
 
-        $post->saveds()->attach($user);
+        // $post->saveds()->attach($user);
         // $saved = Post::with('savedpost.posts');
 
         // $savepost = Post::with(['user', 'savedpost.user']);
         // $saveds = Saved::latest()->get();
         // dd($saveds->user());
         // dd($savepost);
-        $query = Post::with(['user', 'saveds'])->get();
-        // dd($query);
+
+        // $query = Post::with(['user', 'saveds'])->get();
+
+        $query = Post::latest();
+        // dd($query->saveds->first()->pivot->user_id);
         // $query = DB::table('posts')->join('saveds', 'posts.id', '=', 'saveds.post_id')
         //     ->join('categories', 'posts.category_id', '=', 'categories.id')
         //     ->join('users', 'posts.user_id', '=', 'users.id')
@@ -48,9 +51,9 @@ class PostController extends Controller
         return view('home', [
             'title' => 'Blog | Home',
             'page' => 'All Post',
-            // 'posts' => $query->paginate(10)->withQueryString(),
-            'posts' => $query,
-            // 'saved' => $savepost
+            'posts' => $query->paginate(10)->withQueryString(),
+            // 'posts' => $query,
+            // 'saved' => $query->saveds->first()->pivot
         ], compact('query'));
     }
 

@@ -42,7 +42,7 @@ class Post extends Model
         // parameter 3 (variable FK pivot yang terhubung dengan tabel ini)
         // parameter 4 (variable FK pivot yg terhubung dengan tabel yang mau dihubungkan)
         // return $this->belongsToMany(User::class, 'saveds', 'post_id', 'user_id');
-        return $this->belongsToMany(User::class, 'saveds', 'post_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'saveds', 'post_id', 'user_id')->withTimestamps()->withPivot('user_id', 'post_id');
     }
 
     public function sluggable(): array

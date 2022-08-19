@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSavedRequest;
 use App\Http\Requests\UpdateSavedRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SavedController extends Controller
@@ -17,16 +18,17 @@ class SavedController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Saved $saved)
+    public function index(Request $request)
     {
-        // $savedpost = Saved::latest();
-        // dd($savedpost);
-        $posts = Saved::latest()->where($saved->user(), auth()->user()->id)->get();
+        $posts = Post::with('user', 'saveds')->latest();
+        // dd($savedpost->saveds->first()->pivot->user_id);
+        // $posts = $savedpost->where($savedpost->saveds->first()->pivot->user_id, auth()->user()->id);
         // $posts = Saved::latest()->where('user_id', auth()->user()->id);
         return view('home', [
             'title' => 'Blog | Saved',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s saved post",
-            'posts' => $posts->paginate(10)->withQueryString(),
+            'posts' => $posts->paginate(10),
+            // 'posts' => $savedpost,
         ]);
     }
 

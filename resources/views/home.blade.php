@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('container')
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
-    {{-- <p>{{ $saved }}</p> --}}
     <div class="container-fluid">
         <div class="fixed-bottom text-right sm:px-14 py-14 px-10">
             <a class="text-gray-600 px-3 py-2 bg-gray-400 shadow-xl text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
@@ -11,6 +10,7 @@
         <div class="card-group" id="posts">
             <div class="row row-cols-md-2 g-4 mx-3 my-4">
                 @foreach ($posts as $post)
+                    {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
                     {{-- every post --}}
                     <div class="flex justify-center hover:bg-gray-200 hover:rounded-xl" id="post">
                         <div class="flex flex-col md:flex-row rounded-lg bg-white shadow-lg">
@@ -41,16 +41,18 @@
                             {{-- kasih kondisi saved/not saved --}}
                             {{-- masih error, entah relationship atau apanya --}}
                             <div class="flex px-4">
-                                @foreach ($post->saveds as $saved)
-                                    {{ dd($saved) }}
-                                    @if (auth()->user()->id == $saved->user_id)
-                                        <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                            href="#" id="saved"><i class="fa fa-bookmark"></i></a>
-                                    @else
-                                        <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
-                                            href="#" id="save"><i class="fa fa-bookmark"></i></a>
-                                    @endif
-                                @endforeach
+                                {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
+                                {{-- @foreach ($post->saveds as $save) --}}
+                                {{-- <p>{{ dd($post->saveds->all()->pivot->user_id) }}</p> --}}
+                                {{-- @if (auth()->user()->id == $save->first()->pivot->user_id) --}}
+                                @if (auth()->user()->id == 1)
+                                    <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                        href="#" id="saved"><i class="fa fa-bookmark"></i></a>
+                                @else
+                                    <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
+                                        href="#" id="save"><i class="fa fa-bookmark"></i></a>
+                                @endif
+                                {{-- @endforeach --}}
 
                                 {{-- scrpit for saved-unsaved button --}}
                                 <script type="text/javascript">
@@ -134,7 +136,7 @@
             </div>
             {{-- </div> --}}
         </div>
-        {{-- {{ $posts->links() }} --}}
+        {{ $posts->links() }}
     </div>
     <script>
         $(document).ready(function() {
