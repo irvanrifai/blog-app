@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('container')
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
-    <p>{{ $saved->post->name }}</p>
     {{-- <hr> --}}
     <div class="container-fluid">
         <div class="fixed-bottom text-right sm:px-14 py-14 px-10">
@@ -42,8 +41,8 @@
 
                             {{-- kasih kondisi saved/not saved --}}
                             {{-- masih error, entah relationship atau apanya --}}
-                            @if (auth()->user()->id != $post->id)
-                                {{-- @if (auth()->user()->id == $post->savedpost->user_id) --}}
+                            {{-- @if (auth()->user()->id != $post->id) --}}
+                            @if (auth()->user()->id == $post->user_id)
                                 <a class="text-right py-6 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                     href="#" id="saved"><i class="fa fa-bookmark"></i></a>
                             @else

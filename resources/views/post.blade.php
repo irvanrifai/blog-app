@@ -29,7 +29,7 @@
                                 href="#"><i class="fa fa-bookmark"></i></a> --}}
 
                 {{-- tombol edit, only my post --}}
-                @if (auth()->user()->id == $posts->user_id)
+                @if (auth()->user()->id == $post->user_id)
                     <a class="text-right py-4 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                         href="{{ url('mypost/' . $posts->slug . '/edit') }}"><i class="fa fa-pencil"></i></a>
                 @endif

@@ -17,9 +17,9 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->realTextBetween(10, 20, 1),
             'slug' => $this->faker->realTextBetween(10, 20, 1),
-            'body' => $this->faker->realTextBetween(50, 200, 3),
+            'body' => $this->faker->realTextBetween(50, 300, 3),
             'user_id' => $this->faker->numberBetween(1, 5),
-            'category_id' => $this->faker->numberBetween(1, 10),
+            'category_id' => $this->faker->numberBetween(1, 6),
         ];
     }
 }

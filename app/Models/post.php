@@ -24,10 +24,15 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function savedpost()
-    {
-        return $this->belongsToMany(Saved::class);
-    }
+    // public function user()
+    // {
+    //     return $this->belongsToMany(User::class, 'saveds');
+    // }
+
+    // public function savedpost()
+    // {
+    //     return $this->belongsToMany(Saved::class);
+    // }
 
     public function sluggable(): array
     {

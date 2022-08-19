@@ -43,6 +43,8 @@ Route::get('/settings', function () {
 
 Route::post('/signout', [SigninController::class, 'signout']);
 
+// Route::get('/signout', [SigninController::class, 'signout']);
+
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
 
 Route::post('/signup', [SignupController::class, 'store']);

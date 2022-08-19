@@ -52,13 +52,13 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function user()
-    {
-        // return $this->belongsToMany('');
-    }
+    // public function post()
+    // {
+    //     return $this->belongsToMany(Post::class, 'saveds');
+    // }
 
-    public function savedpost()
-    {
-        return $this->belongsToMany(Saved::class);
-    }
+    // public function savedpost()
+    // {
+    //     return $this->belongsToMany(Saved::class);
+    // }
 }
