@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('container')
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
-    <div class="table-responsive">
+    <div class="table-responsive pt-2">
         <table id="tb_datatable" class="table">
             <thead>
                 <tr>
@@ -24,12 +24,13 @@
                 }
             });
 
+            // to view/read data
             var table = $('#tb_datatable').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: '{{ url('post_') }}',
+                    url: '{{ url('pos_') }}',
                 },
                 columns: [{
                         render: function(data, type, row, meta) {
@@ -70,6 +71,8 @@
                     },
                 ],
             });
+
+            // to affect an action with modal
             $('body').on('click', '#editItem', function() {
                 var data_id = $(this).data('id');
                 $.get("{{ url('post_') }}" + '/' + data_id + '/edit', function(data) {
@@ -83,6 +86,7 @@
                 })
             });
 
+            // submit button after affect data
             $('#saveBtn').click(function(e) {
                 e.preventDefault();
                 $(this).html('Sending..');
@@ -106,10 +110,8 @@
                 });
             });
         });
-    </script>
 
-
-    <script>
+        // for table can selected row
         $(document).ready(function() {
             var table = $('#tb_datatable').DataTable();
 
@@ -117,6 +119,7 @@
                 $(this).toggleClass('selected');
             });
 
+            // button for inform amount of table selected (not used)
             $('#button').click(function() {
                 alert(table.rows('.selected').data().length + ' row(s) selected');
             });
