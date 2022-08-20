@@ -1,10 +1,10 @@
 @extends('layouts.main')
 @section('container')
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
-    <button type="button" class="btn btn-primary my-3 btn-sm bg-blue-500" data-bs-toggle="modal" data-bs-target="#tambah"><i
+    <a type="button" href="javascript:void(0)" class="btn btn-primary my-3 btn-sm bg-blue-500" id="createCategory"><i
             class="fa fa-plus"></i>
-        Add Category
-    </button>
+        Add category
+    </a>
     <div class="table-responsive pt-2">
         <table id="tb_datatable" class="table">
             <thead>
@@ -17,66 +17,6 @@
                 </tr>
             </thead>
         </table>
-    </div>
-
-    {{-- modal for action --}}
-    <div class="modal fade" id="ajaxModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modelHeading"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form novalidate action="{{ url('post_') }}" role="form" method="POST" enctype="multipart/form-data"
-                    id="form_data" class="needs-validation">
-                    @csrf
-                    <input type="hidden" name="data_id" id="data_id">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="row mb-2 g-3">
-                                <div class="mb-3 col-md-3 form-group">
-                                    <label for="nama" class="form-label">Nama</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        name="nama" id="nama" placeholder="Nama lengkap" required
-                                        value="{{ old('nama') }}">
-                                    @error('nama')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-3 form-group">
-                                    <label for="tgl_lahir" class="form-label">Tanggal lahir</label><span
-                                        class="text-danger">*</span>
-                                    <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
-                                        name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}">
-                                    @error('tgl_lahir')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-4 form-group">
-                                    <label for="alamat" class="form-label">Alamat</label><span
-                                        class="text-danger">*</span>
-                                    <textarea type="textarea" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
-                                        placeholder="Alamat tambahan" required value="{{ old('alamat') }}"></textarea>
-                                    @error('alamat')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="bi bi-plus-square btn btn-primary" id="saveBtn" value="create"><i
-                                class="fa fa-plus"></i> </button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 
     <script type="text/javascript">
@@ -122,8 +62,8 @@
             });
 
             // button to add new category
-            $('#createNewData').click(function() {
-                $('#saveBtn').html("Tambah");
+            $('#createCategory').click(function() {
+                $('#saveBtn').html("Add");
                 $('#data_id').val('');
                 $('#form_data').trigger("reset");
                 $('#modelHeading').html("Create New Data");
@@ -133,14 +73,12 @@
             // to affect an action with modal
             $('body').on('click', '#editItem', function() {
                 var data_id = $(this).data('id');
-                $.get("{{ url('post_') }}" + '/' + data_id + '/edit', function(data) {
+                $.get("{{ url('category_') }}" + '/' + data_id + '/edit', function(data) {
                     $('#modelHeading').html("Edit Item");
                     $('#saveBtn').html("Update");
                     $('#ajaxModel').modal('show');
                     $('#data_id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#tgl_lahir').val(data.tgl_lahir);
-                    $('#alamat').val(data.alamat);
+                    $('#name').val(data.name);
                 })
             });
 
@@ -151,7 +89,7 @@
 
                 $.ajax({
                     data: $('#form_data').serialize(),
-                    url: "{{ url('PenggunaController') }}",
+                    url: "{{ url('category_') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
@@ -166,6 +104,29 @@
                         $('#saveBtn').html('Save Changes');
                     }
                 });
+            });
+
+            // button to delete item
+            $('body').on('click', '#deleteItem', function() {
+
+                var data_id = $(this).data("id");
+                var result = confirm("Are You sure want to delete?");
+
+                if (result) {
+                    $.ajax({
+                        url: "{{ url('category_') }}" + '/' + data_id,
+                        // url: "{{ route('category_.store') }}" + '/' + data_id,
+                        type: "DELETE",
+                        success: function(data) {
+                            table.draw();
+                        },
+                        error: function(data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {
+                    return false;
+                }
             });
         });
 
@@ -183,4 +144,43 @@
             });
         });
     </script>
+
+    {{-- modal for action --}}
+    <div class="modal fade" id="ajaxModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modelHeading"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form novalidate action="{{ url('post_') }}" role="form" method="POST" enctype="multipart/form-data"
+                    id="form_data" class="needs-validation">
+                    @csrf
+                    <input type="hidden" name="data_id" id="data_id">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="row mb-2 g-3">
+                                <div class="mb-3 col-md-6 form-group">
+                                    <label for="name" class="form-label">Category Name</label><span
+                                        class="text-danger">*</span>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" id="name" placeholder="Category" required
+                                        value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="bi bi-plus-square btn btn-primary bg-blue-500" id="saveBtn"
+                            value="create"><i class="fa fa-plus"></i> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

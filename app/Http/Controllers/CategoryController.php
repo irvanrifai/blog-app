@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = category::latest()->get();
+            $data = category::latest();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
@@ -55,9 +55,13 @@ class CategoryController extends Controller
      * @param  \App\Http\Requests\StorecategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorecategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = category::updateOrCreate(
+            ['id' => $request->data_id],
+            ['name' => $request->name]
+        );
+        return response()->json($data);
     }
 
     /**
@@ -77,9 +81,10 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit(category $category, $id)
     {
-        //
+        $data = category::find($id);
+        return response()->json($data);
     }
 
     /**
@@ -100,8 +105,9 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy(category $category, $id)
     {
-        //
+        $data = category::find($id)->delete();
+        return response()->json($data);
     }
 }

@@ -36,7 +36,7 @@ class SigninController extends Controller
 
             // Alert::success('Congrats', 'Signin Successfull');
             Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
-            if (auth()->user()->role == 2) {
+            if (auth()->user()->role == 1) {
                 return redirect()->intended(url('admin'));
             } else {
                 return redirect()->intended(url('mypost'));

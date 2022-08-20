@@ -57,14 +57,14 @@ class AdminController extends Controller
             'name' => 'required|max:50',
             'username' => 'required|max:50',
             'email' => 'required|email:dns|max:70',
-            'role' => 'required',
+            'role' => 'max:10',
             'password' => 'required|min:8|max:40',
             'remember_token' => Str::random(10),
         ]);
 
-        // dd($validatedData);
-
-        $validatedData['role'] = 2;
+        if ($request->validate('role')) {
+            $validatedData['role'] = 1;
+        }
 
         $validatedData['password'] = bcrypt($validatedData['password']);
         User::create($validatedData);
