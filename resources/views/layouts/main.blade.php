@@ -65,14 +65,30 @@
 </head>
 
 <body>
-    @include('partials.navbar')
-    @include('sweetalert::alert')
-    <div class="container px-4 py-4">
-        <div class="col">
-            @yield('container')
+    @can('isAdmin')
+        <div class="row px-2 py-4">
+            <div class="col">
+                <div class="container">
+                    @include('partials.sidebar')
+                    @include('sweetalert::alert')
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    @yield('container')
+                </div>
+            </div>
         </div>
-    </div>
-    @include('partials.footer')
+    @else
+        @include('partials.navbar')
+        @include('sweetalert::alert')
+        <div class="container px-4 py-4">
+            <div class="col">
+                @yield('container')
+            </div>
+        </div>
+        @include('partials.footer')
+    @endcan
 </body>
 
 </html>

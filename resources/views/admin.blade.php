@@ -1,4 +1,4 @@
 @extends('layouts.main')
 @section('container')
-    <h1>Admin | Data User</h1>
+    <h1 class="text-2xl mb-4">{{ $page }}</h1>
 @endsection

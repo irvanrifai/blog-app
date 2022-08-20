@@ -36,7 +36,11 @@ class SigninController extends Controller
 
             // Alert::success('Congrats', 'Signin Successfull');
             Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
-            return redirect()->intended('mypost');
+            if (auth()->user()->role == 2) {
+                return redirect()->intended(url('admin'));
+            } else {
+                return redirect()->intended(url('mypost'));
+            }
         }
 
         Alert::toast("Sign In Unsuccessfull, Your Credentials Doesn't match", 'error');

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
@@ -27,31 +28,37 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('isUser', function (User $user) {
-            return $user->role === 1;
+            return $user->role == 1;
         });
 
         Gate::define('isAdmin', function (User $user) {
-            return $user->role === 2;
+            return $user->role == 2;
         });
 
-        Gate::define('do_read', function ($user, $url) {
-            return session('access')->where('url', $url)
-                ->where('type', 'Read')->isNotEmpty();
+        Gate::define('read_post', ([Post::class, 'index']));
+
+        // Gate::define('create_post', ([Post::class, 'store']));
+
+        Gate::define('create_post', function (User $user, Post $post) {
+            return $user->id === $post->user_id;
         });
 
-        Gate::define('do_create', function ($user, $raw) {
-            return session('permissions')->where('raw', $raw)
-                ->isNotEmpty();
+        Gate::define('update_post', function (User $user, Post $post) {
+            return $user->id === $post->user_id;
         });
 
-        Gate::define('do_update', function ($user, $raw) {
-            return session('permissions')->where('raw', $raw)
-                ->isNotEmpty();
+        Gate::define('delete_post', function (User $user, Post $post) {
+            return $user->id === $post->user_id;
         });
 
-        Gate::define('do_delete', function ($user, $raw) {
-            return session('permissions')->where('raw', $raw)
-                ->isNotEmpty();
+        Gate::define('create_user', ([User::class, 'store']));
+
+        Gate::define('update_user', function (User $user) {
+            return $user->id === auth()->user()->id;
+        });
+
+        Gate::define('delete_user', function (User $user) {
+            return $user->id === auth()->user()->id;
         });
     }
 }
