@@ -1,6 +1,10 @@
 @extends('layouts.main')
 @section('container')
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
+    <button type="button" class="btn btn-primary my-3 btn-sm bg-blue-500" data-bs-toggle="modal" data-bs-target="#tambah"><i
+            class="fa fa-plus"></i>
+        Add Category
+    </button>
     <div class="table-responsive pt-2">
         <table id="tb_datatable" class="table">
             <thead>
@@ -90,7 +94,7 @@
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: '{{ url('post_') }}',
+                    url: '{{ url('category_') }}',
                 },
                 columns: [{
                         render: function(data, type, row, meta) {
@@ -98,30 +102,15 @@
                         }
                     },
                     {
-                        data: 'title',
-                        name: 'title',
-                        title: 'Title',
+                        data: 'id',
+                        name: 'id',
+                        title: 'ID Category',
                     },
                     {
-                        data: 'category_id',
-                        name: 'category_id',
-                        title: 'Category',
+                        data: 'name',
+                        name: 'name',
+                        title: 'Name',
                     },
-                    {
-                        data: 'body',
-                        name: 'body',
-                        title: 'Body',
-                    },
-                    // {
-                    //     data: 'created_at',
-                    //     name: 'created_at',
-                    //     title: 'Created at',
-                    // },
-                    // {
-                    //     data: 'updated_at',
-                    //     name: 'updated_at',
-                    //     title: 'Updated at',
-                    // },
                     {
                         data: 'action',
                         name: 'action',
@@ -130,6 +119,15 @@
                         orderable: false
                     },
                 ],
+            });
+
+            // button to add new category
+            $('#createNewData').click(function() {
+                $('#saveBtn').html("Tambah");
+                $('#data_id').val('');
+                $('#form_data').trigger("reset");
+                $('#modelHeading').html("Create New Data");
+                $('#ajaxModel').modal('show');
             });
 
             // to affect an action with modal

@@ -15,6 +15,66 @@
         </table>
     </div>
 
+    {{-- modal for action --}}
+    <div class="modal fade" id="ajaxModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modelHeading"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form novalidate action="{{ url('user_') }}" role="form" method="POST" enctype="multipart/form-data"
+                    id="form_data" class="needs-validation">
+                    @csrf
+                    <input type="hidden" name="data_id" id="data_id">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="row mb-2 g-3">
+                                <div class="mb-3 col-md-3 form-group">
+                                    <label for="nama" class="form-label">Nama</label><span class="text-danger">*</span>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        name="nama" id="nama" placeholder="Nama lengkap" required
+                                        value="{{ old('nama') }}">
+                                    @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-3 form-group">
+                                    <label for="tgl_lahir" class="form-label">Tanggal lahir</label><span
+                                        class="text-danger">*</span>
+                                    <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
+                                        name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}">
+                                    @error('tgl_lahir')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-4 form-group">
+                                    <label for="alamat" class="form-label">Alamat</label><span
+                                        class="text-danger">*</span>
+                                    <textarea type="textarea" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
+                                        placeholder="Alamat tambahan" required value="{{ old('alamat') }}"></textarea>
+                                    @error('alamat')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="bi bi-plus-square btn btn-primary" id="saveBtn" value="create"><i
+                                class="fa fa-plus"></i> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         $(function() {
 
@@ -30,7 +90,7 @@
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: '{{ url('use_') }}',
+                    url: '{{ url('user_') }}',
                 },
                 columns: [{
                         render: function(data, type, row, meta) {
@@ -52,16 +112,16 @@
                         name: 'email',
                         title: 'Email',
                     },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
-                        title: 'Created at',
-                    },
-                    {
-                        data: 'updated_at',
-                        name: 'updated_at',
-                        title: 'Updated at',
-                    },
+                    // {
+                    //     data: 'created_at',
+                    //     name: 'created_at',
+                    //     title: 'Created at',
+                    // },
+                    // {
+                    //     data: 'updated_at',
+                    //     name: 'updated_at',
+                    //     title: 'Updated at',
+                    // },
                     {
                         data: 'action',
                         name: 'action',

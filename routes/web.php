@@ -11,6 +11,7 @@ use App\Http\Controllers\MypostController;
 use App\Http\Controllers\SigninController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminpostController;
 use App\Http\Controllers\AdminuserController;
 
@@ -53,19 +54,20 @@ Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
 
 Route::post('/signup', [SignupController::class, 'store']);
 
-Route::resource('/post', PostController::class)->middleware('auth');
+Route::resource('/post', PostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
+Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
-Route::resource('/savedpost', SavedController::class)->middleware('auth');
+Route::resource('/profile', ProfileController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
-Route::resource('/profile', ProfileController::class)->middleware('auth');
-
-Route::resource('/savedpost', SavedController::class)->middleware('auth');
+Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
 Route::resource('/admin', AdminController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
 
 Route::resource('/user_', AdminuserController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
 
 Route::resource('/post_', AdminpostController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
+
+Route::resource('/category_', CategoryController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
 
 Route::resource('/mypost', MypostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');

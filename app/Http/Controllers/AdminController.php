@@ -19,11 +19,13 @@ class AdminController extends Controller
     {
         $posts = Post::latest();
         $users = User::latest();
+        $category = category::latest();
         return view('admin.dashboard', [
             'title' => 'Blog | Admin',
             'page' => 'Dashboard',
             'posts' => $posts,
-            'users' => $users
+            'users' => $users,
+            'category' => $category
         ], compact('posts', 'users'));
     }
 
