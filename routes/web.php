@@ -70,4 +70,6 @@ Route::resource('/post_', AdminpostController::class)->middleware('auth', 'can:i
 
 Route::resource('/category_', CategoryController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
 
+Route::resource('/signup_', AdminController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
+
 Route::resource('/mypost', MypostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');

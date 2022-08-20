@@ -7,6 +7,9 @@ use App\Models\Post;
 use App\Models\User;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
+use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -36,7 +39,10 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.signup_admin', [
+            "title" => "Admin | SignUp",
+            'page' => 'Sign Up for Administrator',
+        ]);
     }
 
     /**
@@ -45,9 +51,25 @@ class AdminController extends Controller
      * @param  \App\Http\Requests\StorecategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorecategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:50',
+            'username' => 'required|max:50',
+            'email' => 'required|email:dns|max:70',
+            'role' => 'required',
+            'password' => 'required|min:8|max:40',
+            'remember_token' => Str::random(10),
+        ]);
+
+        // dd($validatedData);
+
+        $validatedData['role'] = 2;
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+        User::create($validatedData);
+        Alert::toast('Sign Up Successfull, Please Login', 'success');
+        return redirect('/signin');
     }
 
     /**
