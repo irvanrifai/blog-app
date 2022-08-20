@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Post;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class AdminuserController extends Controller
 {
@@ -15,16 +17,28 @@ class AdminuserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest();
+        if ($request->ajax()) {
+            $data = User::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit" id="editItem"><span class="badge bg-warning text-dark"><i class="fa fa-pencil"></i></span></a>';
+
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="delete" id="deleteItem"><span class="badge bg-danger"><i
+                    class="fa fa-trash"></i></span></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         $users = User::latest();
-        return view('admin', [
+        return view('admin.user_datatable', [
             'title' => 'Blog | Admin',
             'page' => 'Manage User Activity',
-            'posts' => $posts,
             'users' => $users
-        ], compact('posts', 'users'));
+        ], compact('users'));
     }
 
 

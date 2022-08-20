@@ -19,7 +19,7 @@ class AdminController extends Controller
     {
         $posts = Post::latest();
         $users = User::latest();
-        return view('admin', [
+        return view('admin.dashboard', [
             'title' => 'Blog | Admin',
             'page' => 'Dashboard',
             'posts' => $posts,

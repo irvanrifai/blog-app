@@ -67,13 +67,13 @@
 <body>
     @can('isAdmin')
         <div class="row px-2 py-4">
+            @include('sweetalert::alert')
             <div class="col">
                 <div class="container">
                     @include('partials.sidebar')
-                    @include('sweetalert::alert')
                 </div>
             </div>
-            <div class="col">
+            <div class="col-md-9">
                 <div class="container">
                     @yield('container')
                 </div>
