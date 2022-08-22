@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->text('body');
             $table->foreignId('user_id', 255)->nullable();
             $table->foreignId('category_id', 255)->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

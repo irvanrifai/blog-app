@@ -107,7 +107,6 @@ class CategoryController extends Controller
      */
     public function destroy(category $category, $id)
     {
-        // $data = category::find($id)->delete();
         $data = category::where('id', $id)->delete();
         return response()->json($data);
     }

@@ -20,7 +20,7 @@ class AdminpostController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Post::latest()->get();
+            $data = Post::latest();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {

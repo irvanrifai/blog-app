@@ -20,7 +20,7 @@ class AdminuserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::latest()->get();
+            $data = User::latest();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {

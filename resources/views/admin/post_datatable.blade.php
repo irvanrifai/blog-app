@@ -112,16 +112,6 @@
                         name: 'body',
                         title: 'Body',
                     },
-                    // {
-                    //     data: 'created_at',
-                    //     name: 'created_at',
-                    //     title: 'Created at',
-                    // },
-                    // {
-                    //     data: 'updated_at',
-                    //     name: 'updated_at',
-                    //     title: 'Updated at',
-                    // },
                     {
                         data: 'action',
                         name: 'action',
