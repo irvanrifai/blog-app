@@ -33,7 +33,7 @@
                                 <div class="mb-3 col-md-3 form-group">
                                     <label for="title" class="form-label">Title</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                        name="title" id="title" placeholder="title lengkap" required
+                                        name="title" id="title" placeholder="title" required
                                         value="{{ old('title') }}">
                                     @error('title')
                                         <div class="invalid-feedback">

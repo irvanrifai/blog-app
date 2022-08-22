@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class AdminuserController extends Controller
@@ -25,9 +26,9 @@ class AdminuserController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     if ($data->status == 'active') {
-                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="activated" class="activated" id="activatedItem"><span class="badge bg-success">activated</span></a>';
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="activated" class="manipulate" id="manipulateItem"><span class="badge bg-success">activated</span></a>';
                     } else if ($data->status == 'deactivated') {
-                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="deactivated" class="deactivated" id="deactivatedItem"><span class="badge bg-danger">deactivated</span></a>';
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="deactivated" class="manipulate" id="manipulateItem"><span class="badge bg-danger">deactivated</span></a>';
                     }
 
                     return $btn;

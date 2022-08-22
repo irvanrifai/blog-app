@@ -113,14 +113,9 @@
                         title: 'Email',
                     },
                     // {
-                    //     data: 'created_at',
-                    //     name: 'created_at',
-                    //     title: 'Created at',
-                    // },
-                    // {
-                    //     data: 'updated_at',
-                    //     name: 'updated_at',
-                    //     title: 'Updated at',
+                    //     data: 'role',
+                    //     name: 'role',
+                    //     title: 'Role',
                     // },
                     {
                         data: 'action',
@@ -133,16 +128,18 @@
             });
 
             // to affect an action with modal
-            $('body').on('click', '#editItem', function() {
+            $('body').on('click', '#manipulateItem', function() {
                 var data_id = $(this).data('id');
                 $.get("{{ url('user_') }}" + '/' + data_id + '/edit', function(data) {
                     $('#modelHeading').html("Edit Item");
                     $('#saveBtn').html("Update");
                     $('#ajaxModel').modal('show');
                     $('#data_id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#tgl_lahir').val(data.tgl_lahir);
-                    $('#alamat').val(data.alamat);
+                    $('#name').val(data.name);
+                    $('#username').val(data.username);
+                    $('#email').val(data.email);
+                    $('#role').val(data.role);
+                    $('#status').val(data.status);
                 })
             });
 
