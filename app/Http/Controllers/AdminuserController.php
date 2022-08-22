@@ -40,7 +40,8 @@ class AdminuserController extends Controller
         return view('admin.user_datatable', [
             'title' => 'Blog | Admin',
             'page' => 'Manage User Activity',
-            'users' => $users
+            'users' => $users,
+            'profile' => auth()->user(),
         ], compact('users'));
     }
 

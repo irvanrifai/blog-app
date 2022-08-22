@@ -68,6 +68,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-2xl-8 mb-4 mt-3">
+                <div class="card border-secondary rounded-lg shadow h-500 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h6 mb-0 text-gray-400">Activities Admin Documented</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
