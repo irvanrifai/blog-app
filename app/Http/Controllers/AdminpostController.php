@@ -20,16 +20,21 @@ class AdminpostController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Post::latest();
+            // $categories = category::latest();
+            $data = Post::with('category')->latest();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit" id="editItem"><span class="badge bg-danger">takedown</span></a>';
+                    if ($data->status == null) {
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="takedown" class="takedown" id="manipulateItem"><span class="badge bg-danger">takedown</span></a>';
+                    } else if ($data->status == 1) {
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="restore" class="restore" id="manipulateItem"><span class="badge bg-success">restore</span></a>';
+                    }
 
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="delete" id="deleteItem"><span class="badge bg-success">restore</span></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
+                ->escapeColumns('active')
                 ->make(true);
         }
         $posts = Post::latest()->get();
@@ -58,7 +63,11 @@ class AdminpostController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
-        //
+        $data = Post::updateOrCreate(
+            ['id' => $request->data_id],
+            ['status' => $request->status]
+        );
+        return response()->json($data);
     }
 
     /**
@@ -78,9 +87,10 @@ class AdminpostController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit(category $category, $id)
     {
-        //
+        $data = Post::find($id);
+        return response()->json($data);
     }
 
     /**

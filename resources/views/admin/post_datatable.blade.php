@@ -17,7 +17,7 @@
 
     {{-- modal for action --}}
     <div class="modal fade" id="ajaxModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modelHeading"></h5>
@@ -31,33 +31,53 @@
                         <div class="row">
                             <div class="row mb-2 g-3">
                                 <div class="mb-3 col-md-3 form-group">
-                                    <label for="nama" class="form-label">Nama</label><span class="text-danger">*</span>
-                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        name="nama" id="nama" placeholder="Nama lengkap" required
-                                        value="{{ old('nama') }}">
-                                    @error('nama')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-3 form-group">
-                                    <label for="tgl_lahir" class="form-label">Tanggal lahir</label><span
-                                        class="text-danger">*</span>
-                                    <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
-                                        name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}">
-                                    @error('tgl_lahir')
+                                    <label for="title" class="form-label">Title</label><span class="text-danger">*</span>
+                                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                        name="title" id="title" placeholder="title lengkap" required
+                                        value="{{ old('title') }}">
+                                    @error('title')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-4 form-group">
-                                    <label for="alamat" class="form-label">Alamat</label><span
+                                    <label for="category" class="form-label">Category</label><span
                                         class="text-danger">*</span>
-                                    <textarea type="textarea" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
-                                        placeholder="Alamat tambahan" required value="{{ old('alamat') }}"></textarea>
-                                    @error('alamat')
+                                    <input type="text" class="form-control @error('category') is-invalid @enderror"
+                                        name="category" id="category" placeholder="category tambahan" required
+                                        value="{{ old('category') }}">
+                                    @error('category')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-4 form-group">
+                                    <label for="body" class="form-label">Body</label><span class="text-danger">*</span>
+                                    <textarea type="textarea" class="form-control @error('body') is-invalid @enderror" name="body" id="body"
+                                        placeholder="body tambahan" required value="{{ old('body') }}"></textarea>
+                                    @error('body')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-4 form-group">
+                                    <label for="status" class="block text-sm font-medium text-gray-700">status
+                                    </label>
+                                    <select
+                                        class="mt-2 form-select @error('status') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        id="status" name="status">
+                                        <option value="{{ old('status') }}" id="status" name="status" selected>
+                                            <label class="text-gray-400 text-sm">
+                                                {{ old('status') }}
+                                            </label>
+                                        </option>
+                                        <option value="{{ null }}">{{ 'restore' }}</option>
+                                        <option value="{{ 1 }}">{{ 'takedown' }}</option>
+                                    </select>
+                                    @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -103,8 +123,8 @@
                         title: 'Title',
                     },
                     {
-                        data: 'category_id',
-                        name: 'category_id',
+                        data: 'category.name',
+                        name: 'category',
                         title: 'Category',
                     },
                     {
@@ -123,16 +143,17 @@
             });
 
             // to affect an action with modal
-            $('body').on('click', '#editItem', function() {
+            $('body').on('click', '#manipulateItem', function() {
                 var data_id = $(this).data('id');
                 $.get("{{ url('post_') }}" + '/' + data_id + '/edit', function(data) {
-                    $('#modelHeading').html("Edit Item");
+                    $('#modelHeading').html("Post");
                     $('#saveBtn').html("Update");
                     $('#ajaxModel').modal('show');
                     $('#data_id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#tgl_lahir').val(data.tgl_lahir);
-                    $('#alamat').val(data.alamat);
+                    $('#title').val(data.title);
+                    $('#category').val(data.category);
+                    $('#body').val(data.body);
+                    $('#status').val(data.status);
                 })
             });
 
@@ -143,7 +164,7 @@
 
                 $.ajax({
                     data: $('#form_data').serialize(),
-                    url: "{{ url('PenggunaController') }}",
+                    url: "{{ url('post_') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {

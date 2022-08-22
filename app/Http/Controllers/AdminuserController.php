@@ -24,9 +24,12 @@ class AdminuserController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit" id="editItem"><span class="badge bg-success">activated</span></a>';
+                    if ($data->status == 'active') {
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="activated" class="activated" id="activatedItem"><span class="badge bg-success">activated</span></a>';
+                    } else if ($data->status == 'deactivated') {
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="deactivated" class="deactivated" id="deactivatedItem"><span class="badge bg-danger">deactivated</span></a>';
+                    }
 
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="delete" id="deleteItem"><span class="badge bg-danger">deactived</span></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
