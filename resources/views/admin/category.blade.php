@@ -115,8 +115,11 @@
                 if (result) {
                     $.ajax({
                         url: "{{ url('category_') }}" + '/' + data_id,
-                        // url: "{{ route('category_.store') }}" + '/' + data_id,
-                        type: "DELETE",
+                        type: "delete",
+                        data: {
+                            id: data_id,
+                            _token: '{{ csrf_token() }}'
+                        },
                         success: function(data) {
                             table.draw();
                         },
