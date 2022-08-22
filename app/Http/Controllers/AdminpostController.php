@@ -30,7 +30,6 @@ class AdminpostController extends Controller
                     } else if ($data->status == 1) {
                         $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="restore" class="restore" id="manipulateItem"><span class="badge bg-success">restore</span></a>';
                     }
-
                     return $btn;
                 })
                 ->rawColumns(['action'])

@@ -30,7 +30,6 @@ class AdminuserController extends Controller
                     } else if ($data->status == 'deactivated') {
                         $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="deactivated" class="manipulate" id="manipulateItem"><span class="badge bg-danger">deactivated</span></a>';
                     }
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
