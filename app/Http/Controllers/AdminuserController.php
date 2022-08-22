@@ -64,7 +64,11 @@ class AdminuserController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
-        //
+        $data = User::updateOrCreate(
+            ['id' => $request->data_id],
+            ['status' => $request->status]
+        );
+        return response()->json($data);
     }
 
     /**
@@ -84,9 +88,10 @@ class AdminuserController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit(category $category, $id)
     {
-        //
+        $data = User::find($id);
+        return response()->json($data);
     }
 
     /**
