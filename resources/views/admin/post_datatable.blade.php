@@ -31,15 +31,6 @@
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-3 sm:col-span-6">
                                         <label for="cover" class="block text-sm font-medium text-gray-700">Cover</label>
-                                        <script>
-                                            var loadFile = function(event) {
-                                                var output = document.getElementById('output');
-                                                output.src = URL.createObjectURL(event.target.files[0]);
-                                                output.onload = function() {
-                                                    URL.revokeObjectURL(output.src) // free memory
-                                                }
-                                            };
-                                        </script>
                                         <div class="mt-4 flex items-center">
                                             <span
                                                 class="inline-block col-auto overflow-clip h-50 w-60 sm:h-50 sm:w-60 rounded-lg bg-gray-100">
@@ -56,7 +47,8 @@
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                                        <input type="text" name="title" id="title" autocomplete="given-name"
+                                        <input type="text" readonly name="title" id="title"
+                                            autocomplete="given-name"
                                             class="@error('title') is-invalid @enderror mt-2 w-full shadow-md border-gray-700 font-medium py-1.5 sm:text-sm rounded-md"
                                             value="{{ old('title') }}">
                                         @error('title')
@@ -69,7 +61,7 @@
                                     <div class="col-span-3 sm:col-span-2">
                                         <label for="category" class="block text-sm font-medium text-gray-700">Category
                                         </label>
-                                        <select
+                                        <select aria-readonly="true"
                                             class="mt-2 form-select @error('category') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                             id="category" name="category">
                                             <option value="{{ old('category') }}" selected>
@@ -105,7 +97,17 @@
                                             </div>
                                         @enderror
                                     </div>
-
+                                    <div class="col-span-4 sm:col-span-2">
+                                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                                        <input type="text" readonly name="status" id="status" value=""
+                                            autocomplete="status"
+                                            class="@error('status') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                        @error('status')
+                                            <div class="invalid-feedback ms-4">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="px-4 py-3 bg-gray-50 sm:px-6">
@@ -168,7 +170,7 @@
                             {
                                 data: 'action',
                                 name: 'action',
-                                title: 'Action',
+                                title: 'Status',
                                 searchable: false,
                                 orderable: false
                             },
@@ -184,7 +186,7 @@
                             $('#ajaxModel').modal('show');
                             $('#data_id').val(data.id);
                             $('#title').val(data.title);
-                            $('#category').val(data.category);
+                            // $('#category').val(data.category);
                             $('#body').val(data.body);
                             $('#status').val(data.status);
                         })

@@ -8,7 +8,7 @@
             <div class="mt-10 md:mt-0 md:col-span-2">
                 <form action="/signup" method="POST">
                     @csrf
-                    <input type="hidden" name="role" id="role" value="1">
+                    {{-- <input type="hidden" name="role" id="role" value="1"> --}}
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
@@ -66,7 +66,7 @@
                                 <a href="/signin" class="text-sm text-blue-600">Sign in</a>
                             </div>
                             <div class="text-right">
-                                <button type="submit"
+                                <button type="submit" name="role" value="1"
                                     class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sign
                                     up</button>
                             </div>

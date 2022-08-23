@@ -47,6 +47,7 @@ class SignupController extends Controller
             'email' => 'required|email:dns|max:70',
             'password' => 'required|min:8|max:40',
             'remember_token' => Str::random(10),
+            'role' => 'max:10'
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);

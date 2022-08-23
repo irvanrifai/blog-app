@@ -40,7 +40,7 @@ class AdminController extends Controller
     public function create()
     {
         return view('admin.signup_admin', [
-            "title" => "Admin | SignUp",
+            "title" => "Admin | Sign Up",
             'page' => 'Sign Up for Administrator',
         ]);
     }
@@ -61,10 +61,6 @@ class AdminController extends Controller
             'password' => 'required|min:8|max:40',
             'remember_token' => Str::random(10),
         ]);
-
-        if ($request->validate('role')) {
-            $validatedData['role'] = 1;
-        }
 
         $validatedData['password'] = bcrypt($validatedData['password']);
         User::create($validatedData);

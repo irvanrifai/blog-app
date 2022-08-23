@@ -36,6 +36,7 @@ class AdminuserController extends Controller
                 ->make(true);
         }
         $users = User::latest()->get();
+        // dd($users);
         return view('admin.user_datatable', [
             'title' => 'Blog | Admin',
             'page' => 'Manage User Activity',
@@ -65,7 +66,8 @@ class AdminuserController extends Controller
     {
         $data = User::updateOrCreate(
             ['id' => $request->data_id],
-            ['status' => $request->status]
+            ['status' => $request->btn_act],
+            ['status' => $request->act]
         );
         return response()->json($data);
     }

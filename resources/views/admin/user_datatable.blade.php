@@ -33,91 +33,101 @@
                             <div class="row mb-2 g-3">
                                 <div class="md:grid md:grid-cols-3 md:gap-6 pb-4">
                                     <div class="md:mt-0 md:col-span-2">
-                                        <form action="{{ url('profile/' . $profile->username) }}" method="POST"
-                                            enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="shadow sm:rounded-md sm:overflow-hidden">
-                                                <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                                    <div>
-                                                        <label class="block text-sm font-medium text-gray-700"> Photo
-                                                        </label>
-                                                        <div class="mt-2 flex items-center">
-                                                            {{-- script for change photo --}}
-                                                            <script>
-                                                                var loadFile = function(event) {
-                                                                    var output = document.getElementById('output');
-                                                                    output.src = URL.createObjectURL(event.target.files[0]);
-                                                                    output.onload = function() {
-                                                                        URL.revokeObjectURL(output.src) // free memory
-                                                                    }
-                                                                };
-                                                            </script>
-                                                            <span
-                                                                class="inline-block h-25 w-25 rounded-full overflow-hidden bg-gray-100">
-                                                                @if ($profile->photo)
-                                                                    <img id="output" class="h-full w-full"
-                                                                        src="{{ asset('storage/' . $profile->photo) }}">
-                                                                @else
-                                                                    <img id="output" class="items-align-center img-fluid"
-                                                                        src="https://media.istockphoto.com/vectors/default-avatar-profile-icon-vector-vector-id1337144146?b=1&k=20&m=1337144146&s=170667a&w=0&h=ys-RUZbXzQ-FQdLstHeWshI4ViJuEhyEa4AzQNQ0rFI=">
-                                                                @endif
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-span-6 sm:col-span-3 lg:col-span-6">
-                                                        <label for="username"
-                                                            class="block text-sm font-medium text-gray-700">Username</label>
-                                                        <input type="text" name="username" id="username"
-                                                            value="{{ $profile->username }}" autocomplete="username"
-                                                            class="@error('username') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                                        @error('username')
-                                                            <div class="invalid-feedback ms-4">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="col-span-3 sm:col-span-3 lg:col-span-2">
-                                                        <label for="name"
-                                                            class="block text-sm font-medium text-gray-700">Name</label>
-                                                        <input type="text" name="name" id="name"
-                                                            value="{{ $profile->name }}" autocomplete="name"
-                                                            class="@error('name') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                                        @error('name')
-                                                            <div class="invalid-feedback ms-4">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="col-span-4 sm:col-span-2">
-                                                        <label for="email"
-                                                            class="block text-sm font-medium text-gray-700">Email
-                                                            address</label>
-                                                        <input type="text" name="email" id="email"
-                                                            value="{{ $profile->email }}" autocomplete="email"
-                                                            class="@error('email') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                                        @error('email')
-                                                            <div class="invalid-feedback ms-4">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
+                                        <div class="shadow sm:rounded-md sm:overflow-hidden">
+                                            <div class="px-4 py-2 pb-2 bg-white space-y-4 sm:p-6">
+                                                <div class="col-span-3">
+                                                    <label class="block text-sm font-medium text-gray-700"> Photo
+                                                    </label>
+                                                    <div class="mt-2 flex items-center">
+                                                        <span
+                                                            class="inline-block h-25 w-25 rounded-full overflow-hidden bg-gray-100">
+                                                            @if ($profile->photo)
+                                                                <img id="output" class="h-full w-full"
+                                                                    src="{{ asset('storage/' . $profile->photo) }}">
+                                                            @else
+                                                                <img id="output" class="items-align-center img-fluid"
+                                                                    src="https://media.istockphoto.com/vectors/default-avatar-profile-icon-vector-vector-id1337144146?b=1&k=20&m=1337144146&s=170667a&w=0&h=ys-RUZbXzQ-FQdLstHeWshI4ViJuEhyEa4AzQNQ0rFI=">
+                                                            @endif
+                                                        </span>
                                                     </div>
                                                 </div>
-                                        </form>
+                                                <div class="col-span-6 sm:col-span-3 lg:col-span-6">
+                                                    <label for="username"
+                                                        class="block text-sm font-medium text-gray-700">Username</label>
+                                                    <input type="text" readonly name="username" id="username"
+                                                        value="{{ $profile->username }}" autocomplete="username"
+                                                        class="@error('username') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                    @error('username')
+                                                        <div class="invalid-feedback ms-4">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-span-3 sm:col-span-3 lg:col-span-2">
+                                                    <label for="name"
+                                                        class="block text-sm font-medium text-gray-700">Name</label>
+                                                    <input type="text" readonly name="name" id="name"
+                                                        value="{{ $profile->name }}" autocomplete="name"
+                                                        class="@error('name') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                    @error('name')
+                                                        <div class="invalid-feedback ms-4">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-span-4 sm:col-span-2">
+                                                    <label for="email"
+                                                        class="block text-sm font-medium text-gray-700">Email
+                                                        address</label>
+                                                    <input type="text" readonly name="email" id="email"
+                                                        value="{{ $profile->email }}" autocomplete="email"
+                                                        class="@error('email') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                    @error('email')
+                                                        <div class="invalid-feedback ms-4">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-span-4 sm:col-span-2">
+                                                    <label for="role"
+                                                        class="block text-sm font-medium text-gray-700">Role</label>
+                                                    <input type="text" readonly name="role" id="role"
+                                                        value="" autocomplete="role"
+                                                        class="@error('role') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                    @error('role')
+                                                        <div class="invalid-feedback ms-4">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-span-4 sm:col-span-2">
+                                                    <label for="status"
+                                                        class="block text-sm font-medium text-gray-700">Status</label>
+                                                    <input type="text" readonly name="status" id="status"
+                                                        value="" autocomplete="status"
+                                                        class="@error('status') is-invalid @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                    @error('status')
+                                                        <div class="invalid-feedback ms-4">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        @if ($profile->status == 'active')
-                            <button type="submit" class="bi bi-plus-square btn btn-danger bg-red-600" id="saveBtn"
-                                value="create"><i class="fa fa-ghost"></i> deactivate</button>
-                        @else
-                            <button type="submit" class="bi bi-plus-square btn btn-success bg-green-600" id="saveBtn"
-                                value="create"><i class="fa fa-smile"></i> activate</button>
-                        @endif
-                    </div>
+                        <input type="hidden" name="act" value="deactivated">
+                        <div class="modal-footer">
+                            <button type="submit" name="btn_act" value="deactivated"
+                                class="bi bi-plus-square btn btn-danger bg-red-600" id="saveBtn"><i
+                                    class="fa fa-ghost"></i> deactivate</button>
+
+                            {{-- <button type="submit" name="act" value="active"
+                                class="bi bi-plus-square btn btn-success bg-green-600" id="saveBtn"><i
+                                    class="fa fa-smile"></i> activate</button> --}}
+                        </div>
                 </form>
             </div>
         </div>
@@ -160,15 +170,10 @@
                         name: 'email',
                         title: 'Email',
                     },
-                    // {
-                    //     data: 'role',
-                    //     name: 'role',
-                    //     title: 'Role',
-                    // },
                     {
                         data: 'action',
                         name: 'action',
-                        title: 'Action',
+                        title: 'Status',
                         searchable: false,
                         orderable: false
                     },
@@ -183,6 +188,7 @@
                     // $('#saveBtn').html("Update");
                     $('#ajaxModel').modal('show');
                     $('#data_id').val(data.id);
+                    $('#output').val(data.photo);
                     $('#name').val(data.name);
                     $('#username').val(data.username);
                     $('#email').val(data.email);
@@ -198,7 +204,7 @@
 
                 $.ajax({
                     data: $('#form_data').serialize(),
-                    url: "{{ url('PenggunaController') }}",
+                    url: "{{ url('user_') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
