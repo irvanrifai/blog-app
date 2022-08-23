@@ -9,7 +9,7 @@
         </div>
         <div class="card-group" id="posts">
             <div class="row row-cols-md-2 g-4 mx-3 my-4">
-                @foreach ($posts as $post)
+                @forelse ($posts as $post)
                     {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
                     {{-- every post --}}
                     <div class="flex justify-center hover:bg-gray-200 hover:rounded-xl" id="post">
@@ -134,7 +134,18 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-md-8">
+                        <h1 class="text-gray-700 text-2xl font-bold">Hello, {{ auth()->user()->name }}!</h1>
+                        <h1 class="text-gray-800 text-xl font-bold">Get your first post!</h1>
+                        <div class="text-center sm:px-14 py-14 px-10">
+                            <a class="text-gray-600 px-4 py-3 bg-gray-300 shadow-xl text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
+                                href="{{ url('mypost/create') }}"><i class="fa fa-plus"></i>
+                            </a>
+                            <i>click now!</i>
+                        </div>
+                    </div>
+                @endforelse
             </div>
             {{-- </div> --}}
         </div>
