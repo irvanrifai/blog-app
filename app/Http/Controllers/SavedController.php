@@ -21,7 +21,9 @@ class SavedController extends Controller
     public function index(Request $request)
     {
         // masih belum jalan
-        $posts = Post::with('user', 'saveds')->latest()->where('user_id', auth()->user()->id);
+        // $posts = Post::with('user', 'saveds')->latest()->where('user_id', auth()->user()->id);
+        // $posts = Saved::with('user', 'post')->latest();
+        $posts = Post::with('user', 'saveds')->latest();
         // $posts = $savedpost->where($savedpost->saveds->first()->pivot->user_id, auth()->user()->id);
         // dd($savedpost->saveds->first()->pivot->user_id);
         // $posts = Saved::latest()->where('user_id', auth()->user()->id);

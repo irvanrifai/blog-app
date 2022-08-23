@@ -13,10 +13,11 @@ class Saved extends Model
     ];
     public function user()
     {
-        return $this->belongsToMany(User::class, 'saveds',);
+        return $this->belongsToMany(User::class);
     }
     public function post()
     {
-        return $this->belongsToMany(Post::class);
+        // return $this->belongsToMany(Post::class);
+        return $this->hasMany(Post::class);
     }
 }

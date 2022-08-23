@@ -35,6 +35,7 @@
                                     {{ Str::of($post->user->name)->words(3, '') }}</p>
                                 <p class="text-gray-600 text-xs mt-2">Last update on
                                     {{ $post->updated_at->diffForHumans() }}
+                                    {{-- {{ $post->saveds->user_id }} --}}
                                 </p>
                             </div>
 
@@ -45,7 +46,8 @@
                                 {{-- @foreach ($post->saveds as $save) --}}
                                 {{-- <p>{{ dd($post->saveds->all()->pivot->user_id) }}</p> --}}
                                 {{-- @if (auth()->user()->id == $save->first()->pivot->user_id) --}}
-                                @if (auth()->user()->id == 1)
+                                {{-- @if (auth()->user()->id == $post->saveds->id) --}}
+                                @if (auth()->user()->id == $post->user->id)
                                     <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                         href="#" id="saved"><i class="fa fa-bookmark"></i></a>
                                 @else
