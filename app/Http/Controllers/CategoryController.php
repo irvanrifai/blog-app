@@ -61,9 +61,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Gate::allows('isAdmin')) {
-            abort(403);
-        }
         $data = category::updateOrCreate(
             ['id' => $request->data_id],
             ['name' => $request->name]

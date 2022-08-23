@@ -88,9 +88,6 @@ class ProfileController extends Controller
     public function update(Request $request, User $user, $username)
     {
         // $user_id = auth()->user()->id;
-        if (!Gate::allows('update_user')) {
-            abort(403);
-        }
         $validatedData = Validator::make($request->all(), [
             'photo' => 'image|file|max:2048',
             'name' => 'required|max:100',
@@ -135,9 +132,6 @@ class ProfileController extends Controller
      */
     public function destroy(User $user, $username)
     {
-        if (!Gate::allows('delete_user')) {
-            abort(403);
-        }
         User::where('username', $username)->delete();
         Alert::toast('Delete Profile Successfull', 'success');
         return redirect(url('/'));

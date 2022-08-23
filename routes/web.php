@@ -33,27 +33,28 @@ Route::post('/signin', [SigninController::class, 'authenticate']);
 
 Route::get('/signin', [SigninController::class, 'index']);
 
-Route::get('/about', function () {
-    return view('about', [
-        'title' => 'Blog | About',
-    ]);
-})->name('about');
+Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
 
-Route::get('/settings', function () {
-    return view('profile_setting', [
-        'title' => 'Blog | Setting',
-        'profile' => auth()->user()
-    ]);
-})->name('settings');
+Route::post('/signup', [SignupController::class, 'store']);
 
 Route::post('/signout', [SigninController::class, 'signout'])->middleware('auth');
 
 // darurat
 // Route::get('/signout', [SigninController::class, 'signout']);
 
-Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
+Route::get('/about', function () {
+    return view('about', [
+        'title' => 'Blog | About',
+    ]);
+})->name('about');
 
-Route::post('/signup', [SignupController::class, 'store']);
+// sementara (to do: buat controller sendiri, middleware auth, isUser)
+Route::get('/settings', function () {
+    return view('profile_setting', [
+        'title' => 'Blog | Setting',
+        'profile' => auth()->user()
+    ]);
+})->name('settings');
 
 Route::resource('/post', PostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
@@ -62,6 +63,8 @@ Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:i
 Route::resource('/profile', ProfileController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
 Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
+
+Route::resource('/mypost', MypostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
 Route::resource('/admin', AdminController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
 
@@ -72,5 +75,3 @@ Route::resource('/post_', AdminpostController::class)->middleware('auth', 'can:i
 Route::resource('/category_', CategoryController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
 
 Route::resource('/signup_', AdminController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
-
-Route::resource('/mypost', MypostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');

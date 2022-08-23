@@ -66,9 +66,6 @@ class AdminpostController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
-        if (!Gate::allows('tOrR_post')) {
-            abort(403);
-        }
         $data = Post::updateOrCreate(
             ['id' => $request->data_id],
             ['status' => $request->status]
@@ -95,7 +92,7 @@ class AdminpostController extends Controller
      */
     public function edit(category $category, $id)
     {
-        if (!Gate::allows('tOrR_post')) {
+        if (!Gate::allows('isAdmin')) {
             abort(403);
         }
         $data = Post::find($id);

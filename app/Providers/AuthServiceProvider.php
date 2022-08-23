@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\MypostController;
+use App\Http\Controllers\SignupController;
 use App\Models\Post;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -35,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role == 1;
         });
 
-        Gate::define('read_post', ([Post::class, 'index']));
+        Gate::define('read_post', ([MypostController::class, 'index']));
 
         // Gate::define('create_post', ([Post::class, 'store']));
 
@@ -44,14 +46,14 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('update_post', function (User $user, Post $post) {
-            return $user->id === $post->user_id;
+            return $user->id == $post->user_id;
         });
 
         Gate::define('delete_post', function (User $user, Post $post) {
             return $user->id === $post->user_id;
         });
 
-        Gate::define('create_user', ([User::class, 'store']));
+        Gate::define('create_user', ([SignupController::class, 'store']));
 
         Gate::define('update_user', function (User $user) {
             return $user->id === auth()->user()->id;

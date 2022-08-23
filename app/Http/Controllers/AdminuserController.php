@@ -68,9 +68,6 @@ class AdminuserController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
-        if (!Gate::allows('aOrD_user')) {
-            abort(403);
-        }
         $data = User::updateOrCreate(
             ['id' => $request->data_id],
             ['status' => $request->btn_act],
@@ -98,7 +95,7 @@ class AdminuserController extends Controller
      */
     public function edit(category $category, $id)
     {
-        if (!Gate::allows('aOrD_user')) {
+        if (!Gate::allows('isAdmin')) {
             abort(403);
         }
         $data = User::find($id);

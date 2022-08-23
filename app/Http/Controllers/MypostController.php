@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -24,9 +25,10 @@ class MypostController extends Controller
     {
         if (!Gate::allows('isUser')) {
             abort(403);
-        } elseif (!Gate::allows('read_post')) {
-            abort(403);
         }
+        // if (!Gate::allows('read_post')) {
+        //     abort(403);
+        // }
         $posts = Post::latest()->where('user_id', auth()->user()->id);
         return view('home', [
             'title' => 'Blog | My Post',
@@ -43,8 +45,6 @@ class MypostController extends Controller
     public function create()
     {
         if (!Gate::allows('isUser')) {
-            abort(403);
-        } elseif (!Gate::allows('create_post')) {
             abort(403);
         }
         return view('add_post', [
@@ -63,9 +63,6 @@ class MypostController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Gate::allows('create_post')) {
-            abort(403);
-        }
         $validatedData = Validator::make($request->all(), [
             'cover' => 'image|file|max:2048',
             'title' => 'required|max:100',
@@ -142,11 +139,8 @@ class MypostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, $slug)
+    public function update(Request $request, User $user, Post $post, $slug)
     {
-        if (!Gate::allows('update_post')) {
-            abort(403);
-        }
         $validatedData = Validator::make($request->all(), [
             'cover' => 'image|file|max:2048',
             'title' => 'required|max:100',
@@ -185,9 +179,6 @@ class MypostController extends Controller
     {
         // Post::destroy($post->slug);
         // Post::destroy('slug', $slug);
-        if (!Gate::allows('delete_post')) {
-            abort(403);
-        }
         Post::where('slug', $slug)->delete();
         Alert::toast('Delete Post Successfull', 'success');
         return redirect(url('/mypost'));
