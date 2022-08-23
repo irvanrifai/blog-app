@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class ProfileController extends Controller
 {
@@ -19,7 +20,9 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
-        // nanti disini pakai datatable, sementara passing data biasa dulu
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
         return view('manipulate_profile', [
             'title' => 'Blog | Profile',
             'profile' => auth()->user(),
@@ -66,6 +69,9 @@ class ProfileController extends Controller
      */
     public function edit(User $user)
     {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
         return view('manipulate_profile', [
             'title' => 'Blog | Profile',
             'profile' => auth()->user(),
@@ -82,6 +88,9 @@ class ProfileController extends Controller
     public function update(Request $request, User $user, $username)
     {
         // $user_id = auth()->user()->id;
+        if (!Gate::allows('update_user')) {
+            abort(403);
+        }
         $validatedData = Validator::make($request->all(), [
             'photo' => 'image|file|max:2048',
             'name' => 'required|max:100',
@@ -126,6 +135,9 @@ class ProfileController extends Controller
      */
     public function destroy(User $user, $username)
     {
+        if (!Gate::allows('delete_user')) {
+            abort(403);
+        }
         User::where('username', $username)->delete();
         Alert::toast('Delete Profile Successfull', 'success');
         return redirect(url('/'));

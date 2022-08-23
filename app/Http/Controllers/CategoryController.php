@@ -7,6 +7,7 @@ use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -17,6 +18,9 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         if ($request->ajax()) {
             $data = category::latest();
             return DataTables::of($data)
@@ -57,6 +61,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         $data = category::updateOrCreate(
             ['id' => $request->data_id],
             ['name' => $request->name]
@@ -83,6 +90,9 @@ class CategoryController extends Controller
      */
     public function edit(category $category, $id)
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         $data = category::find($id);
         return response()->json($data);
     }
@@ -107,6 +117,9 @@ class CategoryController extends Controller
      */
     public function destroy(category $category, $id)
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         $data = category::where('id', $id)->delete();
         return response()->json($data);
     }

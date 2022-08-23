@@ -64,8 +64,8 @@
                                         <select aria-readonly="true"
                                             class="mt-2 form-select @error('category') is-invalid @enderror focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                             id="category" name="category">
-                                            <option value="{{ old('category') }}" selected>
-                                                <label class="text-gray-400 text-sm">
+                                            <option id="category" value="{{ old('category') }}" selected>
+                                                <label id="category" class="text-gray-400 text-sm">
                                                     {{ old('category') }}
                                                 </label>
                                             </option>
@@ -84,12 +84,12 @@
                                     <div class="col-span-6 sm:col-span-6">
                                         <label for="body" class="mb-2 block text-sm font-medium text-gray-700">Body
                                         </label>
-                                        <textarea name="body" id="body" value="{{ old('body') }}" class="@error('body') is-invalid @enderror">{!! old('body') !!}</textarea>
+                                        <textarea name="body" readonly id="body" value="{{ old('body') }}"
+                                            class="body @error('body') is-invalid @enderror">{!! old('body') !!}</textarea>
                                         <script>
                                             ClassicEditor.create(document.querySelector('#body')).catch(error => {
                                                 console.error(error);
                                             });
-                                            // CKEDITOR.replace('body')
                                         </script>
                                         @error('body')
                                             <div class="invalid-feedback">
@@ -186,8 +186,9 @@
                             $('#ajaxModel').modal('show');
                             $('#data_id').val(data.id);
                             $('#title').val(data.title);
-                            // $('#category').val(data.category);
+                            $('#category').val(data.category_id);
                             $('#body').val(data.body);
+                            CKEDITOR.replace('#body');
                             $('#status').val(data.status);
                         })
                     });

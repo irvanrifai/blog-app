@@ -9,6 +9,7 @@ use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Gate;
 
 class AdminpostController extends Controller
 {
@@ -19,6 +20,9 @@ class AdminpostController extends Controller
      */
     public function index(Request $request)
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         if ($request->ajax()) {
             // $categories = category::latest();
             $data = Post::with('category')->latest();
@@ -62,6 +66,9 @@ class AdminpostController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
+        if (!Gate::allows('tOrR_post')) {
+            abort(403);
+        }
         $data = Post::updateOrCreate(
             ['id' => $request->data_id],
             ['status' => $request->status]
@@ -88,6 +95,9 @@ class AdminpostController extends Controller
      */
     public function edit(category $category, $id)
     {
+        if (!Gate::allows('tOrR_post')) {
+            abort(403);
+        }
         $data = Post::find($id);
         return response()->json($data);
     }

@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Gate;
 
 class AdminuserController extends Controller
 {
@@ -20,6 +21,9 @@ class AdminuserController extends Controller
      */
     public function index(Request $request)
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         if ($request->ajax()) {
             $data = User::latest();
             return DataTables::of($data)
@@ -64,6 +68,9 @@ class AdminuserController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
+        if (!Gate::allows('aOrD_user')) {
+            abort(403);
+        }
         $data = User::updateOrCreate(
             ['id' => $request->data_id],
             ['status' => $request->btn_act],
@@ -91,6 +98,9 @@ class AdminuserController extends Controller
      */
     public function edit(category $category, $id)
     {
+        if (!Gate::allows('aOrD_user')) {
+            abort(403);
+        }
         $data = User::find($id);
         return response()->json($data);
     }

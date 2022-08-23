@@ -60,5 +60,12 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete_user', function (User $user) {
             return $user->id === auth()->user()->id;
         });
+
+        Gate::define('tOrR_post', function (User $user, Post $post) {
+            return $user->role === 1;
+        });
+        Gate::define('aOrD_user', function (User $user) {
+            return $user->id === 1;
+        });
     }
 }

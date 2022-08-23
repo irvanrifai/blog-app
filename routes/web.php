@@ -46,8 +46,9 @@ Route::get('/settings', function () {
     ]);
 })->name('settings');
 
-Route::post('/signout', [SigninController::class, 'signout']);
+Route::post('/signout', [SigninController::class, 'signout'])->middleware('auth');
 
+// darurat
 // Route::get('/signout', [SigninController::class, 'signout']);
 
 Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');

@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Gate;
 
 class MypostController extends Controller
 {
@@ -21,6 +22,11 @@ class MypostController extends Controller
      */
     public function index(Request $request)
     {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        } elseif (!Gate::allows('read_post')) {
+            abort(403);
+        }
         $posts = Post::latest()->where('user_id', auth()->user()->id);
         return view('home', [
             'title' => 'Blog | My Post',
@@ -36,6 +42,11 @@ class MypostController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        } elseif (!Gate::allows('create_post')) {
+            abort(403);
+        }
         return view('add_post', [
             'title' => 'Blog | New Post',
             'page' => 'New Post',
@@ -52,6 +63,9 @@ class MypostController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows('create_post')) {
+            abort(403);
+        }
         $validatedData = Validator::make($request->all(), [
             'cover' => 'image|file|max:2048',
             'title' => 'required|max:100',
@@ -90,6 +104,9 @@ class MypostController extends Controller
      */
     public function show(Post $post, $slug)
     {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
         $posts = Post::where('slug', $slug)->first();
         return view('post', [
             'title' => 'Blog | Post',
@@ -106,6 +123,9 @@ class MypostController extends Controller
      */
     public function edit(Post $post, $slug)
     {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
         $post = Post::where('slug', $slug)->first();
         return view('manipulate_post', [
             'title' => 'Blog | Edit Post',
@@ -124,6 +144,9 @@ class MypostController extends Controller
      */
     public function update(Request $request, Post $post, $slug)
     {
+        if (!Gate::allows('update_post')) {
+            abort(403);
+        }
         $validatedData = Validator::make($request->all(), [
             'cover' => 'image|file|max:2048',
             'title' => 'required|max:100',
@@ -162,6 +185,9 @@ class MypostController extends Controller
     {
         // Post::destroy($post->slug);
         // Post::destroy('slug', $slug);
+        if (!Gate::allows('delete_post')) {
+            abort(403);
+        }
         Post::where('slug', $slug)->delete();
         Alert::toast('Delete Post Successfull', 'success');
         return redirect(url('/mypost'));

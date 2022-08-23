@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -19,6 +20,9 @@ class PostController extends Controller
      */
     public function index(Request $request, Post $post)
     {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
 
         $user = User::with('saveds')->first();
         $post = Post::with('saveds')->first();
@@ -86,6 +90,9 @@ class PostController extends Controller
      */
     public function show(Post $post, $slug)
     {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
         $posts = Post::where('slug', $slug)->first();
         return view('post', [
             'title' => 'Blog | Post',

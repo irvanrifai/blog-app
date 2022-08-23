@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {
@@ -20,6 +21,9 @@ class AdminController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         $posts = Post::latest();
         $users = User::latest();
         $category = category::latest();
@@ -39,6 +43,9 @@ class AdminController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         return view('admin.signup_admin', [
             "title" => "Admin | Sign Up",
             'page' => 'Sign Up for Administrator',
@@ -53,6 +60,9 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows('isAdmin')) {
+            abort(403);
+        }
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'username' => 'required|max:50',
