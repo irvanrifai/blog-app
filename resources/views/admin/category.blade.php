@@ -122,7 +122,7 @@
             $('body').on('click', '#deleteItem', function() {
 
                 var data_id = $(this).data("id");
-                var result = confirm("Are You sure want to delete?");
+                var result = confirm("Are you sure want to delete?");
 
                 if (result) {
                     $.ajax({

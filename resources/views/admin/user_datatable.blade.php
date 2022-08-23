@@ -207,26 +207,30 @@
 
             // submit button after affect data
             $('#saveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
+                var result = confirm("Are you sure?");
+                if (result) {
+                    e.preventDefault();
+                    $(this).html('Sending..');
 
-                $.ajax({
-                    data: $('#form_data').serialize(),
-                    url: "{{ url('user_') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function(data) {
+                    $.ajax({
+                        data: $('#form_data').serialize(),
+                        url: "{{ url('user_') }}",
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#form_data').trigger("reset");
+                            $('#ajaxModel').modal('hide');
+                            table.draw();
 
-                        $('#form_data').trigger("reset");
-                        $('#ajaxModel').modal('hide');
-                        table.draw();
-
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#saveBtn').html('Save Changes');
-                    }
-                });
+                        },
+                        error: function(data) {
+                            console.log('Error:', data);
+                            $('#saveBtn').html('Save Changes');
+                        }
+                    });
+                } else {
+                    return false;
+                }
             });
         });
 

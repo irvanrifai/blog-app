@@ -116,7 +116,7 @@
                                 <div class="text-right">
                                     <form action="{{ url('mypost/') }}" method="post">
                                         @csrf
-                                        @method('delete')
+                                        @method('put')
                                         @if (1 == 1)
                                             <button type="submit" class="bi bi-plus-square btn btn-danger bg-red-600"
                                                 id="saveBtn" value="create"><i class="fa fa-ghost"></i> takedown</button>
@@ -200,33 +200,39 @@
                             $('#title').val(data.title);
                             $('#category').val(data.category_id);
                             $('#body').val(data.body);
-                            CKEDITOR.replace('#body');
+                            // CKEDITOR.replace('#body');
                             $('#status').val(data.status);
                         })
                     });
 
                     // submit button after affect data
                     $('#saveBtn').click(function(e) {
-                        e.preventDefault();
-                        $(this).html('Sending..');
+                        var result = confirm("Are you sure?");
+                        if (result) {
+                            e.preventDefault();
+                            $(this).html('Sending..');
 
-                        $.ajax({
-                            data: $('#form_data').serialize(),
-                            url: "{{ url('post_') }}",
-                            type: "POST",
-                            dataType: 'json',
-                            success: function(data) {
+                            $.ajax({
+                                data: $('#form_data').serialize(),
+                                url: "{{ url('post_') }}",
+                                type: "POST",
+                                dataType: 'json',
+                                success: function(data) {
 
-                                $('#form_data').trigger("reset");
-                                $('#ajaxModel').modal('hide');
-                                table.draw();
+                                    $('#form_data').trigger("reset");
+                                    $('#ajaxModel').modal('hide');
+                                    table.draw();
 
-                            },
-                            error: function(data) {
-                                console.log('Error:', data);
-                                $('#saveBtn').html('Save Changes');
-                            }
-                        });
+                                },
+                                error: function(data) {
+                                    console.log('Error:', data);
+                                    $('#saveBtn').html('Save Changes');
+                                }
+
+                            });
+                        } else {
+                            return false;
+                        }
                     });
                 });
 
