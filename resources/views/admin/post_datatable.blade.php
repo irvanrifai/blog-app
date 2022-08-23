@@ -10,6 +10,8 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
         </table>
@@ -166,6 +168,16 @@
                                 data: 'body',
                                 name: 'body',
                                 title: 'Body',
+                            },
+                            {
+                                data: 'dateupload',
+                                name: 'dateupload',
+                                title: 'Upload',
+                            },
+                            {
+                                data: 'dateupdate',
+                                name: 'dateupdate',
+                                title: 'Update',
                             },
                             {
                                 data: 'action',

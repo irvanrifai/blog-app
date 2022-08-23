@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class AdminpostController extends Controller
 {
@@ -28,6 +29,15 @@ class AdminpostController extends Controller
             $data = Post::with('category')->latest();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('body', function ($data) {
+                    return $btn = Str::of($data->body)->words('10', '...');
+                })
+                ->addColumn('dateupload', function ($data) {
+                    return $btn = $data->created_at->diffForHumans();
+                })
+                ->addColumn('dateupdate', function ($data) {
+                    return $btn = $data->updated_at->diffForHumans();
+                })
                 ->addColumn('action', function ($data) {
                     if ($data->status == null) {
                         $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="takedown" class="takedown" id="manipulateItem"><span class="badge bg-danger">takedown</span></a>';
@@ -36,7 +46,7 @@ class AdminpostController extends Controller
                     }
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['body', 'dateupdate', 'dateupload', 'action'])
                 ->escapeColumns('active')
                 ->make(true);
         }

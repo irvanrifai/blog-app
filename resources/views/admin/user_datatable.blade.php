@@ -10,6 +10,7 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
         </table>
@@ -169,6 +170,13 @@
                         data: 'email',
                         name: 'email',
                         title: 'Email',
+                    },
+                    {
+                        data: 'role',
+                        name: 'role',
+                        title: 'Role',
+                        searchable: false,
+                        orderable: false
                     },
                     {
                         data: 'action',

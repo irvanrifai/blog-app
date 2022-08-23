@@ -28,28 +28,33 @@ class SigninController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            // $request->session()->flash('success_login_a', 'Welcome, admin!');
-
-            // Alert::success('Congrats', 'Signin Successfull');
-            Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
-            if (auth()->user()->role == 1) {
-                return redirect()->intended(url('admin'));
-            } else if (auth()->user()->role == null) {
-                return redirect()->intended(url('mypost'));
+            if (auth()->user()->status == 'active') {
+                if (auth()->user()->role == null) {
+                    $request->session()->regenerate();
+                    Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
+                    return redirect()->intended(url('mypost'));
+                } elseif (auth()->user()->role == 1) {
+                    $request->session()->regenerate();
+                    Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
+                    return redirect()->intended(url('admin'));
+                }
+            } else {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                Alert::toast("Sign In Unsuccessfull, Your Account Has Been Deactivated, Please Contact Administrator", 'warning');
+                return redirect('/signin');
             }
+        } else {
+            Alert::toast("Sign In Unsuccessfull, Your Credentials Doesn't match", 'error');
+            return back()
+                ->with([
+                    'error_login' => "Your Credentials Doesn't match"
+                ])
+                ->withErrors('Error Sign In', 'error')
+                ->onlyInput('email');
         }
-
-        Alert::toast("Sign In Unsuccessfull, Your Credentials Doesn't match", 'error');
-        return back()
-            ->with([
-                'error_login' => "Your Credentials Doesn't match"
-            ])
-            ->withErrors('Error Sign In', 'error')
-            ->onlyInput('email');
     }
 
     public function signout(Request $request)

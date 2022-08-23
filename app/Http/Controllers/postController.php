@@ -40,7 +40,7 @@ class PostController extends Controller
 
         // $query = Post::with(['user', 'saveds'])->get();
 
-        $query = Post::latest();
+        $query = Post::latest()->where('status', null);
         // dd($query->saveds->first()->pivot->user_id);
         // $query = DB::table('posts')->join('saveds', 'posts.id', '=', 'saveds.post_id')
         //     ->join('categories', 'posts.category_id', '=', 'categories.id')

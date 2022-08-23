@@ -28,6 +28,14 @@ class AdminuserController extends Controller
             $data = User::latest();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('role', function ($data) {
+                    if ($data->role == 1) {
+                        $btn = '<span class="badge bg-primary">Admin</span>';
+                    } else if ($data->role == null) {
+                        $btn = '<span class="badge bg-info">User</span>';
+                    }
+                    return $btn;
+                })
                 ->addColumn('action', function ($data) {
                     if ($data->status == 'active') {
                         $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="activated" class="manipulate" id="manipulateItem"><span class="badge bg-success">activated</span></a>';
@@ -36,7 +44,7 @@ class AdminuserController extends Controller
                     }
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['role', 'action'])
                 ->make(true);
         }
         $users = User::latest()->get();

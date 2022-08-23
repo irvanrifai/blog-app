@@ -14,6 +14,8 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
         </table>
@@ -50,6 +52,16 @@
                         data: 'name',
                         name: 'name',
                         title: 'Name',
+                    },
+                    {
+                        data: 'create_at',
+                        name: 'create_at',
+                        title: 'Create',
+                    },
+                    {
+                        data: 'update_at',
+                        name: 'update_at',
+                        title: 'Update',
                     },
                     {
                         data: 'action',

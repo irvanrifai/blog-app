@@ -25,6 +25,12 @@ class CategoryController extends Controller
             $data = category::latest();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('create_at', function ($data) {
+                    return $data->created_at->diffForHumans();
+                })
+                ->addColumn('update_at', function ($data) {
+                    return $data->updated_at->diffForHumans();
+                })
                 ->addColumn('action', function ($data) {
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit" id="editItem"><span class="badge bg-warning text-dark"><i class="fa fa-pencil"></i></span></a>';
 
@@ -32,7 +38,7 @@ class CategoryController extends Controller
                     class="fa fa-trash"></i></span></a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['create_at', 'update_at', 'action'])
                 ->make(true);
         }
         $category = category::latest()->get();
