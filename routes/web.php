@@ -56,22 +56,28 @@ Route::get('/settings', function () {
     ]);
 })->name('settings');
 
-Route::resource('/post', PostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
+Route::prefix('user')->middleware('auth', 'isUser')->group(function () {
 
-Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
+    Route::resource('/post', PostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
-Route::resource('/profile', ProfileController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
+    Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
-Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
+    Route::resource('/profile', ProfileController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
-Route::resource('/mypost', MypostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
+    Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
 
-Route::resource('/admin', AdminController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
+    Route::resource('/mypost', MypostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
+});
 
-Route::resource('/user_', AdminuserController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
+Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
 
-Route::resource('/post_', AdminpostController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
+    Route::resource('/admin', AdminController::class);
 
-Route::resource('/category_', CategoryController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
+    Route::resource('/user_', AdminuserController::class);
 
-Route::resource('/signup_', AdminController::class)->middleware('auth', 'can:isAdmin', 'cannot:isUser');
+    Route::resource('/post_', AdminpostController::class);
+
+    Route::resource('/category_', CategoryController::class);
+
+    Route::resource('/signup_', AdminController::class);
+});
