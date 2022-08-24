@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
 
-class SigninController extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,11 +22,18 @@ class SigninController extends Controller
         ]);
     }
 
+    public function indexSignup()
+    {
+        return view('signup', [
+            "title" => "Blog | SignUp"
+        ]);
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:8',
+            'password' => 'required',
         ]);
         if (Auth::attempt($credentials)) {
             if (auth()->user()->status == 'active') {
@@ -88,7 +95,19 @@ class SigninController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:50',
+            'username' => 'required|max:50',
+            'email' => 'required|email:dns|max:70',
+            'password' => 'required|min:8|max:40',
+            'remember_token' => Str::random(10),
+            'role' => 'max:10'
+        ]);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+        User::create($validatedData);
+        Alert::toast('Sign Up Successfull, Please Login', 'success');
+        return redirect('/signin');
     }
 
     /**

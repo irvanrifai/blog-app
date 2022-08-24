@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminpostController;
 use App\Http\Controllers\AdminuserController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,18 +27,19 @@ use App\Http\Controllers\AdminuserController;
 |
 */
 
+Route::prefix('auth')->middleware('guest')->group(function () {
+    Route::get('/', [AuthController::class, 'index'])->name('signin')->middleware('guest');
 
-Route::get('/', [SigninController::class, 'index'])->name('signin')->middleware('guest');
+    Route::get('/signin', [AuthController::class, 'index'])->middleware('guest');
 
-Route::post('/signin', [SigninController::class, 'authenticate']);
+    Route::get('/signup', [AuthController::class, 'indexSignup'])->middleware('guest');
+});
 
-Route::get('/signin', [SigninController::class, 'index']);
+// untuk signin/signup admin juga pakai. jadi tidak menggunakan middleware
+Route::post('/signin', [AuthController::class, 'authenticate']);
+Route::post('/signup', [AuthController::class, 'store']);
 
-Route::get('/signup', [SignupController::class, 'index'])->middleware('guest');
-
-Route::post('/signup', [SignupController::class, 'store']);
-
-Route::post('/signout', [SigninController::class, 'signout'])->middleware('auth');
+Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
 
 // darurat
 // Route::get('/signout', [SigninController::class, 'signout']);

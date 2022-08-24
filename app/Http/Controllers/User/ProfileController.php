@@ -133,7 +133,7 @@ class ProfileController extends Controller
     public function destroy(User $user, $username)
     {
         User::where('username', $username)->delete();
-        Alert::toast('Delete Profile Successfull', 'success');
+        Alert::toast('Delete Account Successfull', 'success');
         return redirect(url('/'));
     }
 }
