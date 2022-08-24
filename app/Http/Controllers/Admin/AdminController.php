@@ -76,7 +76,7 @@ class AdminController extends Controller
         $validatedData['password'] = bcrypt($validatedData['password']);
         User::create($validatedData);
         Alert::toast('Sign Up Successfull, Please Login', 'success');
-        return redirect(url('guest/signin'));
+        return redirect(url('admin/signin'));
     }
 
     /**

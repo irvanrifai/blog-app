@@ -3,7 +3,7 @@
     <div>
         <div class="md:grid md:grid-cols-3 md:gap-6 pb-4">
             <div class="md:mt-0 md:col-span-2">
-                <form action="{{ url('profile/' . $profile->username) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('user/profile/' . $profile->username) }}" method="POST" enctype="multipart/form-data">
                     @method('put')
                     @csrf
                     <div class="shadow sm:rounded-md sm:overflow-hidden">

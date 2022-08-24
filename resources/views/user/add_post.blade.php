@@ -6,7 +6,7 @@
         </div>
         <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
-                <form action="{{ url('mypost') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('user/mypost') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">

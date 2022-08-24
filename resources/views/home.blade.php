@@ -2,9 +2,9 @@
 @section('container')
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
     <div class="container-fluid">
-        <div class="fixed-bottom text-right sm:px-14 py-14 px-10">
-            <a class="text-gray-600 px-3 py-2 bg-gray-400 shadow-xl text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
-                href="{{ url('mypost/create') }}"><i class="fa fa-plus"></i>
+        <div class="fixed-bottom text-right sm:px-14 py-14 px-10 shadow-xl">
+            <a class="text-gray-200 px-2.5 py-1.5 bg-blue-500 text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
+                href="{{ url('user/mypost/create') }}"><i class="fa fa-plus"></i> New post
             </a>
         </div>
         <div class="card-group" id="posts">
@@ -22,7 +22,7 @@
                                     src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" alt="" />
                             @endif
                             <div class="p-6 flex flex-col justify-start">
-                                <a href="{{ url('mypost/' . $post->slug) }}">
+                                <a href="{{ url('user/mypost/' . $post->slug) }}">
                                     <h5 class="text-gray-900 hover:text-blue-700 text-xl font-medium mb-2">
                                         {{ Str::of($post->title)->words(10, '') }}
                                     </h5>

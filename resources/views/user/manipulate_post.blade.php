@@ -6,7 +6,7 @@
         </div>
         <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-10 md:mt-0 md:col-span-2">
-                <form action="{{ url('mypost/' . $post->slug) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('user/mypost/' . $post->slug) }}" method="POST" enctype="multipart/form-data">
                     @method('put')
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
