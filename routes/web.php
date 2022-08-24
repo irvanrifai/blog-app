@@ -4,17 +4,17 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SavedController;
-use App\Http\Controllers\MypostController;
-use App\Http\Controllers\SigninController;
-use App\Http\Controllers\SignupController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\AdminpostController;
-use App\Http\Controllers\AdminuserController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\PostController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\User\SavedController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\MypostController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\Post_Controller;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,59 +27,67 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::prefix('auth')->middleware('guest')->group(function () {
-    Route::get('/', [AuthController::class, 'index'])->name('signin')->middleware('guest');
+Route::prefix('guest')->middleware('guest')->group(function () {
+    Route::get('/', [AuthController::class, 'index'])->name('signin');
 
-    Route::get('/signin', [AuthController::class, 'index'])->middleware('guest');
+    Route::get('/signin', [AuthController::class, 'index']);
 
-    Route::get('/signup', [AuthController::class, 'indexSignup'])->middleware('guest');
+    Route::get('/signup', [AuthController::class, 'indexSignup']);
+
+    Route::post('/signin', [AuthController::class, 'authenticate']);
+
+    Route::post('/signup', [AuthController::class, 'store']);
+
+    Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
 });
 
-// untuk signin/signup admin juga pakai. jadi tidak menggunakan middleware
-Route::post('/signin', [AuthController::class, 'authenticate']);
-Route::post('/signup', [AuthController::class, 'store']);
+Route::prefix('user')->middleware('auth', 'can:isUser')->group(function () {
 
-Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
+    Route::resource('/post', PostController::class);
+
+    Route::resource('/savedpost', SavedController::class);
+
+    Route::resource('/profile', ProfileController::class);
+
+    Route::resource('/savedpost', SavedController::class);
+
+    Route::resource('/mypost', MypostController::class);
+});
+
+Route::prefix('admin')->middleware('auth', 'can:isAdmin')->group(function () {
+
+    Route::resource('/', AdminController::class);
+
+    Route::resource('/user', UserController::class);
+
+    Route::resource('/post', Post_Controller::class);
+
+    Route::resource('/category', CategoryController::class);
+
+    Route::resource('/signup', AdminController::class);
+
+    Route::post('/signin', [AuthController::class, 'authenticate']);
+
+    Route::get('/signin', [AuthController::class, 'indexSignup']);
+
+    Route::post('/signout', [AuthController::class, 'signout']);
+});
 
 // darurat
-// Route::get('/signout', [SigninController::class, 'signout']);
+Route::get('/signout', [AuthController::class, 'signout']);
+
+Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
 
 Route::get('/about', function () {
     return view('about', [
         'title' => 'Blog | About',
     ]);
-})->name('about');
+})->name('about')->prefix('user');
 
 // sementara (to do: buat controller sendiri, middleware auth, isUser)
 Route::get('/settings', function () {
-    return view('profile_setting', [
+    return view('user.profile_setting', [
         'title' => 'Blog | Setting',
         'profile' => auth()->user()
     ]);
-})->name('settings');
-
-Route::prefix('user')->middleware('auth', 'isUser')->group(function () {
-
-    Route::resource('/post', PostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
-
-    Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
-
-    Route::resource('/profile', ProfileController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
-
-    Route::resource('/savedpost', SavedController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
-
-    Route::resource('/mypost', MypostController::class)->middleware('auth', 'can:isUser', 'cannot:isAdmin');
-});
-
-Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
-
-    Route::resource('/admin', AdminController::class);
-
-    Route::resource('/user_', AdminuserController::class);
-
-    Route::resource('/post_', AdminpostController::class);
-
-    Route::resource('/category_', CategoryController::class);
-
-    Route::resource('/signup_', AdminController::class);
-});
+})->name('settings')->prefix('user');

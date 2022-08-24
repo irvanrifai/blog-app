@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\category;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Post;
 use App\Http\Requests\StorecategoryRequest;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Gate;
 
-class AdminuserController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -87,10 +88,10 @@ class AdminuserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show(Category $category)
     {
         //
     }
@@ -98,10 +99,10 @@ class AdminuserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category, $id)
+    public function edit(Category $category, $id)
     {
         if (!Gate::allows('isAdmin')) {
             abort(403);
@@ -114,10 +115,10 @@ class AdminuserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdatecategoryRequest  $request
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecategoryRequest $request, category $category)
+    public function update(UpdatecategoryRequest $request, Category $category)
     {
         //
     }
@@ -125,10 +126,10 @@ class AdminuserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy(Category $category)
     {
         //
     }

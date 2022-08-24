@@ -6,7 +6,7 @@
         </div>
         <div class="md:grid md:grid-cols-3 md:gap-96">
             <div class="mt-10 md:mt-0 md:col-span-2">
-                <form action="/signin" method="POST">
+                <form action="{{ url('guest/signin') }}" method="POST">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
@@ -40,7 +40,7 @@
                             <div class="text-left">
                                 <p class="text-sm text-gray-600">Don't have account?
                                 </p>
-                                <a href="/signup" class="text-sm text-blue-600">Sign up</a>
+                                <a href="{{ url('guest/signup') }}" class="text-sm text-blue-600">Sign up</a>
                             </div>
                             <div class="text-right">
                                 <button type="submit"

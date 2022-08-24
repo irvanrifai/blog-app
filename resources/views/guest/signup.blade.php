@@ -62,7 +62,7 @@
                             <div class="text-left">
                                 <p class="text-sm text-gray-600">Already have account?
                                 </p>
-                                <a href="/signin" class="text-sm text-blue-600">Sign in</a>
+                                <a href="{{ url('guest/signin') }}" class="text-sm text-blue-600">Sign in</a>
                             </div>
                             <div class="text-right">
                                 <button type="submit"

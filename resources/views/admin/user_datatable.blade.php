@@ -25,8 +25,8 @@
                     <button type="button" class="btn-close text-slate-800 text-lg font-bold" data-bs-dismiss="modal"
                         aria-label="Close"><i class="fa fa-x"></i></button>
                 </div>
-                <form novalidate action="{{ url('user_') }}" role="form" method="POST" enctype="multipart/form-data"
-                    id="form_data" class="needs-validation">
+                <form novalidate action="{{ url('admin/user') }}" role="form" method="POST"
+                    enctype="multipart/form-data" id="form_data" class="needs-validation">
                     @csrf
                     <input type="hidden" name="data_id" id="data_id">
                     <div class="modal-body">
@@ -149,7 +149,7 @@
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: '{{ url('user_') }}',
+                    url: '{{ url('admin/user') }}',
                 },
                 columns: [{
                         render: function(data, type, row, meta) {
@@ -191,7 +191,7 @@
             // to affect an action with modal
             $('body').on('click', '#manipulateItem', function() {
                 var data_id = $(this).data('id');
-                $.get("{{ url('user_') }}" + '/' + data_id + '/edit', function(data) {
+                $.get("{{ url('admin/user') }}" + '/' + data_id + '/edit', function(data) {
                     $('#modelHeading').html("User Information");
                     // $('#saveBtn').html("Update");
                     $('#ajaxModel').modal('show');
@@ -214,7 +214,7 @@
 
                     $.ajax({
                         data: $('#form_data').serialize(),
-                        url: "{{ url('user_') }}",
+                        url: "{{ url('admin/user') }}",
                         type: "POST",
                         dataType: 'json',
                         success: function(data) {

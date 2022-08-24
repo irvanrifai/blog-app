@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\category;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class CategoryController extends Controller
             abort(403);
         }
         if ($request->ajax()) {
-            $data = category::latest();
+            $data = Category::latest();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('create_at', function ($data) {
@@ -41,7 +42,7 @@ class CategoryController extends Controller
                 ->rawColumns(['create_at', 'update_at', 'action'])
                 ->make(true);
         }
-        $category = category::latest()->get();
+        $category = Category::latest()->get();
         return view('admin.category', [
             'title' => 'Blog | Admin',
             'page' => 'Manage Post Category',
@@ -67,7 +68,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = category::updateOrCreate(
+        $data = Category::updateOrCreate(
             ['id' => $request->data_id],
             ['name' => $request->name]
         );
@@ -77,10 +78,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show(Category $category)
     {
         //
     }
@@ -91,12 +92,12 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category, $id)
+    public function edit(Category $category, $id)
     {
         if (!Gate::allows('isAdmin')) {
             abort(403);
         }
-        $data = category::find($id);
+        $data = Category::find($id);
         return response()->json($data);
     }
 
@@ -107,7 +108,7 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecategoryRequest $request, category $category)
+    public function update(UpdatecategoryRequest $request, Category $category)
     {
         //
     }
@@ -118,12 +119,12 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category, $id)
+    public function destroy(Category $category, $id)
     {
         if (!Gate::allows('isAdmin')) {
             abort(403);
         }
-        $data = category::where('id', $id)->delete();
+        $data = Category::where('id', $id)->delete();
         return response()->json($data);
     }
 }

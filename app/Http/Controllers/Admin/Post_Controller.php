@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\category;
+use App\Http\Controllers\Controller;
+
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-use App\Http\Requests\StorecategoryRequest;
-use App\Http\Requests\UpdatecategoryRequest;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
-class AdminpostController extends Controller
+class Post_Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +27,7 @@ class AdminpostController extends Controller
             abort(403);
         }
         if ($request->ajax()) {
-            // $categories = category::latest();
+            // $categories = Category::latest();
             $data = Post::with('category')->latest();
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -71,10 +73,10 @@ class AdminpostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorecategoryRequest  $request
+     * @param  \App\Http\Requests\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorecategoryRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         $data = Post::updateOrCreate(
             ['id' => $request->data_id],
@@ -86,10 +88,10 @@ class AdminpostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $Category
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show(Category $Category)
     {
         //
     }
@@ -97,10 +99,10 @@ class AdminpostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $Category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category, $id)
+    public function edit(Category $Category, $id)
     {
         if (!Gate::allows('isAdmin')) {
             abort(403);
@@ -112,11 +114,11 @@ class AdminpostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatecategoryRequest  $request
-     * @param  \App\Models\category  $category
+     * @param  \App\Http\Requests\UpdateCategoryRequest  $request
+     * @param  \App\Models\Category  $Category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecategoryRequest $request, category $category)
+    public function update(UpdateCategoryRequest $request, Category $Category)
     {
         //
     }
@@ -124,10 +126,10 @@ class AdminpostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\category  $category
+     * @param  \App\Models\Category  $Category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy(Category $Category)
     {
         //
     }

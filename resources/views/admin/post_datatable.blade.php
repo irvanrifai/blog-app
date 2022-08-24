@@ -147,7 +147,7 @@
                         serverSide: true,
                         responsive: true,
                         ajax: {
-                            url: '{{ url('post_') }}',
+                            url: '{{ url('admin/post') }}',
                         },
                         columns: [{
                                 render: function(data, type, row, meta) {
@@ -192,7 +192,7 @@
                     // to affect an action with modal
                     $('body').on('click', '#manipulateItem', function() {
                         var data_id = $(this).data('id');
-                        $.get("{{ url('post_') }}" + '/' + data_id + '/edit', function(data) {
+                        $.get("{{ url('admin/post') }}" + '/' + data_id + '/edit', function(data) {
                             $('#modelHeading').html("Post Information");
                             // $('#saveBtn').html("Update");
                             $('#ajaxModel').modal('show');
@@ -214,7 +214,7 @@
 
                             $.ajax({
                                 data: $('#form_data').serialize(),
-                                url: "{{ url('post_') }}",
+                                url: "{{ url('admin/post') }}",
                                 type: "POST",
                                 dataType: 'json',
                                 success: function(data) {

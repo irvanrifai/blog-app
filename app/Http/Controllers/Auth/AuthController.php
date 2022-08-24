@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,14 +18,14 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return view('signin', [
+        return view('guest.signin', [
             'title' => 'Blog | Sign In',
         ]);
     }
 
     public function indexSignup()
     {
-        return view('signup', [
+        return view('guest.signup', [
             "title" => "Blog | SignUp"
         ]);
     }
@@ -40,7 +41,7 @@ class AuthController extends Controller
                 if (auth()->user()->role == null) {
                     $request->session()->regenerate();
                     Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
-                    return redirect()->intended(url('mypost'));
+                    return redirect()->intended(url('user/mypost'));
                 } elseif (auth()->user()->role == 1) {
                     $request->session()->regenerate();
                     Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
@@ -51,7 +52,7 @@ class AuthController extends Controller
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
                 Alert::toast("Sign In Unsuccessfull, Your Account Has Been Deactivated, Please Contact Administrator", 'warning');
-                return redirect('/signin');
+                return redirect('guest/signin');
             }
         } else {
             Alert::toast("Sign In Unsuccessfull, Your Credentials Doesn't match", 'error');
@@ -74,7 +75,7 @@ class AuthController extends Controller
 
         // $request->session()->flash('success_logout_a', 'Logout success!');
         Alert::toast('Sign Out Successfull', 'success');
-        return redirect('/signin');
+        return redirect('guest/signin');
     }
 
     /**
@@ -107,7 +108,7 @@ class AuthController extends Controller
         $validatedData['password'] = bcrypt($validatedData['password']);
         User::create($validatedData);
         Alert::toast('Sign Up Successfull, Please Login', 'success');
-        return redirect('/signin');
+        return redirect('auth/signin');
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Models\Post;
 use App\Models\Saved;
@@ -26,9 +26,6 @@ class MypostController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        // if (!Gate::allows('read_post')) {
-        //     abort(403);
-        // }
         $posts = Post::latest()->where('user_id', auth()->user()->id);
         return view('home', [
             'title' => 'Blog | My Post',
@@ -47,7 +44,7 @@ class MypostController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        return view('add_post', [
+        return view('user.add_post', [
             'title' => 'Blog | New Post',
             'page' => 'New Post',
             'posts' => Post::latest()->get(),
@@ -73,7 +70,7 @@ class MypostController extends Controller
 
         if ($validatedData->fails()) {
             Alert::toast('New Post Upload Unsuccessfull', 'error');
-            return redirect(url('mypost/create'))->withInput()->withErrors($validatedData);
+            return redirect(url('user/mypost/create'))->withInput()->withErrors($validatedData);
         } else {
             $validatedData = $request->validate([
                 'cover' => 'image|file|max:2048',
@@ -89,7 +86,7 @@ class MypostController extends Controller
             $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
             Post::create($validatedData);
             Alert::toast('New Post Upload Successfull', 'success');
-            return redirect(url('mypost'));
+            return redirect(url('user/mypost'));
         }
     }
 
@@ -124,7 +121,7 @@ class MypostController extends Controller
             abort(403);
         }
         $post = Post::where('slug', $slug)->first();
-        return view('manipulate_post', [
+        return view('user.manipulate_post', [
             'title' => 'Blog | Edit Post',
             'page' => 'Edit Post',
             'post' => $post,
@@ -149,7 +146,7 @@ class MypostController extends Controller
         ]);
         if ($validatedData->fails()) {
             Alert::toast('Update Post Unsuccessfull', 'error');
-            return redirect(url('mypost/' . $slug . '/edit'))->withInput()->withErrors($validatedData);
+            return redirect(url('user/mypost/' . $slug . '/edit'))->withInput()->withErrors($validatedData);
         } else {
             $validatedData = $request->validate([
                 'cover' => 'image|file|max:2048',
@@ -165,7 +162,7 @@ class MypostController extends Controller
             $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
             Post::where('slug', $slug)->update($validatedData);
             Alert::toast('Update Post Successfull', 'success');
-            return redirect(url('/mypost'));
+            return redirect(url('user/mypost'));
         }
     }
 
@@ -177,10 +174,8 @@ class MypostController extends Controller
      */
     public function destroy(Post $post, $slug)
     {
-        // Post::destroy($post->slug);
-        // Post::destroy('slug', $slug);
         Post::where('slug', $slug)->delete();
         Alert::toast('Delete Post Successfull', 'success');
-        return redirect(url('/mypost'));
+        return redirect(url('user/mypost'));
     }
 }

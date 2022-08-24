@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Models\Post;
 use App\Models\User;
@@ -23,7 +23,7 @@ class ProfileController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        return view('manipulate_profile', [
+        return view('user.manipulate_profile', [
             'title' => 'Blog | Profile',
             'profile' => auth()->user(),
         ]);
@@ -72,7 +72,7 @@ class ProfileController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        return view('manipulate_profile', [
+        return view('user.manipulate_profile', [
             'title' => 'Blog | Profile',
             'profile' => auth()->user(),
         ]);
@@ -102,7 +102,7 @@ class ProfileController extends Controller
         ]);
         if ($validatedData->fails()) {
             Alert::toast('Update Profile Unsuccessfull', 'error');
-            return redirect(url('profile'))->withInput()->withErrors($validatedData);
+            return redirect(url('user/profile'))->withInput()->withErrors($validatedData);
         } else {
             $validatedData = $request->validate([
                 'photo' => 'image|file|max:2048',
@@ -120,7 +120,7 @@ class ProfileController extends Controller
             }
             User::where('username', $username)->update($validatedData);
             Alert::toast('Update Profile Successfull', 'success');
-            return redirect(url('profile'));
+            return redirect(url('user/profile'));
         }
     }
 
@@ -134,6 +134,6 @@ class ProfileController extends Controller
     {
         User::where('username', $username)->delete();
         Alert::toast('Delete Account Successfull', 'success');
-        return redirect(url('/'));
+        return redirect(url('guest'));
     }
 }

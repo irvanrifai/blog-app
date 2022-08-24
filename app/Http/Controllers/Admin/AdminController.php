@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\category;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use App\Http\Requests\StorecategoryRequest;
@@ -26,7 +27,7 @@ class AdminController extends Controller
         }
         $posts = Post::latest();
         $users = User::latest();
-        $category = category::latest();
+        $category = Category::latest();
         return view('admin.dashboard', [
             'title' => 'Blog | Admin',
             'page' => 'Dashboard',
@@ -75,7 +76,7 @@ class AdminController extends Controller
         $validatedData['password'] = bcrypt($validatedData['password']);
         User::create($validatedData);
         Alert::toast('Sign Up Successfull, Please Login', 'success');
-        return redirect('/signin');
+        return redirect(url('guest/signin'));
     }
 
     /**

@@ -36,7 +36,7 @@
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: '{{ url('category_') }}',
+                    url: '{{ url('admin/category') }}',
                 },
                 columns: [{
                         render: function(data, type, row, meta) {
@@ -85,7 +85,7 @@
             // to affect an action with modal
             $('body').on('click', '#editItem', function() {
                 var data_id = $(this).data('id');
-                $.get("{{ url('category_') }}" + '/' + data_id + '/edit', function(data) {
+                $.get("{{ url('admin/category') }}" + '/' + data_id + '/edit', function(data) {
                     $('#modelHeading').html("Edit Item");
                     $('#saveBtn').html("Update");
                     $('#ajaxModel').modal('show');
@@ -101,7 +101,7 @@
 
                 $.ajax({
                     data: $('#form_data').serialize(),
-                    url: "{{ url('category_') }}",
+                    url: "{{ url('admin/category') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
@@ -126,7 +126,7 @@
 
                 if (result) {
                     $.ajax({
-                        url: "{{ url('category_') }}" + '/' + data_id,
+                        url: "{{ url('admin/category') }}" + '/' + data_id,
                         type: "delete",
                         data: {
                             id: data_id,

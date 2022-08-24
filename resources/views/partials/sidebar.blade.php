@@ -25,8 +25,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('category_') }}"
-                    class="{{ Request::is('category_') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+                <a href="{{ url('admin/category') }}"
+                    class="{{ Request::is('admin/category') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
                     <svg aria-hidden="true"
                         class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -41,8 +41,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('user_') }}"
-                    class="{{ Request::is('user_') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+                <a href="{{ url('admin/user') }}"
+                    class="{{ Request::is('admin/user') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
                     <svg aria-hidden="true"
                         class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -53,8 +53,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('post_') }}"
-                    class="{{ Request::is('post_') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+                <a href="{{ url('admin/post') }}"
+                    class="{{ Request::is('admin/post') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
                     <svg aria-hidden="true"
                         class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -66,8 +66,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('signup_/create') }}"
-                    class="{{ Request::is('signup_*') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+                <a href="{{ url('admin/signup/create') }}"
+                    class="{{ Request::is('admin/signup*') ? 'bg-gray-300 text-gray-50' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
                     <svg aria-hidden="true"
                         class="flex-shrink-0 w-6 h-6 text-yellow-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +78,7 @@
                 </a>
             </li>
             <li>
-                <form action="/signout" class="hover:bg-gray-200 hover:rounded-md" method="POST">
+                <form action="{{ url('/signout') }}" class="hover:bg-gray-200 hover:rounded-md" method="POST">
                     @csrf
                     <button type="submit"
                         class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:text-blue-600 group-hover:text-gray-900 dark:hover:bg-gray-700">
