@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="_token" content="{{ csrf_token() }}">
 
     <link rel="icon" href="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" type="image/x-icon">
 

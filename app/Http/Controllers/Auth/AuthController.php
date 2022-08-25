@@ -45,7 +45,7 @@ class AuthController extends Controller
                 } elseif (auth()->user()->role == 1) {
                     $request->session()->regenerate();
                     Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
-                    return redirect()->intended(url('admin'));
+                    return redirect()->intended(url('admin/'));
                 }
             } else {
                 Auth::logout();
@@ -108,7 +108,7 @@ class AuthController extends Controller
         $validatedData['password'] = bcrypt($validatedData['password']);
         User::create($validatedData);
         Alert::toast('Sign Up Successfull, Please Login', 'success');
-        return redirect('auth/signin');
+        return redirect('/signin');
     }
 
     /**

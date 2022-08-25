@@ -76,6 +76,7 @@ Route::prefix('admin')->middleware('auth', 'can:isAdmin')->group(function () {
 // darurat
 Route::get('/signout', [AuthController::class, 'signout']);
 
+Route::get('/signin', [AuthController::class, 'index']);
 Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
 
 Route::get('/about', function () {
