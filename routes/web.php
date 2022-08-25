@@ -66,9 +66,7 @@ Route::prefix('admin')->middleware('auth', 'can:isAdmin')->group(function () {
 
     Route::resource('/signup', AdminController::class);
 
-    Route::post('/signin', [AuthController::class, 'authenticate']);
-
-    Route::get('/signin', [AuthController::class, 'index']);
+    Route::post('/signin', [AdminController::class, 'authenticate']);
 
     Route::post('/signout', [AuthController::class, 'signout']);
 });

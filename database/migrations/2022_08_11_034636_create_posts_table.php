@@ -19,8 +19,8 @@ class CreatePostsTable extends Migration
             $table->string('title', 255);
             $table->string('slug', 255);
             $table->text('body');
-            $table->foreignId('user_id', 255)->nullable();
-            $table->foreignId('category_id', 255)->nullable();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnUpdate()->restrictOnDelete();
             $table->string('status')->nullable();
             $table->timestamps();
         });

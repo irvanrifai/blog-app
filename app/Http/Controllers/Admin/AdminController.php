@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -51,6 +52,41 @@ class AdminController extends Controller
             "title" => "Admin | Sign Up",
             'page' => 'Sign Up for Administrator',
         ]);
+    }
+
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        if (Auth::attempt($credentials)) {
+            if (auth()->user()->status == 'active') {
+                if (auth()->user()->role == null) {
+                    $request->session()->regenerate();
+                    Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
+                    return redirect()->intended(url('user/mypost'));
+                } elseif (auth()->user()->role == 1) {
+                    $request->session()->regenerate();
+                    Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
+                    return redirect()->intended(url('admin/'));
+                }
+            } else {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                Alert::toast("Sign In Unsuccessfull, Your Account Has Been Deactivated, Please Contact Administrator", 'warning');
+                return redirect('guest/signin');
+            }
+        } else {
+            Alert::toast("Sign In Unsuccessfull, Your Credentials Doesn't match", 'error');
+            return back()
+                ->with([
+                    'error_login' => "Your Credentials Doesn't match"
+                ])
+                ->withErrors('Error Sign In', 'error')
+                ->onlyInput('email');
+        }
     }
 
     /**

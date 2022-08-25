@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(5)->create();
-        Post::factory(10)->create();
         // Category::factory(6)->create();
         Category::create([
             'name' => 'Software Engineering'
@@ -35,6 +34,7 @@ class DatabaseSeeder extends Seeder
         Category::create([
             'name' => 'Desktop App'
         ]);
-        Saved::factory(5)->create();
+        Post::factory(10)->create();
+        // Saved::factory(5)->create();
     }
 }

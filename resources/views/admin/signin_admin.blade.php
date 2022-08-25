@@ -37,22 +37,16 @@
                             </div>
                         </div>
                         <div class="px-4 py-3 bg-gray-50 sm:px-6">
-                            <div class="text-left">
-                                <p class="text-sm text-gray-600">Don't have account?
-                                </p>
-                                <a href="{{ url('guest/signup') }}" class="text-sm text-blue-600">Sign up</a>
-                            </div>
-                            <div class="text-right">
-                                <button type="submit"
-                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sign
-                                    in</button>
-                            </div>
+                            <button type="submit"
+                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sign
+                                in</button>
                         </div>
                     </div>
-                </form>
             </div>
+            </form>
         </div>
-        {{-- <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+    </div>
+    {{-- <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
             <img class="h-20 w-20 object-cover sm:h-30 md:h-30 lg:w-40 lg:h-40"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="">
         </div> --}}
