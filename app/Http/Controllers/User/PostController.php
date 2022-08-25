@@ -49,8 +49,8 @@ class PostController extends Controller
         // $query = Post::with(['user', 'savedpost.user'])->latest();
         if (request('cari')) {
             $query->where('title', 'like', '%' . request('cari') . '%')
-                ->orWhere('body', 'like', '%' . request('cari') . '%')
-                ->orWhere('category', 'like', '%' . request('cari') . '%');
+                ->orWhere('body', 'like', '%' . request('cari') . '%');
+            // ->orWhere('category', 'like', '%' . request('cari') . '%');
         }
         return view('home', [
             'title' => 'Blog | Home',

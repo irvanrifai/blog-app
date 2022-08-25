@@ -13,9 +13,9 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "realrashid/sweet-alert": "^5.1",
-        "rtconner/laravel-likeable": "^3.2",
         "symfony/http-client": "^5.4",
         "symfony/mailgun-mailer": "^5.4",
+        "twilio/sdk": "^6.41",
         "yajra/laravel-datatables-oracle": "^9.21"
     },
     "require-dev": {

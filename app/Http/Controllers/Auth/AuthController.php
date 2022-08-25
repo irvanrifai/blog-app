@@ -23,13 +23,6 @@ class AuthController extends Controller
         ]);
     }
 
-    public function indexSignup()
-    {
-        return view('guest.signup', [
-            "title" => "Blog | SignUp"
-        ]);
-    }
-
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([

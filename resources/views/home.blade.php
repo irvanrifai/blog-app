@@ -3,7 +3,7 @@
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
     <div class="container-fluid">
         <div class="fixed-bottom text-right sm:px-14 py-14 px-10 shadow-xl">
-            <a class="text-gray-200 px-2.5 py-1.5 bg-blue-500 text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
+            <a class="text-gray-200 px-2.5 py-1.5 bg-blue-500 text-xl hover:text-2xl hover:text-slate-300 font-bold rounded-full mr-1 ease-linear"
                 href="{{ url('user/mypost/create') }}"><i class="fa fa-plus"></i> New post
             </a>
         </div>

@@ -6,7 +6,7 @@
         </div>
         <div class="md:grid md:grid-cols-3 md:gap-96">
             <div class="mt-10 md:mt-0 md:col-span-2">
-                <form action="{{ url('guest/signin') }}" method="POST">
+                <form action="{{ url('admin/signin') }}" method="POST">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">

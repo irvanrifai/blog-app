@@ -38,6 +38,14 @@ class AdminController extends Controller
         ], compact('posts', 'users'));
     }
 
+    public function indexSignin()
+    {
+        return view('admin.signin_admin', [
+            "title" => "Admin | Sign In",
+            'page' => 'Sign In for Administrator',
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -64,19 +72,20 @@ class AdminController extends Controller
             if (auth()->user()->status == 'active') {
                 if (auth()->user()->role == null) {
                     $request->session()->regenerate();
-                    Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
-                    return redirect()->intended(url('user/mypost'));
+                    Alert::toast('Sign In Unsuccessfull, Admin Credentials Only', 'success');
+                    // Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
+                    // return redirect()->intended(url('user/mypost'));
                 } elseif (auth()->user()->role == 1) {
                     $request->session()->regenerate();
                     Alert::toast('Sign In Successfull' . '<br>' . 'Hello, ' . Str::of(auth()->user()->name)->words(2, ''), 'success');
-                    return redirect()->intended(url('admin/'));
+                    return redirect()->intended(url('admin'));
                 }
             } else {
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
                 Alert::toast("Sign In Unsuccessfull, Your Account Has Been Deactivated, Please Contact Administrator", 'warning');
-                return redirect('guest/signin');
+                return redirect('admin/signin');
             }
         } else {
             Alert::toast("Sign In Unsuccessfull, Your Credentials Doesn't match", 'error');
