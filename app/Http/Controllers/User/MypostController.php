@@ -104,7 +104,7 @@ class MypostController extends Controller
         $posts = Post::where('slug', $slug)->first();
         return view('post', [
             'title' => 'Blog | Post',
-            'page' => $posts->title,
+            'page' => 'Detail Post',
             'posts' => $posts
         ], compact('posts'));
     }

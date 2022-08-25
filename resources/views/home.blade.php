@@ -3,7 +3,7 @@
     <h1 class="text-2xl mb-4">{{ $page }}</h1>
     <div class="container-fluid">
         <div class="fixed-bottom text-right sm:px-14 py-14 px-10 shadow-xl">
-            <a class="text-gray-200 px-2.5 py-1.5 bg-blue-500 text-xl hover:text-2xl hover:text-slate-300 font-bold rounded-full mr-1 ease-linear"
+            <a class="text-gray-200 px-2.5 py-1.5 bg-blue-600 text-xl hover:text-2xl hover:text-slate-300 font-bold rounded-full mr-1 ease-linear"
                 href="{{ url('user/mypost/create') }}"><i class="fa fa-plus"></i> New post
             </a>
         </div>
@@ -22,7 +22,8 @@
                                     src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" alt="" />
                             @endif
                             <div class="p-6 flex flex-col justify-start">
-                                <a href="{{ url('user/mypost/' . $post->slug) }}">
+                                <a href="{{ url('user/post' . '/' . $post->slug) }}">
+                                    {{-- <a href="{{ url('user/post') }}"> --}}
                                     <h5 class="text-gray-900 hover:text-blue-700 text-xl font-medium mb-2">
                                         {{ Str::of($post->title)->words(10, '') }}
                                     </h5>
@@ -30,9 +31,12 @@
                                 <p class="text-gray-700 text-justify text-base mb-2">
                                     {!! Str::of($post->body)->words(20, ' read more...') !!}
                                 </p>
-                                <p class="text-gray-800 text-xs mt-2">In Category : {{ $post->category->name }}</p>
+                                <p class="text-gray-800 text-xs mt-2">In Category :
+                                    <a href="#">{{ $post->category->name }}</a>
+                                </p>
                                 <p class="text-gray-900 text-sm my-2 font-bold">By
-                                    {{ Str::of($post->user->name)->words(3, '') }}</p>
+                                    <a href="#">{{ Str::of($post->user->name)->words(3, '') }}</a>
+                                </p>
                                 <p class="text-gray-600 text-xs mt-2">Last update on
                                     {{ $post->updated_at->diffForHumans() }}
                                     {{-- {{ $post->saveds->user_id }} --}}
@@ -49,10 +53,10 @@
                                 {{-- @if (auth()->user()->id == $post->saveds->id) --}}
                                 @if (auth()->user()->id == $post->user->id)
                                     <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                        href="#" id="saved"><i class="fa fa-bookmark"></i></a>
+                                        href="#!" id="saved"><i class="fa fa-bookmark"></i></a>
                                 @else
                                     <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
-                                        href="#" id="save"><i class="fa fa-bookmark"></i></a>
+                                        href="#!" id="save"><i class="fa fa-bookmark"></i></a>
                                 @endif
                                 {{-- @endforeach --}}
 

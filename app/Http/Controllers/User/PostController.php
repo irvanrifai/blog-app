@@ -40,18 +40,18 @@ class PostController extends Controller
 
         // $query = Post::with(['user', 'saveds'])->get();
 
-        $query = Post::latest()->where('status', null);
+        $query = Post::latest()->filter(request(['cari']))->where('status', null);
         // dd($query->saveds->first()->pivot->user_id);
         // $query = DB::table('posts')->join('saveds', 'posts.id', '=', 'saveds.post_id')
         //     ->join('categories', 'posts.category_id', '=', 'categories.id')
         //     ->join('users', 'posts.user_id', '=', 'users.id')
         //     ->latest('posts.created_at');
         // $query = Post::with(['user', 'savedpost.user'])->latest();
-        if (request('cari')) {
-            $query->where('title', 'like', '%' . request('cari') . '%')
-                ->orWhere('body', 'like', '%' . request('cari') . '%');
-            // ->orWhere('category', 'like', '%' . request('cari') . '%');
-        }
+        // if (request('cari')) {
+        //     $query->where('title', 'like', '%' . request('cari') . '%')
+        //         ->orWhere('body', 'like', '%' . request('cari') . '%');
+        //     // ->orWhere('category', 'like', '%' . request('cari') . '%');
+        // }
         return view('home', [
             'title' => 'Blog | Home',
             'page' => 'All Post',

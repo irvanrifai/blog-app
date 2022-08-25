@@ -85,6 +85,12 @@ Route::get('/about', function () {
     ]);
 })->name('about')->prefix('user');
 
+Route::get('/profile', function () {
+    return view('profile', [
+        'title' => 'Blog | About',
+    ]);
+})->name('about');
+
 // sementara (to do: buat controller sendiri, middleware auth, isUser)
 Route::get('/settings', function () {
     return view('user.profile_setting', [
