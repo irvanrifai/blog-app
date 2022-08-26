@@ -56,9 +56,17 @@ class ProfileController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user, $username)
     {
-        //
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
+        $users = User::with('post')->where('username', $username)->first();
+        return view('profile', [
+            'title' => 'Profile | User',
+            'page' => 'Detail Profile',
+            'users' => $users
+        ], compact('users'));
     }
 
     /**

@@ -175,6 +175,7 @@
                         <div class="row">
                             <div class="row mb-2 g-3">
                                 <div class="mb-3 col-md-6 form-group">
+                                    <input type="hidden" name="slug" id="slug" value="0">
                                     <label for="name" class="form-label">Category Name</label><span
                                         class="text-danger">*</span>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"

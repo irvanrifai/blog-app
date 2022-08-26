@@ -32,7 +32,7 @@ Route::prefix('guest')->middleware('guest')->group(function () {
 
     Route::get('/signin', [AuthController::class, 'index']);
 
-    Route::get('/signup', [AuthController::class, 'indexSignup']);
+    Route::get('/signup', [AuthController::class, 'create']);
 
     Route::post('/signin', [AuthController::class, 'authenticate']);
 
@@ -48,6 +48,8 @@ Route::prefix('user')->middleware('auth', 'can:isUser')->group(function () {
     Route::resource('/savedpost', SavedController::class);
 
     Route::resource('/profile', ProfileController::class);
+
+    Route::resource('/category', CategoryController::class)->only('show');
 
     Route::resource('/savedpost', SavedController::class);
 

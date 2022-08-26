@@ -20,19 +20,24 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create();
         // Category::factory(6)->create();
         Category::create([
-            'name' => 'Software Engineering'
+            'name' => 'Software Engineering',
+            'slug' => 'software-engineering'
         ]);
         Category::create([
-            'name' => 'Web App'
+            'name' => 'Web App',
+            'slug' => 'web-app'
         ]);
         Category::create([
-            'name' => 'Mobile App'
+            'name' => 'Mobile App',
+            'slug' => 'mobile-app'
         ]);
         Category::create([
-            'name' => 'UI & UX'
+            'name' => 'UI & UX',
+            'slug' => 'ui-&-ux'
         ]);
         Category::create([
-            'name' => 'Desktop App'
+            'name' => 'Desktop App',
+            'slug' => 'desktop-app'
         ]);
         Post::factory(10)->create();
         // Saved::factory(5)->create();

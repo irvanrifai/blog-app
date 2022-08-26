@@ -15,6 +15,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->randomElement(['General', 'Web App', 'Mobile App', 'Desktop App', 'Software', 'Tips & Trick']),
+            'slug' => $this->faker->realTextBetween(10, 20, 1),
         ];
     }
 }

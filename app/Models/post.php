@@ -46,6 +46,20 @@ class Post extends Model
         return $this->belongsTo(Saved::class);
     }
 
+    public function scopeFilter($query, array $filters)
+    {
+        // if (isset($filters['cari']) ? $filters['cari'] : false) {
+        //     return $query->where('title', 'like', '%' . $filters['cari'] . '%')
+        //         ->orWhere('body', 'like', '%' . $filters['cari'] . '%');
+        //     // ->orWhere('category', 'like', '%' . request('cari') . '%');
+        // }
+
+        $query->when($filters['cari'] ?? false, function ($query, $cari) {
+            return $query->where('title', 'like', '%' . $cari . '%')
+                ->orWhere('body', 'like', '%' . $cari . '%');
+        });
+    }
+
     public function sluggable(): array
     {
         return [

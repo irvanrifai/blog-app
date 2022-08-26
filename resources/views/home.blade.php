@@ -22,7 +22,7 @@
                                     src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" alt="" />
                             @endif
                             <div class="p-6 flex flex-col justify-start">
-                                <a href="{{ url('user/post' . '/' . $post->slug) }}">
+                                <a href="{{ url('user/mypost' . '/' . $post->slug) }}">
                                     {{-- <a href="{{ url('user/post') }}"> --}}
                                     <h5 class="text-gray-900 hover:text-blue-700 text-xl font-medium mb-2">
                                         {{ Str::of($post->title)->words(10, '') }}
@@ -32,10 +32,12 @@
                                     {!! Str::of($post->body)->words(20, ' read more...') !!}
                                 </p>
                                 <p class="text-gray-800 text-xs mt-2">In Category :
-                                    <a href="#">{{ $post->category->name }}</a>
+                                    <a
+                                        href="{{ url('user/category') . '/' . $post->category->id }}">{{ $post->category->name }}</a>
                                 </p>
                                 <p class="text-gray-900 text-sm my-2 font-bold">By
-                                    <a href="#">{{ Str::of($post->user->name)->words(3, '') }}</a>
+                                    <a
+                                        href="{{ url('user/profile') . '/' . $post->user->username }}">{{ Str::of($post->user->name)->words(3, '') }}</a>
                                 </p>
                                 <p class="text-gray-600 text-xs mt-2">Last update on
                                     {{ $post->updated_at->diffForHumans() }}

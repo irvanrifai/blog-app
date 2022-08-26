@@ -9,6 +9,9 @@ use App\Http\Requests\UpdatecategoryRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class CategoryController extends Controller
 {
@@ -68,11 +71,31 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Category::updateOrCreate(
-            ['id' => $request->data_id],
-            ['name' => $request->name]
-        );
+        $validatedData = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+        ]);
+
+        // $data = Category::updateOrCreate(['name' => $request->name], ['id' => $request->data_id], ['slug' => SlugService::createSlug(Category::class, 'slug', $request->name)]);
+        $data = Category::updateOrCreate(['name' => $request->name], ['id' => $request->data_id], ['slug' =>  $request->slug]);
         return response()->json($data);
+        // if ($validatedData->fails()) {
+        //     Alert::toast('Add New Category Unsuccessfull', 'error');
+        // } else {
+        //     $validatedData = $request->validate([
+        //         'name' => 'required|max:100',
+        //     ]);
+        //     $validatedData['slug'] = SlugService::createSlug(Category::class, 'slug', $validatedData['name']);
+        //     $data = Category::updateOrCreate($validatedData, ['id' => $request->data_id]);
+        //     Alert::toast('New Post Upload Successfull', 'success');
+        //     return response()->json($data);
+        // }
+
+        // $data = Category::updateOrCreate(
+        //     ['id' => $request->data_id],
+        //     ['name' => $request->name],
+        //     ['slug' => $request->slug],
+        // );
+        // return response()->json($data);
     }
 
     /**
@@ -83,7 +106,15 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
+        $categories = Category::with('post')->where('id', $category->id)->first();
+        return view('category', [
+            'title' => 'Post | Category',
+            'page' => $categories->name,
+            'categories' => $categories->paginate(10)
+        ], compact('categories'));
     }
 
     /**
