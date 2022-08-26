@@ -27,8 +27,10 @@ use App\Http\Controllers\Admin\Post_Controller;
 |
 */
 
+Route::get('/', [PostController::class, 'index'])->middleware('guest');
+
 Route::prefix('guest')->middleware('guest')->group(function () {
-    Route::get('/', [AuthController::class, 'index'])->name('signin');
+    // Route::get('/', [AuthController::class, 'index'])->name('signin');
 
     Route::get('/signin', [AuthController::class, 'index']);
 
@@ -85,7 +87,7 @@ Route::get('/about', function () {
     return view('about', [
         'title' => 'Blog | About',
     ]);
-})->name('about')->prefix('user');
+})->name('about');
 
 Route::get('/profile', function () {
     return view('profile', [

@@ -20,9 +20,9 @@ class PostController extends Controller
      */
     public function index(Request $request, Post $post)
     {
-        if (!Gate::allows('isUser')) {
-            abort(403);
-        }
+        // if (!Gate::allows('isUser')) {
+        //     abort(403);
+        // }
 
         $user = User::with('saveds')->first();
         $post = Post::with('saveds')->first();
@@ -55,7 +55,7 @@ class PostController extends Controller
         return view('home', [
             'title' => 'Blog | Home',
             'page' => 'All Post',
-            'posts' => $query->paginate(10)->withQueryString(),
+            'posts' => $query->paginate(8)->withQueryString(),
             // 'posts' => $query,
             // 'saved' => $query->saveds->first()->pivot
         ], compact('query'));

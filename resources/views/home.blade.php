@@ -53,7 +53,8 @@
                                 {{-- <p>{{ dd($post->saveds->all()->pivot->user_id) }}</p> --}}
                                 {{-- @if (auth()->user()->id == $save->first()->pivot->user_id) --}}
                                 {{-- @if (auth()->user()->id == $post->saveds->id) --}}
-                                @if (auth()->user()->id == $post->user->id)
+                                @if (1 == $post->user->id)
+                                    {{-- @if (auth()->user()->id == $post->user->id) --}}
                                     <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                         href="#!" id="saved"><i class="fa fa-bookmark"></i></a>
                                 @else
@@ -133,7 +134,8 @@
                                 </script>
 
                                 {{-- tombol edit, only my post --}}
-                                @if (auth()->user()->id == $post->user_id)
+                                @if (1 == $post->user_id)
+                                    {{-- @if (auth()->user()->id == $post->user_id) --}}
                                     <a class="text-right py-2 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                         href="mypost/{{ $post->slug }}/edit"><i class="fa fa-pencil"></i></a>
                                 @endif
@@ -146,7 +148,7 @@
                         <h1 class="text-gray-800 text-xl font-bold">Get your first post!</h1>
                         <div class="text-center sm:px-14 py-14 px-10">
                             <a class="text-gray-600 px-4 py-3 bg-gray-300 shadow-xl text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
-                                href="{{ url('mypost/create') }}"><i class="fa fa-plus"></i>
+                                href="{{ url('user/mypost/create') }}"><i class="fa fa-plus"></i>
                             </a>
                             <i>click now!</i>
                         </div>

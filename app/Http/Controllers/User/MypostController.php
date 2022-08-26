@@ -30,7 +30,7 @@ class MypostController extends Controller
         return view('home', [
             'title' => 'Blog | My Post',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
-            'posts' => $posts->paginate(10)->withQueryString(),
+            'posts' => $posts->paginate(8)->withQueryString(),
         ]);
     }
 
@@ -43,6 +43,10 @@ class MypostController extends Controller
     {
         if (!Gate::allows('isUser')) {
             abort(403);
+            // return view('guest.signin', [
+            //     'title' => 'Blog | Sign In',
+            // ]);
+            // Alert::toast('You Must Sign Up/Sign In First!', 'warning');
         }
         return view('user.add_post', [
             'title' => 'Blog | New Post',
