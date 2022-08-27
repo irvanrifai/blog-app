@@ -1,44 +1,43 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<script>
-    // script for avatar dropdown
-    const btn = document.querySelector("button.user-menu-button");
-    const menu = document.querySelector(".user-menu-item");
-    btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-    });
-
-    // script for menu dropdown
-    const button = document.querySelector("button.menus-button");
-    const menus = document.querySelector(".menus-item");
-    button.addEventListener("click", () => {
-        menus.classList.toggle("hidden");
-    });
-
-    // script for notification
-    const n_button = document.querySelector("button.notif-button");
-    const isi = document.querySelector(".isi-notif");
-    n_button.addEventListener("click", () => {
-        isi.classList.toggle("hidden");
-    });
-</script>
 <nav class="bg-gray-800 mb-4">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="relative flex items-center justify-between h-16">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <!-- Mobile menu button-->
-                <button type="button"
-                    class="menus-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                    aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="2" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                @auth
+                    <button type="button"
+                        class="menus-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                @else
+                    <a href="{{ url('/') }}"
+                        class="{{ Request::is('/*') ? 'bg-gray-900 text-white' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg aria-hidden="true"
+                            class="w-7 h-7 mt-1 ms-2 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z" />
+                        </svg>
+                    </a>
+                    <a href="{{ url('about') }}"
+                        class="{{ Request::is('about') ? 'bg-gray-900 text-white' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg aria-hidden="true"
+                            class="flex-shrink-0 w-6 h-6 mt-2 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                        </svg>
+                    </a>
+                @endauth
             </div>
             <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex-shrink-0 flex items-center">
@@ -126,33 +125,28 @@
 
                 {{-- button signin on mobile view --}}
                 @guest
-                    <a href="{{ url('guest/signin') }}" type="button"
-                        class="hover:text-white transition-all duration-150 ease-in-out">
-                        <span
-                            class="block lg:hidden input-group-text flex items-center px-3 py-1.5 text-base border-0 font-normal bg-gray-800 text-gray-400 text-center whitespace-nowrap rounded"
-                            id="basic-addon2">
-                            <svg aria-hidden="true"
-                                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </span>
+                    <a href="{{ url('guest/signin') }}"
+                        class="{{ Request::is('guest/signin') ? 'bg-gray-900 text-white' : '' }} hover:bg-white transition-all duration-150 ease-in-out
+                            block lg:hidden input-group-text flex items-center px-3 py-1.5 text-base border-0 font-normal bg-gray-800 text-gray-400 text-center whitespace-nowrap rounded"
+                        id="basic-addon2">
+                        <svg aria-hidden="true"
+                            class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                clip-rule="evenodd"></path>
+                        </svg>
                     </a>
                 @endguest
                 {{-- button search on mobile with modal --}}
-                <button type="button" class="hover:text-white transition-all duration-150 ease-in-out"
-                    onclick="toggleModal('search')">
-                    <span
-                        class="block lg:hidden input-group-text flex items-center px-3 py-1.5 text-base border-0 font-normal bg-gray-800 text-gray-400 text-center whitespace-nowrap rounded"
-                        id="basic-addon2">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search"
-                            class="w-5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path fill="currentColor"
-                                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
-                            </path>
-                        </svg>
-                    </span>
+                <button type="button" onclick="toggleModal('search')"
+                    class="hover:bg-white transition-all duration-150 ease-in-out block lg:hidden input-group-text flex items-center px-3 py-1.5 text-base border-0 font-normal bg-gray-800 text-gray-400 text-center whitespace-nowrap rounded"
+                    id="basic-addon2">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="w-5"
+                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path fill="currentColor"
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                        </path>
+                    </svg>
                 </button>
                 {{-- modal --}}
                 <div class="hidden overflow-x-hidden overflow-y-auto fixed-top inset-0 z-50 outline-none focus:outline-none justify-center items-center"
@@ -258,10 +252,10 @@
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    @auth
-        <div class="hidden menus-item" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+    <div class="hidden menus-item" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            @auth
                 <a href="{{ url('user/post') }}"
                     class="{{ Request::is('user/post*') ? 'bg-gray-900 text-white' : '' }} text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                     aria-current="page">Home</a>
@@ -276,18 +270,40 @@
                 <a href="{{ url('about') }}"
                     class="{{ Request::is('about') ? 'bg-gray-900 text-white' : '' }} text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About
                 </a>
-                {{-- @else --}}
+            @else
                 <a href="{{ url('/') }}"
                     class="{{ Request::is('/*') ? 'bg-gray-900 text-white' : '' }} text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                     aria-current="page">Home</a>
                 <a href="{{ url('about') }}"
                     class="{{ Request::is('about') ? 'bg-gray-900 text-white' : '' }} text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About
                 </a>
-                @can('isAdmin')
-                    <a href="#"
-                        class="{{ Request::is('admin') ? 'bg-gray-900 text-yellow-500' : '' }} text-yellow-400 hover:bg-gray-700 hover:text-yellow-500 px-3 py-2 rounded-md text-base font-medium">Admin</a>
-                @endcan
-            </div>
+            @endauth
+            {{-- @can('isAdmin')
+                <a href="#"
+                    class="{{ Request::is('admin') ? 'bg-gray-900 text-yellow-500' : '' }} text-yellow-400 hover:bg-gray-700 hover:text-yellow-500 px-3 py-2 rounded-md text-base font-medium">Admin</a>
+            @endcan --}}
         </div>
-    @endauth
+    </div>
 </nav>
+<script>
+    // script for avatar dropdown
+    const btn = document.querySelector("button.user-menu-button");
+    const menu = document.querySelector(".user-menu-item");
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+
+    // script for menu dropdown
+    const button = document.querySelector("button.menus-button");
+    const menus = document.querySelector(".menus-item");
+    button.addEventListener("click", () => {
+        menus.classList.toggle("hidden");
+    });
+
+    // script for notification
+    const n_button = document.querySelector("button.notif-button");
+    const isi = document.querySelector(".isi-notif");
+    n_button.addEventListener("click", () => {
+        isi.classList.toggle("hidden");
+    });
+</script>

@@ -17,4 +17,12 @@ class Category extends Model
     {
         return $this->hasMany(Post::class);
     }
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 }

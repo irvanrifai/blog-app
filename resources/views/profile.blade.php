@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('container')
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div
                 class="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-end px-4 py-4">
@@ -105,55 +105,54 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+
+        {{-- posts from user selected --}}
+        <div class="col-md-8 mt-0">
             <div class="card-group" id="posts">
-                <div class="row row-cols-md-2 g-4 mx-3 my-4">
-                    @forelse ($users as $user)
-                        {{-- <p>{{ $user->saveds->first()->pivot->user_id }}</p> --}}
+                <div class="row row-cols-md-1 g-3 mb-2 my-3">
+                    @forelse ($posts as $post)
+                        {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
                         {{-- every post --}}
                         <div class="flex justify-center hover:bg-gray-200 hover:rounded-xl" id="post">
                             <div class="flex flex-col md:flex-row rounded-lg bg-white shadow-lg">
-                                @if ($user->cover)
+                                @if ($post->cover)
                                     <img class="w-full h-42 sm:h-21 object-cover sm:w-40 rounded-t-lg md:rounded-none md:rounded-l-lg"
-                                        src="{{ asset('storage/' . $user->cover) }}" alt="" />
+                                        src="{{ asset('storage/' . $post->cover) }}" alt="" />
                                 @else
                                     <img class="w-full h-42 sm:h-21 object-cover sm:w-40 rounded-t-lg md:rounded-none md:rounded-l-lg"
-                                        src="https://source.unsplash.com/200x200/?{{ $user->category->name }}"
+                                        {{-- src="https://source.unsplash.com/200x200/?{{ $post->category->name }}" --}} src="https://source.unsplash.com/200x200/?man"
                                         alt="" />
                                 @endif
                                 <div class="p-6 flex flex-col justify-start">
-                                    <a href="{{ url('user/mypost' . '/' . $user->slug) }}">
-                                        {{-- <a href="{{ url('user/post') }}"> --}}
+                                    <a href="{{ url('user/mypost' . '/' . $post->slug) }}">
                                         <h5 class="text-gray-900 hover:text-blue-700 text-xl font-medium mb-2">
-                                            {{ Str::of($user->title)->words(10, '') }}
+                                            {{ Str::of($post->title)->words(10, '') }}
                                         </h5>
                                     </a>
                                     <p class="text-gray-700 text-justify text-base mb-2">
-                                        {!! Str::of($user->body)->words(20, ' read more...') !!}
+                                        {!! Str::of($post->body)->words(20, ' read more...') !!}
                                     </p>
                                     <p class="text-gray-800 text-xs mt-2">In Category :
-                                        <a
-                                            href="{{ url('user/category') . '/' . $user->category->id }}">{{ $user->category->name }}</a>
+                                        <a href="{{ url('user/category') . '/' . $post->category->id }}">{{ $post->category->name }}
                                     </p>
                                     <p class="text-gray-900 text-sm my-2 font-bold">By
                                         <a
-                                            href="{{ url('user/profile') . '/' . $user->user->username }}">{{ Str::of($user->user->name)->words(3, '') }}</a>
+                                            href="{{ url('user/profile') . '/' . $post->user->username }}">{{ Str::of($post->user->name)->words(3, '') }}</a>
                                     </p>
                                     <p class="text-gray-600 text-xs mt-2">Last update on
-                                        {{ $user->updated_at->diffForHumans() }}
-                                        {{-- {{ $user->saveds->user_id }} --}}
+                                        {{ $post->updated_at->diffForHumans() }}
                                     </p>
                                 </div>
 
                                 {{-- kasih kondisi saved/not saved --}}
                                 {{-- masih error, entah relationship atau apanya --}}
                                 <div class="flex px-4">
-                                    {{-- <p>{{ $user->saveds->first()->pivot->user_id }}</p> --}}
-                                    {{-- @foreach ($user->saveds as $save) --}}
-                                    {{-- <p>{{ dd($user->saveds->all()->pivot->user_id) }}</p> --}}
+                                    {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
+                                    {{-- @foreach ($post->saveds as $save) --}}
+                                    {{-- <p>{{ dd($post->saveds->all()->pivot->user_id) }}</p> --}}
                                     {{-- @if (auth()->user()->id == $save->first()->pivot->user_id) --}}
-                                    {{-- @if (auth()->user()->id == $user->saveds->id) --}}
-                                    @if (auth()->user()->id == $user->user->id)
+                                    {{-- @if (auth()->user()->id == $post->saveds->id) --}}
+                                    @if (auth()->user()->id == $post->user_id)
                                         <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
                                             href="#!" id="saved"><i class="fa fa-bookmark"></i></a>
                                     @else
@@ -233,9 +232,9 @@
                                     </script>
 
                                     {{-- tombol edit, only my post --}}
-                                    @if (auth()->user()->id == $user->user_id)
+                                    @if (auth()->user()->id == $post->user_id)
                                         <a class="text-right py-2 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                            href="mypost/{{ $user->slug }}/edit"><i class="fa fa-pencil"></i></a>
+                                            href="mypost/{{ $post->slug }}/edit"><i class="fa fa-pencil"></i></a>
                                     @endif
                                 </div>
                             </div>
@@ -255,7 +254,7 @@
                 </div>
                 {{-- </div> --}}
             </div>
-            {{ $users->links() }}
+            {{ $posts->links() }}
         </div>
     </div>
 @endsection

@@ -62,10 +62,12 @@ class ProfileController extends Controller
             abort(403);
         }
         $users = User::with('post')->where('username', $username)->first();
+        $posts = Post::latest();
         return view('profile', [
             'title' => 'Profile | User',
             'page' => 'Detail Profile',
-            'users' => $users
+            'users' => $users,
+            'posts' => $posts->paginate(4)
         ], compact('users'));
     }
 

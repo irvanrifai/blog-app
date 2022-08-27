@@ -71,9 +71,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = Validator::make($request->all(), [
-            'name' => 'required|max:100',
-        ]);
 
         // $data = Category::updateOrCreate(['name' => $request->name], ['id' => $request->data_id], ['slug' => SlugService::createSlug(Category::class, 'slug', $request->name)]);
         $data = Category::updateOrCreate(['name' => $request->name], ['id' => $request->data_id], ['slug' =>  $request->slug]);
