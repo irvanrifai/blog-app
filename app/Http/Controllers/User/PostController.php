@@ -93,7 +93,7 @@ class PostController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        $posts = Post::where('slug', $slug)->first();
+        $posts = Post::where('slug', $post->slug)->first();
         return view('post', [
             'title' => 'Blog | Post',
             'page' => 'Detail Post',
@@ -133,5 +133,12 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function about()
+    {
+        return view('about', [
+            'title' => 'Blog | About',
+        ]);
     }
 }

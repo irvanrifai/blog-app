@@ -61,7 +61,7 @@ class ProfileController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        $users = User::with('post')->where('username', $username)->first();
+        $users = $user->load('post')->where('username', $username)->first();
         $posts = Post::latest();
         return view('profile', [
             'title' => 'Profile | User',
@@ -145,5 +145,16 @@ class ProfileController extends Controller
         User::where('username', $username)->delete();
         Alert::toast('Delete Account Successfull', 'success');
         return redirect(url('guest'));
+    }
+
+    public function setting()
+    {
+        if (!Gate::allows('isUser')) {
+            abort(403);
+        }
+        return view('user.profile_setting', [
+            'title' => 'Blog | Setting',
+            'profile' => auth()->user()
+        ]);
     }
 }

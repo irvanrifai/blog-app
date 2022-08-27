@@ -31,7 +31,7 @@
                     <a href="{{ url('about') }}"
                         class="{{ Request::is('about') ? 'bg-gray-900 text-white' : '' }} flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <svg aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 mt-2 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            class="flex-shrink-0 w-6 h-6 mt-1.5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
@@ -236,8 +236,8 @@
                             <a href="{{ url('user/profile') }}"
                                 class="{{ Request::is('user/profile') ? 'text-blue-500 rounded' : '' }} block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem" tabindex="-1" id="user-menu-item-0">Profile</a>
-                            <a href="{{ url('user/settings') }}"
-                                class="{{ Request::is('user/settings') ? 'text-blue-500 rounded' : '' }} block px-4 py-2 text-sm text-gray-700"
+                            <a href="{{ url('user/setting') }}"
+                                class="{{ Request::is('user/setting') ? 'text-blue-500 rounded' : '' }} block px-4 py-2 text-sm text-gray-700"
                                 role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
                             <form action="{{ url('/signout') }}" method="POST">
                                 @csrf

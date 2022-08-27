@@ -33,7 +33,7 @@
                                 </p>
                                 <p class="text-gray-800 text-xs mt-2">In Category :
                                     <a
-                                        href="{{ url('user/category') . '/' . $post->category->id }}">{{ $post->category->name }}</a>
+                                        href="{{ url('user/category') . '/' . $post->category_id }}">{{ $post->category->name }}</a>
                                 </p>
                                 <p class="text-gray-900 text-sm my-2 font-bold">By
                                     <a

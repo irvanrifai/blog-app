@@ -3,7 +3,7 @@
     <h1>{{ $page }}</h1>
     <div class="card-group" id="posts">
         <div class="row row-cols-md-2 g-4 mx-3 my-4">
-            @forelse ($categories as $post)
+            @foreach ($categories as $post)
                 {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
                 {{-- every post --}}
                 <div class="flex justify-center hover:bg-gray-200 hover:rounded-xl" id="post">
@@ -16,7 +16,7 @@
                                 src="https://source.unsplash.com/200x200/?{{ $post->name }}" alt="" />
                         @endif
                         <div class="p-6 flex flex-col justify-start">
-                            <a href="{{ url('user/post' . '/' . $post->slug) }}">
+                            <a href="{{ url('user/mypost' . '/' . $post->slug) }}">
                                 {{-- <a href="{{ url('user/post') }}"> --}}
                                 <h5 class="text-gray-900 hover:text-blue-700 text-xl font-medium mb-2">
                                     {{ Str::of($post->title)->words(10, '') }}
@@ -26,12 +26,13 @@
                                 {!! Str::of($post->body)->words(20, ' read more...') !!}
                             </p>
                             <p class="text-gray-800 text-xs mt-2">In Category :
-                                <a href="{{ url('user/category') . '/' . $post->id }}">{{ $post->name }}</a>
+                                <a
+                                    href="{{ url('user/category') . '/' . $post->category->id }}">{{ $post->category->name }}</a>
                             </p>
-                            {{-- <p class="text-gray-900 text-sm my-2 font-bold">By
+                            <p class="text-gray-900 text-sm my-2 font-bold">By
                                 <a
                                     href="{{ url('user/profile') . '/' . $post->user->username }}">{{ Str::of($post->user->name)->words(3, '') }}</a>
-                            </p> --}}
+                            </p>
                             <p class="text-gray-600 text-xs mt-2">Last update on
                                 {{ $post->updated_at->diffForHumans() }}
                                 {{-- {{ $post->saveds->user_id }} --}}
@@ -133,22 +134,11 @@
                         </div>
                     </div>
                 </div>
-            @empty
-                <div class="col-md-8">
-                    <h1 class="text-gray-700 text-2xl font-bold">Hello, {{ auth()->user()->name }}!</h1>
-                    <h1 class="text-gray-800 text-xl font-bold">Get your first post!</h1>
-                    <div class="text-center sm:px-14 py-14 px-10">
-                        <a class="text-gray-600 px-4 py-3 bg-gray-300 shadow-xl text-xl hover:text-2xl font-bold rounded-full mr-1 ease-linear"
-                            href="{{ url('mypost/create') }}"><i class="fa fa-plus"></i>
-                        </a>
-                        <i>click now!</i>
-                    </div>
-                </div>
-            @endforelse
+            @endforeach
         </div>
         {{-- </div> --}}
     </div>
-    {{ $categories->links() }}
+    {{-- {{ $categories->links() }} --}}
     </div>
     <script>
         $(document).ready(function() {

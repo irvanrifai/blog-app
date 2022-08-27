@@ -106,11 +106,13 @@ class CategoryController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        $categories = Category::with('post')->where('id', $category->id)->first();
+        $categories = $category->posts;
         return view('category', [
             'title' => 'Post | Category',
-            'page' => $categories->name,
-            'categories' => $categories->paginate(10)
+            'page' => $categories->first()->name,
+            // 'page' => 'Category ini',
+            // 'categories' => $categories->paginate(8)
+            'categories' => $categories
         ], compact('categories'));
     }
 

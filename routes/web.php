@@ -28,6 +28,9 @@ use App\Http\Controllers\Admin\Post_Controller;
 */
 
 Route::get('/', [PostController::class, 'index'])->middleware('guest');
+Route::get('/signin', [AuthController::class, 'index'])->name('signin')->middleware('guest');
+Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
+Route::get('/about', [PostController::class, 'about']);
 
 Route::prefix('guest')->middleware('guest')->group(function () {
     // Route::get('/', [AuthController::class, 'index'])->name('signin');
@@ -50,6 +53,8 @@ Route::prefix('user')->middleware('auth', 'can:isUser')->group(function () {
     Route::resource('/savedpost', SavedController::class);
 
     Route::resource('/profile', ProfileController::class);
+
+    Route::get('/setting', [ProfileController::class, 'setting']);
 
     Route::resource('/category', CategoryController::class)->only('show');
 
@@ -79,26 +84,3 @@ Route::prefix('admin')->middleware('auth', 'can:isAdmin')->group(function () {
 
 // darurat
 Route::get('/signout', [AuthController::class, 'signout']);
-
-Route::get('/signin', [AuthController::class, 'index']);
-Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
-
-Route::get('/about', function () {
-    return view('about', [
-        'title' => 'Blog | About',
-    ]);
-})->name('about');
-
-Route::get('/profile', function () {
-    return view('profile', [
-        'title' => 'Blog | About',
-    ]);
-})->name('about');
-
-// sementara (to do: buat controller sendiri, middleware auth, isUser)
-Route::get('/settings', function () {
-    return view('user.profile_setting', [
-        'title' => 'Blog | Setting',
-        'profile' => auth()->user()
-    ]);
-})->name('settings')->prefix('user');
