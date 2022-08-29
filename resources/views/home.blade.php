@@ -48,20 +48,22 @@
                             {{-- kasih kondisi saved/not saved --}}
                             {{-- masih error, entah relationship atau apanya --}}
                             <div class="flex px-4">
+
+                                {{-- <h2>{{ dd($post->saveds) }}</h2> --}}
                                 {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
-                                {{-- @foreach ($post->saveds as $save) --}}
                                 {{-- <p>{{ dd($post->saveds->all()->pivot->user_id) }}</p> --}}
                                 {{-- @if (auth()->user()->id == $save->first()->pivot->user_id) --}}
                                 {{-- @if (auth()->user()->id == $post->saveds->id) --}}
-                                @if (1 == $post->user->id)
-                                    {{-- @if (auth()->user()->id == $post->user->id) --}}
-                                    <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                        href="#!" id="saved"><i class="fa fa-bookmark"></i></a>
-                                @else
-                                    <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
-                                        href="#!" id="save"><i class="fa fa-bookmark"></i></a>
-                                @endif
-                                {{-- @endforeach --}}
+                                @auth
+                                    @if (auth()->user()->id == null)
+                                        {{-- @if (auth()->user()->id == $post->user->id) --}}
+                                        <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                            href="#!" id="saved"><i class="fa fa-bookmark"></i></a>
+                                    @else
+                                        <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
+                                            href="#!" id="save"><i class="fa fa-bookmark"></i></a>
+                                    @endif
+                                @endauth
 
                                 {{-- scrpit for saved-unsaved button --}}
                                 <script type="text/javascript">
@@ -73,34 +75,34 @@
                                         });
 
                                         // coba buat sendiri
-                                        // $save = $("#save");
-                                        // $saved = $("#saved");
+                                        $save = $("#save");
+                                        $saved = $("#saved");
 
-                                        // if ($save.length) {
-                                        //     $save.on('click', function() {
-                                        //         $.ajax('SavedController.php', {
-                                        //             data: 'here'
-                                        //         }, function(response) {
-                                        //             // do something with your response from SavedController.php:
-                                        //             $save.addClass("unlike");
-                                        //             $save.removeClass("like");
-                                        //             $saved = $save;
-                                        //         });
-                                        //     });
-                                        // }
+                                        if ($save.length) {
+                                            $save.on('click', function() {
+                                                $.ajax('SavedController.php', {
+                                                    data: 'here'
+                                                }, function(response) {
+                                                    // do something with your response from SavedController.php:
+                                                    $save.addClass("unlike");
+                                                    $save.removeClass("like");
+                                                    $saved = $save;
+                                                });
+                                            });
+                                        }
 
-                                        // if ($saved.length) {
-                                        //     $saved.on('click', function() {
-                                        //         $.ajax('SavedController.php', {
-                                        //             data: 'here'
-                                        //         }, function(response) {
-                                        //             // do something with your response from SavedController.php:
-                                        //             $saved.addClass("like");
-                                        //             $saved.removeClass("unlike");
-                                        //             $save = $saved;
-                                        //         });
-                                        //     });
-                                        // }
+                                        if ($saved.length) {
+                                            $saved.on('click', function() {
+                                                $.ajax('SavedController.php', {
+                                                    data: 'here'
+                                                }, function(response) {
+                                                    // do something with your response from SavedController.php:
+                                                    $saved.addClass("like");
+                                                    $saved.removeClass("unlike");
+                                                    $save = $saved;
+                                                });
+                                            });
+                                        }
 
                                         // contoh ajax dari datatable
                                         $('body').on('click', '#save', function() {
@@ -134,11 +136,13 @@
                                 </script>
 
                                 {{-- tombol edit, only my post --}}
-                                @if (1 == $post->user_id)
-                                    {{-- @if (auth()->user()->id == $post->user_id) --}}
-                                    <a class="text-right py-2 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                        href="mypost/{{ $post->slug }}/edit"><i class="fa fa-pencil"></i></a>
-                                @endif
+                                @auth
+                                    @if (auth()->user()->id == $post->user_id)
+                                        {{-- @if (auth()->user()->id == $post->user_id) --}}
+                                        <a class="text-right py-2 text-gray-500 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                            href="mypost/{{ $post->slug }}/edit"><i class="fa fa-pencil"></i></a>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                     </div>

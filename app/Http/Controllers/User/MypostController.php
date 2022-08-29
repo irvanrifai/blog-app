@@ -31,6 +31,7 @@ class MypostController extends Controller
             'title' => 'Blog | My Post',
             'page' => Str::of(auth()->user()->name)->words(2, '') . "'s post",
             'posts' => $posts->paginate(8)->withQueryString(),
+            'postsaved' => Post::where('user_id', auth()->user()->id)->get()
         ]);
     }
 

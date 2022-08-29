@@ -70,6 +70,7 @@ class User extends Authenticatable
         // parameter 3 (variable FK pivot yang terhubung dengan tabel ini)
         // parameter 4 (variable FK pivot yg terhubung dengan tabel yang mau dihubungkan)
         // return $this->belongsToMany(Post::class, 'saveds', 'user_id', 'post_id');
-        return $this->belongsToMany(Post::class, 'saveds', 'user_id', 'post_id')->withTimestamps()->withPivot('user_id', 'post_id');
+        // return $this->belongsToMany(Post::class, 'saveds', 'user_id', 'post_id')->withTimestamps()->withPivot('user_id', 'post_id');
+        return $this->belongsToMany(related: Post::class, table: 'saveds', foreignPivotKey: 'user_id', relatedPivotKey: 'post_id')->withTimestamps()->withPivot('user_id', 'post_id');
     }
 }
