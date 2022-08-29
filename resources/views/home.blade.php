@@ -58,10 +58,10 @@
                                     @if (auth()->user()->id == null)
                                         {{-- @if (auth()->user()->id == $post->user->id) --}}
                                         <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                            href="#!" id="saved"><i class="fa fa-bookmark"></i></a>
+                                            href="javascript:void(0)" id="saved"><i class="fa fa-bookmark"></i></a>
                                     @else
                                         <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
-                                            href="#!" id="save"><i class="fa fa-bookmark"></i></a>
+                                            href="javascript:void(0)" id="save"><i class="fa fa-bookmark"></i></a>
                                     @endif
                                 @endauth
 
@@ -80,58 +80,61 @@
 
                                         if ($save.length) {
                                             $save.on('click', function() {
-                                                $.ajax('SavedController.php', {
-                                                    data: 'here'
-                                                }, function(response) {
-                                                    // do something with your response from SavedController.php:
-                                                    $save.addClass("unlike");
-                                                    $save.removeClass("like");
-                                                    $saved = $save;
-                                                });
+                                                var post_id = $(this).data("post_id");
+                                                $.ajax({
+                                                        url: "{{ url('user/savedpost') }}",
+                                                        type: "POST",
+                                                        data: {
+                                                            id: post_id,
+                                                            _token: '{{ csrf_token() }}'
+                                                        },
+                                                        dataType: 'json',
+                                                        enctype: 'multipart/form-data',
+                                                        success: function(data) {
+                                                            table.draw();
+                                                        },
+                                                        error: function(data) {
+                                                            console.log('Error:', data);
+                                                        }
+                                                    }
+                                                    // , function(response) {
+                                                    //     // do something with your response from SavedController.php:
+                                                    //     $save.addClass("unlike");
+                                                    //     $save.removeClass("like");
+                                                    //     $saved = $save;
+                                                    // }
+                                                );
                                             });
                                         }
 
                                         if ($saved.length) {
                                             $saved.on('click', function() {
-                                                $.ajax('SavedController.php', {
-                                                    data: 'here'
-                                                }, function(response) {
-                                                    // do something with your response from SavedController.php:
-                                                    $saved.addClass("like");
-                                                    $saved.removeClass("unlike");
-                                                    $save = $saved;
-                                                });
+                                                var post_id = $(this).data("post_id");
+                                                $.ajax({
+                                                        url: "{{ url('user/savedpost') }}" + '/' + post_id,
+                                                        type: "delete",
+                                                        data: {
+                                                            id: post_id,
+                                                            _token: '{{ csrf_token() }}'
+                                                        },
+                                                        dataType: 'json',
+                                                        enctype: 'multipart/form-data',
+                                                        success: function(data) {
+                                                            table.draw();
+                                                        },
+                                                        error: function(data) {
+                                                            console.log('Error:', data);
+                                                        }
+                                                    }
+                                                    // , function(response) {
+                                                    //     // do something with your response from SavedController.php:
+                                                    //     $saved.addClass("like");
+                                                    //     $saved.removeClass("unlike");
+                                                    //     $save = $saved;
+                                                    // }
+                                                );
                                             });
                                         }
-
-                                        // contoh ajax dari datatable
-                                        $('body').on('click', '#save', function() {
-                                            var slug = $(this).data("slug");
-                                            $.ajax({
-                                                url: "{{ url('savedpost') }}",
-                                                type: "POST",
-                                                success: function(data) {
-                                                    table.draw();
-                                                },
-                                                error: function(data) {
-                                                    console.log('Error:', data);
-                                                }
-                                            });
-                                        });
-
-                                        $('body').on('click', '#saved', function() {
-                                            var id_saved = $(this).data("id_saved");
-                                            $.ajax({
-                                                url: "{{ url('savedpost') }}" + '/' + id_saved,
-                                                type: "DELETE",
-                                                success: function(data) {
-                                                    table.draw();
-                                                },
-                                                error: function(data) {
-                                                    console.log('Error:', data);
-                                                }
-                                            });
-                                        });
                                     })
                                 </script>
 
