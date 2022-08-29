@@ -25,7 +25,7 @@
         $(function() {
             $.ajaxSetup({
                 headers: {
-                    'csrftoken': '{{ csrf_token() }}'
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
@@ -103,6 +103,7 @@
                     url: "{{ url('admin/category') }}",
                     type: "POST",
                     dataType: 'json',
+                    enctype: 'multipart/form-data',
                     success: function(data) {
 
                         $('#form_data').trigger("reset");

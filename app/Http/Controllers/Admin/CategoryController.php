@@ -73,7 +73,9 @@ class CategoryController extends Controller
     {
 
         // $data = Category::updateOrCreate(['name' => $request->name], ['id' => $request->data_id], ['slug' => SlugService::createSlug(Category::class, 'slug', $request->name)]);
-        $data = Category::updateOrCreate(['name' => $request->name], ['id' => $request->data_id], ['slug' =>  $request->slug]);
+        $name = $request->name;
+        $slug = SlugService::createSlug(Category::class, 'slug', $name);
+        $data = Category::updateOrCreate(['id' => $request->data_id], ['name' => $request->name], ['slug' => $slug]);
         return response()->json($data);
         // if ($validatedData->fails()) {
         //     Alert::toast('Add New Category Unsuccessfull', 'error');
@@ -109,10 +111,11 @@ class CategoryController extends Controller
         $categories = $category->posts;
         return view('category', [
             'title' => 'Post | Category',
-            'page' => $categories->first()->name,
+            'page' => $category->name,
             // 'page' => 'Category ini',
             // 'categories' => $categories->paginate(8)
             'categories' => $categories
+            // 'categories' => Category::where('slug', $category->slug)->first()
         ], compact('categories'));
     }
 
@@ -122,12 +125,13 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category, $id)
+    public function edit(Category $category)
     {
         if (!Gate::allows('isAdmin')) {
             abort(403);
         }
-        $data = Category::find($id);
+        $data = Category::find($category->id);
+        // $data = Category::where('id', $category->id);
         return response()->json($data);
     }
 
@@ -149,12 +153,12 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, $id)
+    public function destroy(Category $category)
     {
         if (!Gate::allows('isAdmin')) {
             abort(403);
         }
-        $data = Category::where('id', $id)->delete();
+        $data = Category::where('id', $category->id)->delete();
         return response()->json($data);
     }
 }

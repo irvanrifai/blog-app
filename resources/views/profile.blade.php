@@ -3,7 +3,6 @@
     <div class="row">
         <div class="col-md-4">
             @foreach ($users as $user)
-                <h1>{{ dd($user->posts->title) }}</h1>
                 <div
                     class="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-end px-4 py-4">
@@ -113,7 +112,7 @@
         <div class="col-md-8 mt-0">
             <div class="card-group" id="posts">
                 <div class="row row-cols-md-1 g-3 mb-2 my-3">
-                    @foreach ($users as $post)
+                    @foreach ($posts as $post)
                         {{-- <p>{{ $post->saveds->first()->pivot->user_id }}</p> --}}
                         {{-- every post --}}
                         <div class="flex justify-center hover:bg-gray-200 hover:rounded-xl" id="post">

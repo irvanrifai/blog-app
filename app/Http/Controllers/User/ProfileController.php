@@ -61,15 +61,15 @@ class ProfileController extends Controller
         if (!Gate::allows('isUser')) {
             abort(403);
         }
-        $users = $user->where('username', $username)->get();
+        // $users = $user->where('username', $username);
         // dd($users->where('username', $username)->get());
         $posts = $user->posts;
         return view('profile', [
             'title' => 'Profile | User',
             'page' => 'Detail Profile',
-            'users' => $users,
+            'users' => $user->where('username', $username)->get(),
             'posts' => $posts
-        ], compact('users', 'posts'));
+        ], compact('posts'));
     }
 
     /**
