@@ -119,15 +119,8 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="act" value="deactivated">
-                        <div class="modal-footer">
-                            <button type="submit" name="btn_act" value="deactivated"
-                                class="bi bi-plus-square btn btn-danger bg-red-600" id="saveBtn"><i
-                                    class="fa fa-ghost"></i> deactivate</button>
-
-                            {{-- <button type="submit" name="act" value="active"
-                                class="bi bi-plus-square btn btn-success bg-green-600" id="saveBtn"><i
-                                    class="fa fa-smile"></i> activate</button> --}}
+                        {{-- <input type="hidden" name="act" value="deactivated"> --}}
+                        <div class="modal-footer" id="saveBtn">
                         </div>
                 </form>
             </div>
@@ -192,6 +185,8 @@
             $('body').on('click', '#manipulateItem', function() {
                 var data_id = $(this).data('id');
                 $.get("{{ url('admin/user') }}" + '/' + data_id + '/edit', function(data) {
+                    var data_role = data.role;
+                    var data_status = data.status;
                     $('#modelHeading').html("User Information");
                     // $('#saveBtn').html("Update");
                     $('#ajaxModel').modal('show');
@@ -200,8 +195,14 @@
                     $('#name').val(data.name);
                     $('#username').val(data.username);
                     $('#email').val(data.email);
-                    $('#role').val(data.role);
+                    $('#role').val(data_role == 1 ? 'admin' : data_role == null ? 'user' : '');
                     $('#status').val(data.status);
+                    $('#saveBtn').html(data_status == 'active' ?
+                        '<button type="submit" name="btn_act" value="deactivated" class="bi bi-plus-square btn btn-danger bg-red-600" id="saveBtn"><i class="fa fa-ghost"></i> deactivate</button>' :
+                        data_status ==
+                        'deactivated' ?
+                        '<button type="submit" name="btn_act" value="active" class="bi bi-plus-square btn btn-success bg-green-600" id="saveBtn"><i class="fa fa-smile"></i> activate</button>' :
+                        '');
                 })
             });
 

@@ -117,13 +117,7 @@
                                     <form action="{{ url('mypost/') }}" method="post">
                                         @csrf
                                         @method('put')
-                                        @if (1 == 1)
-                                            <button type="submit" class="bi bi-plus-square btn btn-danger bg-red-600"
-                                                id="saveBtn" value="create"><i class="fa fa-ghost"></i> takedown</button>
-                                        @else
-                                            <button type="submit" class="bi bi-plus-square btn btn-success bg-green-600"
-                                                id="saveBtn" value="create"><i class="fa fa-smile"></i> restore</button>
-                                        @endif
+                                        <div class="modal-footer" id="saveBtn"></div>
                                     </form>
                                 </div>
                             </div>
@@ -182,7 +176,7 @@
                             {
                                 data: 'action',
                                 name: 'action',
-                                title: 'Status',
+                                title: 'Action',
                                 searchable: false,
                                 orderable: false
                             },
@@ -193,6 +187,7 @@
                     $('body').on('click', '#manipulateItem', function() {
                         var data_id = $(this).data('id');
                         $.get("{{ url('admin/post') }}" + '/' + data_id + '/edit', function(data) {
+                            var data_status = data.status;
                             $('#modelHeading').html("Post Information");
                             // $('#saveBtn').html("Update");
                             $('#ajaxModel').modal('show');
@@ -201,8 +196,14 @@
                             $('#category').val(data.category_id);
                             $('#body').val(data.body);
                             // CKEDITOR.replace('#body');
-                            $('#status').val(data.status);
-                        })
+                            $('#status').val(data_status == null ? 'available' : data_status == 1 ?
+                                'unavailable' : '');
+                            $('#saveBtn').val(data_status == null ?
+                                '<button type="submit" class="bi bi-plus-square btn btn-danger bg-red-600" value=1><i class="fa fa-ghost"></i> takedown</button>' :
+                                data_status == 1 ?
+                                '<button type="submit" class="bi bi-plus-square btn btn-success bg-green-600" value=null><i class="fa fa-smile"></i> restore</button>' :
+                                '');
+                        });
                     });
 
                     // submit button after affect data
@@ -234,19 +235,19 @@
                             return false;
                         }
                     });
-                });
 
-                // for table can selected row
-                $(document).ready(function() {
-                    var table = $('#tb_datatable').DataTable();
+                    // for table can selected row
+                    $(document).ready(function() {
+                        var table = $('#tb_datatable').DataTable();
 
-                    $('#tb_datatable tbody').on('click', 'tr', function() {
-                        $(this).toggleClass('selected');
-                    });
+                        $('#tb_datatable tbody').on('click', 'tr', function() {
+                            $(this).toggleClass('selected');
+                        });
 
-                    // button for inform amount of table selected (not used)
-                    $('#button').click(function() {
-                        alert(table.rows('.selected').data().length + ' row(s) selected');
+                        // button for inform amount of table selected (not used)
+                        $('#button').click(function() {
+                            alert(table.rows('.selected').data().length + ' row(s) selected');
+                        });
                     });
                 });
             </script>

@@ -79,9 +79,9 @@ class UserController extends Controller
     {
         $data = User::updateOrCreate(
             ['id' => $request->data_id],
-            ['status' => $request->btn_act],
-            ['status' => $request->act]
+            ['status' => $request->btn_act]
         );
+        // dd($request->btn_act);
         return response()->json($data);
     }
 

@@ -43,7 +43,8 @@ class Post extends Model
         // parameter 4 (variable FK pivot yg terhubung dengan tabel yang mau dihubungkan)
         // return $this->belongsToMany(User::class, 'saveds', 'post_id', 'user_id');
         // return $this->belongsToMany(User::class, 'saveds', 'post_id', 'user_id')->withTimestamps()->withPivot('user_id', 'post_id');
-        return $this->belongsTo(Saved::class);
+        return $this->belongsToMany(related: User::class, table: 'saveds', foreignPivotKey: 'post_id', relatedPivotKey: 'user_id')->withTimestamps()->withPivot('user_id', 'post_id');
+        // return $this->belongsTo(Saved::class);
     }
 
     public function scopeFilter($query, array $filters)

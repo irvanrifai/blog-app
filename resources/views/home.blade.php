@@ -55,14 +55,14 @@
                                 {{-- @if (auth()->user()->id == $save->first()->pivot->user_id) --}}
                                 {{-- @if (auth()->user()->id == $post->saveds->id) --}}
                                 @auth
-                                    @if (auth()->user()->id == null)
-                                        {{-- @if (auth()->user()->id == $post->user->id) --}}
-                                        <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
-                                            href="javascript:void(0)" id="saved"><i class="fa fa-bookmark"></i></a>
-                                    @else
-                                        <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
-                                            href="javascript:void(0)" id="save"><i class="fa fa-bookmark"></i></a>
-                                    @endif
+                                    {{-- @if (auth()->user()->id == null) --}}
+                                    {{-- @if (auth()->user()->id == $post->user->id) --}}
+                                    <a class="text-right py-4 text-blue-600 text-xl pt-4 pe-4 md:text-left sm:text-right sm:py-6"
+                                        href="javascript:void(0)" id="saved"><i class="fa fa-bookmark"></i></a>
+                                    {{-- @else --}}
+                                    <a class="text-right py-4 text-gray-500 text-xl pe-4 md:text-left sm:text-right sm:py-6"
+                                        href="javascript:void(0)" id="save"><i class="fa fa-bookmark"></i></a>
+                                    {{-- @endif --}}
                                 @endauth
 
                                 {{-- scrpit for saved-unsaved button --}}
