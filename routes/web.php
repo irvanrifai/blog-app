@@ -28,6 +28,9 @@ use App\Http\Controllers\Admin\Post_Controller;
 */
 
 Route::get('/', [PostController::class, 'index'])->middleware('guest');
+// Route::get('/', function(){
+//     return response("service up", 200);
+// });
 Route::get('/signin', [AuthController::class, 'index'])->name('signin')->middleware('guest');
 Route::post('/signout', [AuthController::class, 'signout'])->middleware('auth');
 Route::get('/about', [PostController::class, 'about']);
